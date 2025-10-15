@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 
 const blackBox = {
@@ -79,6 +80,22 @@ const tagline = {
 };
 
 export function InitialTransition() {
+  useEffect(() => {
+    // Add overflow-hidden on mount
+    document.body.classList.add("overflow-hidden");
+    
+    // Safety timeout to ensure overflow-hidden is removed after animation
+    const timer = setTimeout(() => {
+      document.body.classList.remove("overflow-hidden");
+    }, 1500); // Total animation time is ~1.2s, so 1.5s is safe
+    
+    // Cleanup: always remove overflow-hidden when component unmounts
+    return () => {
+      clearTimeout(timer);
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, []);
+
   return (
     <div className="absolute inset-0 z-50 flex items-center justify-center">
       <motion.div
@@ -86,7 +103,6 @@ export function InitialTransition() {
         initial="initial"
         animate="animate"
         variants={blackBox}
-        onAnimationStart={() => document.body.classList.add("overflow-hidden")}
         onAnimationComplete={() =>
           document.body.classList.remove("overflow-hidden")
         }

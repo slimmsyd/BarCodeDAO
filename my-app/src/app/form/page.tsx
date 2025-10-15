@@ -101,6 +101,11 @@ export default function FormPage() {
 
   const connected = solanaWallet.connected || evmWallet.isConnected;
 
+  // Ensure scrolling is always enabled on this page
+  useEffect(() => {
+    document.body.classList.remove("overflow-hidden");
+  }, []);
+
   // Auto-populate wallet address when wallet is connected
   useEffect(() => {
     // Solana wallet connected

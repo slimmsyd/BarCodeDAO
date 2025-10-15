@@ -38,6 +38,8 @@ export default function Home() {
       sessionStorage.setItem("hasVisited", "true");
     } else {
       setIsFirstMount(false);
+      // If not first mount, ensure scrolling is enabled
+      document.body.classList.remove("overflow-hidden");
     }
   }, []);
 
