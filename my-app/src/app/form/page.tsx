@@ -1056,136 +1056,145 @@ export default function FormPage() {
                   </p>
                 </div>
 
-                {/* Identity Section */}
-                <div className="rounded-2xl border border-white/20 bg-white/5 p-6">
-                  <h3 className="mb-4 text-xl font-bold text-white">Identity</h3>
-                  <div className="space-y-2 text-gray-300">
-                    <p className="text-base">
-                      {formData.firstName} {formData.lastName}
-                    </p>
-                    <p className="text-base">{formData.email}</p>
-                    <p className="text-base">{formData.phone}</p>
-                    {formData.walletAddress && (
-                      <p className="break-all text-sm">
-                        {formData.walletAddress}
-                        {formData.chain && (
-                          <span className="ml-2 text-xs text-gray-500">
-                            ({formData.chain})
-                          </span>
-                        )}
+                {/* Row 1: Identity & Professional Info */}
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                  {/* Identity Section */}
+                  <div className="rounded-2xl border border-white/20 bg-white/5 p-6">
+                    <h3 className="mb-4 text-xl font-bold text-white">Identity</h3>
+                    <div className="space-y-2 text-gray-300">
+                      <p className="text-base">
+                        {formData.firstName} {formData.lastName}
                       </p>
-                    )}
+                      <p className="text-base">{formData.email}</p>
+                      <p className="text-base">{formData.phone}</p>
+                      {formData.walletAddress && (
+                        <p className="break-all text-sm">
+                          {formData.walletAddress}
+                          {formData.chain && (
+                            <span className="ml-2 text-xs text-gray-500">
+                              ({formData.chain})
+                            </span>
+                          )}
+                        </p>
+                      )}
+                    </div>
                   </div>
+
+                  {/* Professional Info Section */}
+                  {(formData.company || formData.title || formData.website || formData.linkedin) && (
+                    <div className="rounded-2xl border border-white/20 bg-white/5 p-6">
+                      <h3 className="mb-4 text-xl font-bold text-white">
+                        Professional Information
+                      </h3>
+                      <div className="space-y-2 text-gray-300">
+                        {formData.company && (
+                          <p className="text-base">
+                            <span className="text-gray-500">Company:</span>{" "}
+                            {formData.company}
+                          </p>
+                        )}
+                        {formData.title && (
+                          <p className="text-base">
+                            <span className="text-gray-500">Title:</span>{" "}
+                            {formData.title}
+                          </p>
+                        )}
+                        {formData.website && (
+                          <p className="text-sm">
+                            <span className="text-gray-500">Website:</span>{" "}
+                            <a
+                              href={formData.website}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-white underline hover:text-gray-300"
+                            >
+                              {formData.website}
+                            </a>
+                          </p>
+                        )}
+                        {formData.linkedin && (
+                          <p className="text-sm">
+                            <span className="text-gray-500">LinkedIn:</span>{" "}
+                            <a
+                              href={formData.linkedin}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-white underline hover:text-gray-300"
+                            >
+                              {formData.linkedin}
+                            </a>
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
-                {/* Professional Info Section */}
-                {(formData.company || formData.title || formData.website || formData.linkedin) && (
-                  <div className="rounded-2xl border border-white/20 bg-white/5 p-6">
-                    <h3 className="mb-4 text-xl font-bold text-white">
-                      Professional Information
-                    </h3>
-                    <div className="space-y-2 text-gray-300">
-                      {formData.company && (
-                        <p className="text-base">
-                          <span className="text-gray-500">Company:</span>{" "}
-                          {formData.company}
-                        </p>
-                      )}
-                      {formData.title && (
-                        <p className="text-base">
-                          <span className="text-gray-500">Title:</span>{" "}
-                          {formData.title}
-                        </p>
-                      )}
-                      {formData.website && (
-                        <p className="text-sm">
-                          <span className="text-gray-500">Website:</span>{" "}
-                          <a
-                            href={formData.website}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-white underline hover:text-gray-300"
+                {/* Row 2: Bio & Contributions/Skills */}
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                  {/* Bio Section */}
+                  {formData.bio && (
+                    <div className="rounded-2xl border border-white/20 bg-white/5 p-6">
+                      <h3 className="mb-4 text-xl font-bold text-white">Bio</h3>
+                      <p className="text-sm leading-relaxed text-gray-300">
+                        {formData.bio}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Contributions & Skills */}
+                  {formData.interests.length > 0 && (
+                    <div className="rounded-2xl border border-white/20 bg-white/5 p-6">
+                      <h3 className="mb-4 text-xl font-bold text-white">
+                        Contributions & Skills
+                      </h3>
+                      <div className="flex flex-wrap gap-2">
+                        {formData.interests.map((interest) => (
+                          <span
+                            key={interest}
+                            className="rounded-full bg-white/10 px-4 py-1.5 text-sm text-gray-300"
                           >
-                            {formData.website}
-                          </a>
-                        </p>
-                      )}
-                      {formData.linkedin && (
-                        <p className="text-sm">
-                          <span className="text-gray-500">LinkedIn:</span>{" "}
-                          <a
-                            href={formData.linkedin}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-white underline hover:text-gray-300"
+                            {interest}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Row 3: Learning Interests & Participation Track */}
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                  {/* Learning Interests */}
+                  {formData.learningAreas.length > 0 && (
+                    <div className="rounded-2xl border border-white/20 bg-white/5 p-6">
+                      <h3 className="mb-4 text-xl font-bold text-white">
+                        Learning Interests
+                      </h3>
+                      <div className="flex flex-wrap gap-2">
+                        {formData.learningAreas.map((area) => (
+                          <span
+                            key={area}
+                            className="rounded-full bg-white/10 px-4 py-1.5 text-sm text-gray-300"
                           >
-                            {formData.linkedin}
-                          </a>
-                        </p>
-                      )}
+                            {area}
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
 
-                {/* Bio Section */}
-                {formData.bio && (
-                  <div className="rounded-2xl border border-white/20 bg-white/5 p-6">
-                    <h3 className="mb-4 text-xl font-bold text-white">Bio</h3>
-                    <p className="text-sm leading-relaxed text-gray-300">
-                      {formData.bio}
-                    </p>
-                  </div>
-                )}
-
-                {/* Contributions & Skills */}
-                {formData.interests.length > 0 && (
-                  <div className="rounded-2xl border border-white/20 bg-white/5 p-6">
-                    <h3 className="mb-4 text-xl font-bold text-white">
-                      Contributions & Skills
-                    </h3>
-                    <div className="flex flex-wrap gap-2">
-                      {formData.interests.map((interest) => (
-                        <span
-                          key={interest}
-                          className="rounded-full bg-white/10 px-4 py-1.5 text-sm text-gray-300"
-                        >
-                          {interest}
-                        </span>
-                      ))}
+                  {/* Participation Track */}
+                  {formData.participationTrack && (
+                    <div className="rounded-2xl border border-white/20 bg-white/5 p-6">
+                      <h3 className="mb-4 text-xl font-bold text-white">
+                        Participation Track
+                      </h3>
+                      <p className="text-base capitalize text-gray-300">
+                        {formData.participationTrack}
+                      </p>
                     </div>
-                  </div>
-                )}
-
-                {/* Learning Interests */}
-                {formData.learningAreas.length > 0 && (
-                  <div className="rounded-2xl border border-white/20 bg-white/5 p-6">
-                    <h3 className="mb-4 text-xl font-bold text-white">
-                      Learning Interests
-                    </h3>
-                    <div className="flex flex-wrap gap-2">
-                      {formData.learningAreas.map((area) => (
-                        <span
-                          key={area}
-                          className="rounded-full bg-white/10 px-4 py-1.5 text-sm text-gray-300"
-                        >
-                          {area}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Participation Track */}
-                {formData.participationTrack && (
-                  <div className="rounded-2xl border border-white/20 bg-white/5 p-6">
-                    <h3 className="mb-4 text-xl font-bold text-white">
-                      Participation Track
-                    </h3>
-                    <p className="text-base capitalize text-gray-300">
-                      {formData.participationTrack}
-                    </p>
-                  </div>
-                )}
+                  )}
+                </div>
 
                 {/* Terms Agreement */}
                 <div className="rounded-2xl border border-white/20 bg-white/5 p-6">
