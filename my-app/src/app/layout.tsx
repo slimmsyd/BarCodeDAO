@@ -1,0 +1,76 @@
+import type { Metadata } from "next";
+import localFont from "next/font/local";
+import "./globals.css";
+import { PageTransition } from "@/components/page-transition";
+import { SolanaWalletProvider } from "@/components/wallet-provider";
+import { EVMWalletProvider } from "@/components/evm-wallet-provider";
+
+const gellix = localFont({
+  src: [
+    {
+      path: "../../public/fonts/Gellix/Gellix-TRIAL-Thin.woff2",
+      weight: "100",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/Gellix/Gellix-TRIAL-Light.woff2",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/Gellix/Gellix-TRIAL-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/Gellix/Gellix-TRIAL-Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/Gellix/Gellix-TRIAL-SemiBold.woff2",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/Gellix/Gellix-TRIAL-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/Gellix/Gellix-TRIAL-ExtraBold.woff2",
+      weight: "800",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/Gellix/Gellix-TRIAL-Black.woff2",
+      weight: "900",
+      style: "normal",
+    },
+  ],
+  variable: "--font-gellix",
+  display: "swap",
+});
+
+export const metadata: Metadata = {
+  title: "BarCode - Join the Community",
+  description: "Fill out the form to become a potential member of our DAO.",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body className={`${gellix.variable} antialiased`}>
+        <EVMWalletProvider>
+          <SolanaWalletProvider>
+            <PageTransition>{children}</PageTransition>
+          </SolanaWalletProvider>
+        </EVMWalletProvider>
+      </body>
+    </html>
+  );
+}

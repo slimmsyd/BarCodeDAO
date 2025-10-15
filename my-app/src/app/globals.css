@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-gellix);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-gellix), system-ui, -apple-system, sans-serif;
+}
+
+/* Wallet Adapter Custom Styles */
+.wallet-adapter-button {
+  font-family: var(--font-gellix), system-ui, -apple-system, sans-serif !important;
+}
+
+.wallet-adapter-modal-wrapper {
+  font-family: var(--font-gellix), system-ui, -apple-system, sans-serif !important;
+}
+
+.wallet-adapter-modal {
+  background: rgba(0, 0, 0, 0.95) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.wallet-adapter-modal-title {
+  font-family: var(--font-gellix), system-ui, -apple-system, sans-serif !important;
+  color: white !important;
+}
+
+.wallet-adapter-modal-list {
+  font-family: var(--font-gellix), system-ui, -apple-system, sans-serif !important;
+}
+
+.wallet-adapter-modal-list-more {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.wallet-adapter-button-trigger {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* RainbowKit Custom Styles */
+.iekbcc0 {
+  font-family: var(--font-gellix), system-ui, -apple-system, sans-serif !important;
+}
+
+[data-rk] {
+  font-family: var(--font-gellix), system-ui, -apple-system, sans-serif !important;
+}
