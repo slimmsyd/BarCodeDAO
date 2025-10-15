@@ -63,3 +63,7 @@ body {
 [data-rk] {
   font-family: var(--font-gellix), system-ui, -apple-system, sans-serif !important;
 }
+
+.z-negative {
+  z-index: -1 !important;
+}

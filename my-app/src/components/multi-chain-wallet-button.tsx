@@ -25,7 +25,7 @@ export function MultiChainWalletButton() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.6 }}
-      className="relative"
+      className="relative z-10"
     >
       {!isAnyConnected ? (
         <div className="space-y-3">
@@ -100,7 +100,7 @@ export function MultiChainWalletButton() {
           )}
         </div>
       ) : (
-        <div className="flex items-center gap-2 rounded-xl bg-white/20 px-8 py-4 backdrop-blur-sm md:px-10 md:py-5">
+        <div className="flex items-center gap-2 rounded-xl bg-white/20 px-8 py-4 backdrop-blur-sm md:px-10 md:py-5 relative z-1">
           <svg
             className="h-5 w-5 text-green-400 md:h-6 md:w-6"
             fill="currentColor"

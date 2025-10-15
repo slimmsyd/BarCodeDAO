@@ -66,7 +66,20 @@ export default function Home() {
       </div>
 
       {/* Content Container */}
-      <div className="relative z-10 flex min-h-screen items-center px-4 py-12 md:px-8 lg:px-16">
+      <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-4 py-12 md:flex-row md:items-center md:justify-start md:px-8 lg:px-16">
+        {/* Mobile Top Image - Only visible on mobile */}
+        <div className="mb-6 block w-full max-w-2xl md:hidden">
+          <div className="relative h-48 w-full overflow-hidden rounded-3xl">
+            <Image
+              src="/assets/BarcodeBG.jpg"
+              alt="Barcode community"
+              fill
+              className="object-cover"
+              quality={90}
+            />
+          </div>
+        </div>
+
         {/* Black Container Card - Left Aligned */}
         <motion.div
           variants={content(isFirstMount)}
@@ -112,7 +125,7 @@ export default function Home() {
           <motion.div variants={item} className="mb-10 mt-6">
             <Link href="/form">
               <button className="flex cursor-pointer items-center justify-between rounded-xl bg-[#53361C]/30 backdrop-blur-sm border border-[#53361C]/50 px-8 py-4 text-base font-semibold text-white transition-all hover:bg-[#53361C]/50 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-[#53361C]/50 md:px-10 md:py-5 md:text-lg">
-                <span>Get Started</span>
+                <span>Begin Application</span>
                 <svg
                   className="ml-3 h-5 w-5"
                   fill="none"
@@ -133,6 +146,73 @@ export default function Home() {
                {/* Wallet Connection */}
                <MultiChainWalletButton />
 
+
+               <motion.div
+            variants={item}
+            className="mb-8 z-negative rounded-2xl mt-6 border border-white/20 bg-white/5 p-6 backdrop-blur-sm"
+          >
+            <h2 className="mb-4 text-2xl font-bold text-white">
+              EARLY ACCESS
+            </h2>
+            <ul className="space-y-2 text-sm text-gray-300 md:text-base">
+              <li className="flex items-start">
+                <svg
+                  className="mr-3 mt-1 h-5 w-5 flex-shrink-0 text-[#53361C]"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <span>Private & Secure Process</span>
+              </li>
+              <li className="flex items-start">
+                <svg
+                  className="mr-3 mt-1 h-5 w-5 flex-shrink-0 text-[#53361C]"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <span>Few carefully curated steps</span>
+              </li>
+              <li className="flex items-start">
+                <svg
+                  className="mr-3 mt-1 h-5 w-5 flex-shrink-0 text-[#53361C]"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <span>Takes 5-10 minutes to complete</span>
+              </li>
+              <li className="flex items-start">
+                <svg
+                  className="mr-3 mt-1 h-5 w-5 flex-shrink-0 text-[#53361C]"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <span>Progress automatically saved</span>
+              </li>
+            </ul>
+          </motion.div>
           {/* Footer Text */}
           <motion.p
             variants={item}
