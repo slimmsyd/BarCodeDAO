@@ -58,7 +58,7 @@ export default function Home() {
           alt="Community background"
           fill
           className="object-cover"
-          priority
+        priority
           quality={90}
         />
         {/* Dark Overlay */}
@@ -111,7 +111,7 @@ export default function Home() {
           {/* Get Started Button */}
           <motion.div variants={item} className="mb-10 mt-6">
             <Link href="/form">
-              <button className="flex cursor-pointer items-center justify-between rounded-xl bg-white px-8 py-4 text-base font-semibold text-gray-900 transition-all hover:bg-gray-100 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white/50 md:px-10 md:py-5 md:text-lg">
+              <button className="flex cursor-pointer items-center justify-between rounded-xl bg-[#53361C]/30 backdrop-blur-sm border border-[#53361C]/50 px-8 py-4 text-base font-semibold text-white transition-all hover:bg-[#53361C]/50 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-[#53361C]/50 md:px-10 md:py-5 md:text-lg">
                 <span>Get Started</span>
                 <svg
                   className="ml-3 h-5 w-5"

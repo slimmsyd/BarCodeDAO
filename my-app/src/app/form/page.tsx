@@ -484,7 +484,7 @@ export default function FormPage() {
                 <div className="flex justify-end gap-4 pt-6">
                   <button
                     type="submit"
-                    className="flex cursor-pointer items-center justify-center rounded-xl bg-white px-8 py-3 text-base font-semibold text-gray-900 transition-all hover:scale-105 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    className="flex cursor-pointer items-center justify-center rounded-xl bg-[#53361C]/30 backdrop-blur-sm border border-[#53361C]/50 px-8 py-3 text-base font-semibold text-white transition-all hover:bg-[#53361C]/50 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-[#53361C]/50"
                   >
                     Continue
                     <svg
@@ -632,7 +632,7 @@ export default function FormPage() {
                   </button>
                   <button
                     type="submit"
-                    className="flex cursor-pointer items-center justify-center rounded-xl bg-white px-8 py-3 text-base font-semibold text-gray-900 transition-all hover:scale-105 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    className="flex cursor-pointer items-center justify-center rounded-xl bg-[#53361C]/30 backdrop-blur-sm border border-[#53361C]/50 px-8 py-3 text-base font-semibold text-white transition-all hover:bg-[#53361C]/50 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-[#53361C]/50"
                   >
                     Continue
                     <svg
@@ -729,7 +729,7 @@ export default function FormPage() {
                   </button>
                   <button
                     type="submit"
-                    className="flex cursor-pointer items-center justify-center rounded-xl bg-white px-8 py-3 text-base font-semibold text-gray-900 transition-all hover:scale-105 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    className="flex cursor-pointer items-center justify-center rounded-xl bg-[#53361C]/30 backdrop-blur-sm border border-[#53361C]/50 px-8 py-3 text-base font-semibold text-white transition-all hover:bg-[#53361C]/50 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-[#53361C]/50"
                   >
                     Continue
                     <svg
@@ -826,7 +826,7 @@ export default function FormPage() {
                   </button>
                   <button
                     type="submit"
-                    className="flex cursor-pointer items-center justify-center rounded-xl bg-white px-8 py-3 text-base font-semibold text-gray-900 transition-all hover:scale-105 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    className="flex cursor-pointer items-center justify-center rounded-xl bg-[#53361C]/30 backdrop-blur-sm border border-[#53361C]/50 px-8 py-3 text-base font-semibold text-white transition-all hover:bg-[#53361C]/50 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-[#53361C]/50"
                   >
                     Continue
                     <svg
@@ -873,7 +873,7 @@ export default function FormPage() {
                       }
                       className={`group cursor-pointer relative w-full rounded-2xl border-2 p-6 text-left transition-all ${
                         formData.participationTrack === "citizen"
-                          ? "border-white bg-white/5"
+                          ? "border-[#53361C] bg-[#53361C]/20 backdrop-blur-sm"
                           : "border-white/20 bg-transparent hover:border-white/40 hover:bg-white/5"
                       }`}
                     >
@@ -887,9 +887,9 @@ export default function FormPage() {
                           </p>
                         </div>
                         {formData.participationTrack === "citizen" && (
-                          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white">
+                          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#53361C] border border-[#53361C]">
                             <svg
-                              className="h-4 w-4 text-gray-900"
+                              className="h-4 w-4 text-white"
                               fill="none"
                               viewBox="0 0 24 24"
                               stroke="currentColor"
@@ -914,7 +914,7 @@ export default function FormPage() {
                       }
                       className={`group relative w-full rounded-2xl border-2 p-6 text-left transition-all ${
                         formData.participationTrack === "company"
-                          ? "border-white bg-white/5"
+                          ? "border-[#53361C] bg-[#53361C]/20 backdrop-blur-sm"
                           : "border-white/20 bg-transparent hover:border-white/40 hover:bg-white/5"
                       }`}
                     >
@@ -928,9 +928,9 @@ export default function FormPage() {
                           </p>
                         </div>
                         {formData.participationTrack === "company" && (
-                          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white">
+                          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#53361C] border border-[#53361C]">
                             <svg
-                              className="h-4 w-4 text-gray-900"
+                              className="h-4 w-4 text-white"
                               fill="none"
                               viewBox="0 0 24 24"
                               stroke="currentColor"
@@ -958,7 +958,7 @@ export default function FormPage() {
                       }
                       className={`group relative w-full rounded-2xl border-2 p-6 text-left transition-all ${
                         formData.participationTrack === "enterprise"
-                          ? "border-white bg-white/5"
+                          ? "border-[#53361C] bg-[#53361C]/20 backdrop-blur-sm"
                           : "border-white/20 bg-transparent hover:border-white/40 hover:bg-white/5"
                       }`}
                     >
@@ -973,9 +973,9 @@ export default function FormPage() {
                           </p>
                         </div>
                         {formData.participationTrack === "enterprise" && (
-                          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white">
+                          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#53361C] border border-[#53361C]">
                             <svg
-                              className="h-4 w-4 text-gray-900"
+                              className="h-4 w-4 text-white"
                               fill="none"
                               viewBox="0 0 24 24"
                               stroke="currentColor"
@@ -1018,7 +1018,7 @@ export default function FormPage() {
                   </button>
                   <button
                     type="submit"
-                    className="flex cursor-pointer items-center justify-center rounded-xl bg-white px-8 py-3 text-base font-semibold text-gray-900 transition-all hover:scale-105 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    className="flex cursor-pointer items-center justify-center rounded-xl bg-[#53361C]/30 backdrop-blur-sm border border-[#53361C]/50 px-8 py-3 text-base font-semibold text-white transition-all hover:bg-[#53361C]/50 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-[#53361C]/50"
                   >
                     Continue
                     <svg
@@ -1241,7 +1241,7 @@ export default function FormPage() {
                   <button
                     onClick={handleSubmit}
                     disabled={!formData.agreedToTerms}
-                    className="flex cursor-pointer items-center justify-center rounded-xl bg-white px-8 py-3 text-base font-semibold text-gray-900 transition-all hover:scale-105 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-white/50 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
+                    className="flex cursor-pointer items-center justify-center rounded-xl bg-[#53361C]/30 backdrop-blur-sm border border-[#53361C]/50 px-8 py-3 text-base font-semibold text-white transition-all hover:bg-[#53361C]/50 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-[#53361C]/50 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
                   >
                     Submit
                   </button>
