@@ -79,7 +79,11 @@ const tagline = {
   },
 };
 
-export function InitialTransition() {
+interface InitialTransitionProps {
+  onComplete?: () => void;
+}
+
+export function InitialTransition({ onComplete }: InitialTransitionProps) {
   useEffect(() => {
     // Add overflow-hidden on mount
     document.body.classList.add("overflow-hidden");
@@ -103,9 +107,10 @@ export function InitialTransition() {
         initial="initial"
         animate="animate"
         variants={blackBox}
-        onAnimationComplete={() =>
-          document.body.classList.remove("overflow-hidden")
-        }
+        onAnimationComplete={() => {
+          document.body.classList.remove("overflow-hidden");
+          onComplete?.();
+        }}
       >
         <motion.div
           variants={textContainer}

@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
 import { InitialTransition } from "@/components/initial-transition";
 import { MultiChainWalletButton } from "@/components/multi-chain-wallet-button";
@@ -30,6 +29,9 @@ const item = {
 
 export default function Home() {
   const [isFirstMount, setIsFirstMount] = useState(true);
+  const [showTransition, setShowTransition] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const hasVisited = sessionStorage.getItem("hasVisited");
@@ -38,10 +40,58 @@ export default function Home() {
       sessionStorage.setItem("hasVisited", "true");
     } else {
       setIsFirstMount(false);
+      setShowTransition(false);
       // If not first mount, ensure scrolling is enabled
       document.body.classList.remove("overflow-hidden");
     }
   }, []);
+
+  // Try to autoplay with sound after transition completes
+  useEffect(() => {
+    if (!showTransition && videoRef.current) {
+      // Add a slight delay to ensure video is ready
+      const timer = setTimeout(() => {
+        if (videoRef.current) {
+          videoRef.current.muted = false;
+          videoRef.current.play().then(() => {
+            setIsMuted(false);
+          }).catch(() => {
+            // If autoplay with sound fails (most browsers), keep it muted
+            videoRef.current!.muted = true;
+            setIsMuted(true);
+          });
+        }
+      }, 100);
+
+      return () => clearTimeout(timer);
+    }
+  }, [showTransition]);
+
+  // Try to autoplay with sound immediately on mount
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = false;
+      videoRef.current.play().then(() => {
+        setIsMuted(false);
+      }).catch(() => {
+        // If autoplay with sound fails, keep it muted
+        videoRef.current!.muted = true;
+        setIsMuted(true);
+      });
+    }
+  }, []);
+
+  const handleTransitionComplete = () => {
+    // Remove the transition component after animation completes
+    setShowTransition(false);
+  };
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
 
   return (
     <motion.div
@@ -52,33 +102,85 @@ export default function Home() {
       className="relative min-h-screen w-full overflow-x-hidden "
     >
       {/* Initial Transition - Only on first visit */}
-      {isFirstMount && <InitialTransition />}
-      {/* Background Image */}
+      {isFirstMount && showTransition && (
+        <InitialTransition onComplete={handleTransitionComplete} />
+      )}
+      {/* Background Video */}
       <div className="absolute inset-0 z-0">
-        <Image
-          src="/assets/BarcodeBG.jpg"
-          alt="Community background"
-          fill
-          className="object-cover"
-        priority
-          quality={90}
-        />
+        <video
+          ref={videoRef}
+          autoPlay
+          loop
+          muted={isMuted}
+          playsInline
+          className="h-full w-full object-cover"
+        >
+          <source src="/assets/Only_Group.mp4" type="video/mp4" />
+        </video>
         {/* Dark Overlay */}
         <div className="absolute inset-0 bg-black/40" />
       </div>
 
+      {/* Sound Toggle Button */}
+      <motion.button
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: isFirstMount ? 1.5 : 0 }}
+        onClick={toggleMute}
+        className="fixed right-6 top-6 z-20 rounded-full bg-black/50 p-3 backdrop-blur-sm transition-all hover:bg-black/70 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
+        aria-label={isMuted ? "Unmute video" : "Mute video"}
+      >
+        {isMuted ? (
+          <svg
+            className="h-6 w-6 text-white"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+            />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"
+            />
+          </svg>
+        ) : (
+          <svg
+            className="h-6 w-6 text-white"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+            />
+          </svg>
+        )}
+      </motion.button>
+
       {/* Content Container */}
       <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-4 py-12 md:flex-row md:items-center md:justify-start md:px-8 lg:px-16">
-        {/* Mobile Top Image - Only visible on mobile */}
+        {/* Mobile Top Video - Only visible on mobile */}
         <div className="mb-6 block w-full max-w-2xl md:hidden">
           <div className="relative h-48 w-full overflow-hidden rounded-3xl">
-            <Image
-              src="/assets/BarcodeBG.jpg"
-              alt="Barcode community"
-              fill
-              className="object-cover"
-              quality={90}
-            />
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="h-full w-full object-cover"
+            >
+              <source src="/assets/Only_Group.mp4" type="video/mp4" />
+            </video>
           </div>
         </div>
 
@@ -124,9 +226,12 @@ export default function Home() {
      
 
           {/* Get Started Button */}
-          <motion.div variants={item} className="mb-10 mt-6">
+    
+               {/* Wallet Connection */}
+               <MultiChainWalletButton />
+               <motion.div variants={item} className="mb-10 mt-6">
             <Link href="/form">
-              <button className="flex cursor-pointer items-center justify-between rounded-xl bg-[#53361C]/30 backdrop-blur-sm border border-[#53361C]/50 px-8 py-4 text-base font-semibold text-white transition-all hover:bg-[#53361C]/50 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-[#53361C]/50 md:px-10 md:py-5 md:text-lg">
+              <button className="flex w-full text-center  justify-center *:items-center cursor-pointer rounded-xl bg-[#53361C]/30 backdrop-blur-sm border border-[#53361C]/50 px-8 py-4 text-base font-semibold text-white transition-all hover:bg-[#53361C]/50 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-[#53361C]/50 md:px-10 md:py-5 md:text-lg">
                 <span>Begin Application</span>
                 <svg
                   className="ml-3 h-5 w-5"
@@ -145,8 +250,6 @@ export default function Home() {
             </Link>
           </motion.div>
 
-               {/* Wallet Connection */}
-               <MultiChainWalletButton />
 
 
                <motion.div
