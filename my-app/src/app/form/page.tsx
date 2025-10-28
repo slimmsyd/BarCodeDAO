@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useAccount } from "wagmi";
@@ -383,7 +382,11 @@ export default function FormPage() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full rounded-xl bg-white/10 px-4 py-3 text-white placeholder-gray-500 backdrop-blur-sm transition-all focus:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    className="w-full rounded-xl bg-white/5 px-4 py-3 text-white placeholder-gray-500 border border-white/10 backdrop-blur-xl transition-all focus:bg-white/10 focus:border-white/30 focus:outline-none focus:ring-2 focus:ring-white/20 hover:border-white/20"
+                    style={{
+                      backdropFilter: 'blur(20px) saturate(150%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                    }}
                     placeholder="your.email@example.com"
                   />
                 </div>
@@ -403,7 +406,11 @@ export default function FormPage() {
                     value={formData.phone}
                     onChange={handleChange}
                     required
-                    className="w-full rounded-xl bg-white/10 px-4 py-3 text-white placeholder-gray-500 backdrop-blur-sm transition-all focus:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    className="w-full rounded-xl bg-white/5 px-4 py-3 text-white placeholder-gray-500 border border-white/10 backdrop-blur-xl transition-all focus:bg-white/10 focus:border-white/30 focus:outline-none focus:ring-2 focus:ring-white/20 hover:border-white/20"
+                    style={{
+                      backdropFilter: 'blur(20px) saturate(150%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                    }}
                     placeholder="+1 (555) 000-0000"
                   />
                 </div>
@@ -564,7 +571,11 @@ export default function FormPage() {
                     name="company"
                     value={formData.company}
                     onChange={handleChange}
-                    className="w-full rounded-xl bg-white/10 px-4 py-3 text-white placeholder-gray-500 backdrop-blur-sm transition-all focus:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    className="w-full rounded-xl bg-white/5 px-4 py-3 text-white placeholder-gray-500 border border-white/10 backdrop-blur-xl transition-all focus:bg-white/10 focus:border-white/30 focus:outline-none focus:ring-2 focus:ring-white/20 hover:border-white/20"
+                    style={{
+                      backdropFilter: 'blur(20px) saturate(150%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                    }}
                     placeholder="Your company name"
                   />
                 </div>
@@ -583,7 +594,11 @@ export default function FormPage() {
                     name="title"
                     value={formData.title}
                     onChange={handleChange}
-                    className="w-full rounded-xl bg-white/10 px-4 py-3 text-white placeholder-gray-500 backdrop-blur-sm transition-all focus:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    className="w-full rounded-xl bg-white/5 px-4 py-3 text-white placeholder-gray-500 border border-white/10 backdrop-blur-xl transition-all focus:bg-white/10 focus:border-white/30 focus:outline-none focus:ring-2 focus:ring-white/20 hover:border-white/20"
+                    style={{
+                      backdropFilter: 'blur(20px) saturate(150%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                    }}
                     placeholder="e.g., Senior Developer, Product Manager"
                   />
                 </div>
@@ -602,7 +617,11 @@ export default function FormPage() {
                     name="website"
                     value={formData.website}
                     onChange={handleChange}
-                    className="w-full rounded-xl bg-white/10 px-4 py-3 text-white placeholder-gray-500 backdrop-blur-sm transition-all focus:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    className="w-full rounded-xl bg-white/5 px-4 py-3 text-white placeholder-gray-500 border border-white/10 backdrop-blur-xl transition-all focus:bg-white/10 focus:border-white/30 focus:outline-none focus:ring-2 focus:ring-white/20 hover:border-white/20"
+                    style={{
+                      backdropFilter: 'blur(20px) saturate(150%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                    }}
                     placeholder="https://yourwebsite.com"
                   />
                 </div>
@@ -621,7 +640,11 @@ export default function FormPage() {
                     name="linkedin"
                     value={formData.linkedin}
                     onChange={handleChange}
-                    className="w-full rounded-xl bg-white/10 px-4 py-3 text-white placeholder-gray-500 backdrop-blur-sm transition-all focus:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    className="w-full rounded-xl bg-white/5 px-4 py-3 text-white placeholder-gray-500 border border-white/10 backdrop-blur-xl transition-all focus:bg-white/10 focus:border-white/30 focus:outline-none focus:ring-2 focus:ring-white/20 hover:border-white/20"
+                    style={{
+                      backdropFilter: 'blur(20px) saturate(150%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                    }}
                     placeholder="https://linkedin.com/in/yourprofile"
                   />
                 </div>
@@ -640,7 +663,11 @@ export default function FormPage() {
                     value={formData.bio}
                     onChange={handleChange}
                     rows={4}
-                    className="w-full rounded-xl bg-white/10 px-4 py-3 text-white placeholder-gray-500 backdrop-blur-sm transition-all focus:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    className="w-full rounded-xl bg-white/5 px-4 py-3 text-white placeholder-gray-500 border border-white/10 backdrop-blur-xl transition-all focus:bg-white/10 focus:border-white/30 focus:outline-none focus:ring-2 focus:ring-white/20 hover:border-white/20"
+                    style={{
+                      backdropFilter: 'blur(20px) saturate(150%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                    }}
                     placeholder="Tell us about your professional background and experience..."
                   />
                 </div>
@@ -1036,11 +1063,15 @@ export default function FormPage() {
                           participationTrack: "enterprise",
                         })
                       }
-                      className={`group relative w-full rounded-2xl border-2 p-6 text-left transition-all ${
+                      className={`group cursor-pointer relative w-full rounded-2xl border-2 p-6 text-left transition-all backdrop-blur-xl ${
                         formData.participationTrack === "enterprise"
-                          ? "border-[#53361C] bg-[#53361C]/20 backdrop-blur-sm"
-                          : "border-white/20 bg-transparent hover:border-white/40 hover:bg-white/5"
+                          ? "border-[#53361C]/80 bg-[#53361C]/30 shadow-lg"
+                          : "border-white/10 bg-white/5 hover:border-white/30 hover:bg-white/10 hover:scale-105"
                       }`}
+                      style={{
+                        backdropFilter: 'blur(20px) saturate(150%)',
+                        WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                      }}
                     >
                       <div className="flex items-start justify-between">
                         <div>
@@ -1148,7 +1179,12 @@ export default function FormPage() {
                 {/* Row 1: Identity & Professional Info */}
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                   {/* Identity Section */}
-                  <div className="rounded-2xl border border-white/20 bg-white/5 p-6">
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl shadow-lg"
+                    style={{
+                      backdropFilter: 'blur(20px) saturate(150%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                    }}
+                  >
                     <h3 className="mb-4 text-xl font-bold text-white">Identity</h3>
                     <div className="space-y-2 text-gray-300">
                       <p className="text-base">
@@ -1171,7 +1207,12 @@ export default function FormPage() {
 
                   {/* Professional Info Section */}
                   {(formData.company || formData.title || formData.website || formData.linkedin) && (
-                    <div className="rounded-2xl border border-white/20 bg-white/5 p-6">
+                    <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl shadow-lg"
+                    style={{
+                      backdropFilter: 'blur(20px) saturate(150%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                    }}
+                  >
                       <h3 className="mb-4 text-xl font-bold text-white">
                         Professional Information
                       </h3>
@@ -1223,7 +1264,12 @@ export default function FormPage() {
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                   {/* Bio Section */}
                   {formData.bio && (
-                    <div className="rounded-2xl border border-white/20 bg-white/5 p-6">
+                    <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl shadow-lg"
+                    style={{
+                      backdropFilter: 'blur(20px) saturate(150%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                    }}
+                  >
                       <h3 className="mb-4 text-xl font-bold text-white">Bio</h3>
                       <p className="text-sm leading-relaxed text-gray-300">
                         {formData.bio}
@@ -1233,7 +1279,12 @@ export default function FormPage() {
 
                   {/* Contributions & Skills */}
                   {formData.interests.length > 0 && (
-                    <div className="rounded-2xl border border-white/20 bg-white/5 p-6">
+                    <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl shadow-lg"
+                    style={{
+                      backdropFilter: 'blur(20px) saturate(150%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                    }}
+                  >
                       <h3 className="mb-4 text-xl font-bold text-white">
                         Contributions & Skills
                       </h3>
@@ -1255,7 +1306,12 @@ export default function FormPage() {
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                   {/* Learning Interests */}
                   {formData.learningAreas.length > 0 && (
-                    <div className="rounded-2xl border border-white/20 bg-white/5 p-6">
+                    <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl shadow-lg"
+                    style={{
+                      backdropFilter: 'blur(20px) saturate(150%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                    }}
+                  >
                       <h3 className="mb-4 text-xl font-bold text-white">
                         Learning Interests
                       </h3>
@@ -1274,7 +1330,12 @@ export default function FormPage() {
 
                   {/* Participation Track */}
                   {formData.participationTrack && (
-                    <div className="rounded-2xl border border-white/20 bg-white/5 p-6">
+                    <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl shadow-lg"
+                    style={{
+                      backdropFilter: 'blur(20px) saturate(150%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                    }}
+                  >
                       <h3 className="mb-4 text-xl font-bold text-white">
                         Participation Track
                       </h3>
@@ -1286,7 +1347,12 @@ export default function FormPage() {
                 </div>
 
                 {/* Terms Agreement */}
-                <div className="rounded-2xl border border-white/20 bg-white/5 p-6">
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl"
+                  style={{
+                    backdropFilter: 'blur(20px) saturate(150%)',
+                    WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                  }}
+                >
                   <div className="flex items-start gap-3">
                     <input
                       type="checkbox"

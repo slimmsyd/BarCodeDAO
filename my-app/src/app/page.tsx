@@ -99,14 +99,14 @@ export default function Home() {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 1.05 }}
       transition={{ duration: 0.3, ease: [0.6, -0.05, 0.01, 0.99] }}
-      className="relative min-h-screen w-full overflow-x-hidden "
+      className="relative min-h-screen w-full overflow-x-hidden"
     >
       {/* Initial Transition - Only on first visit */}
       {isFirstMount && showTransition && (
         <InitialTransition onComplete={handleTransitionComplete} />
       )}
-      {/* Background Video */}
-      <div className="absolute inset-0 z-0 bg-black">
+      {/* Background Video - Fixed Position */}
+      <div className="fixed inset-0 z-0 bg-black">
         <video
           ref={videoRef}
           autoPlay
@@ -366,6 +366,46 @@ export default function Home() {
               </svg>
             </a>
           </motion.div>
+        </motion.div>
+      </div>
+
+      {/* Secondary Hero Section */}
+      <div className="relative z-10 flex min-h-[60vh] items-center justify-center px-4 py-20 md:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: isFirstMount ? 1.5 : 0.3, ease: [0.6, -0.05, 0.01, 0.99] }}
+          className="relative w-full max-w-5xl"
+        >
+          {/* Glass Container */}
+          <div 
+            className="rounded-3xl border border-white/10 bg-black/60 px-8 py-16 text-center backdrop-blur-3xl shadow-2xl md:px-16 md:py-20"
+            style={{
+              backdropFilter: 'blur(40px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(40px) saturate(180%)',
+              boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37), inset 0 1px 0 0 rgba(255, 255, 255, 0.1)',
+            }}
+          >
+            {/* Main Statement */}
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: isFirstMount ? 1.8 : 0.5 }}
+              className="mb-6 text-4xl font-bold leading-tight text-white md:text-5xl lg:text-6xl"
+            >
+              We are the system now.
+            </motion.h2>
+
+            {/* Subtext */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: isFirstMount ? 2.0 : 0.7 }}
+              className="text-xl font-medium text-gray-300 md:text-2xl lg:text-3xl"
+            >
+              Autonomous. Accountable. Accelerating
+            </motion.p>
+          </div>
         </motion.div>
       </div>
     </motion.div>
