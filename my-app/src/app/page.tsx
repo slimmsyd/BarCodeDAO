@@ -106,19 +106,19 @@ export default function Home() {
         <InitialTransition onComplete={handleTransitionComplete} />
       )}
       {/* Background Video */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 bg-black">
         <video
           ref={videoRef}
           autoPlay
           loop
           muted={isMuted}
           playsInline
-          className="h-full w-full object-cover"
+          className="h-full w-full object-contain"
         >
           <source src="/assets/Only_Group.mp4" type="video/mp4" />
         </video>
-        {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black/40" />
+        {/* Subtle Gradient Overlay for Glass Effect */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent" />
       </div>
 
       {/* Sound Toggle Button */}
@@ -127,7 +127,11 @@ export default function Home() {
         animate={{ opacity: 1 }}
         transition={{ delay: isFirstMount ? 1.5 : 0 }}
         onClick={toggleMute}
-        className="fixed right-6 top-6 z-20 rounded-full bg-black/50 p-3 backdrop-blur-sm transition-all hover:bg-black/70 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
+        className="fixed right-6 top-6 z-20 rounded-full bg-black/40 p-3 backdrop-blur-xl border border-white/10 transition-all hover:bg-black/60 hover:scale-110 hover:border-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 shadow-lg"
+        style={{
+          backdropFilter: 'blur(20px) saturate(150%)',
+          WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+        }}
         aria-label={isMuted ? "Unmute video" : "Mute video"}
       >
         {isMuted ? (
@@ -168,28 +172,32 @@ export default function Home() {
       </motion.button>
 
       {/* Content Container */}
-      <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-4 py-12 md:flex-row md:items-center md:justify-start md:px-8 lg:px-16">
+      <div className="relative z-10 flex min-h-screen flex-col md:flex-row md:justify-end">
         {/* Mobile Top Video - Only visible on mobile */}
-        <div className="mb-6 block w-full max-w-2xl md:hidden">
-          <div className="relative h-48 w-full overflow-hidden rounded-3xl">
+        <div className="block w-full md:hidden">
+          <div className="relative h-48 w-full overflow-hidden bg-black">
             <video
               autoPlay
               loop
               muted
               playsInline
-              className="h-full w-full object-cover"
+              className="h-full w-full object-contain"
             >
               <source src="/assets/Only_Group.mp4" type="video/mp4" />
             </video>
           </div>
         </div>
 
-        {/* Black Container Card - Left Aligned */}
+        {/* Black Container - Right-Aligned Column with Liquid Glass Effect */}
         <motion.div
           variants={content(isFirstMount)}
           initial="initial"
           animate="animate"
-          className="w-full max-w-2xl rounded-3xl bg-black px-8 py-12 shadow-2xl md:px-12 md:py-16 lg:px-16 lg:py-20"
+          className="w-full bg-black/80 backdrop-blur-3xl px-8 py-12 md:min-h-screen md:w-5/12 md:px-12 md:py-16 lg:w-1/3 lg:px-16 lg:py-20 flex flex-col justify-center border-l border-white/10 shadow-2xl"
+          style={{
+            backdropFilter: 'blur(40px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(40px) saturate(180%)',
+          }}
         >
           {/* Barcode Icon */}
           <motion.div variants={item} className="mb-8 flex justify-start">
@@ -254,7 +262,11 @@ export default function Home() {
 
                <motion.div
             variants={item}
-            className="mb-8 z-negative rounded-2xl mt-6 border border-white/20 bg-white/5 p-6 backdrop-blur-sm"
+            className="mb-6 rounded-2xl mt-4 border border-white/10 bg-white/5 p-6 backdrop-blur-xl shadow-lg"
+            style={{
+              backdropFilter: 'blur(20px) saturate(150%)',
+              WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+            }}
           >
             <h2 className="mb-4 text-2xl font-bold text-white">
               EARLY ACCESS
@@ -321,7 +333,7 @@ export default function Home() {
           {/* Footer Text */}
           <motion.p
             variants={item}
-            className="text-center text-sm mt-6 text-gray-400 md:text-base"
+            className="text-center text-sm mt-4 text-gray-400 md:text-base"
           >
             BUILD WITH US. Fill out our{" "}
             <Link
@@ -336,7 +348,7 @@ export default function Home() {
           {/* Social Icons */}
           <motion.div
             variants={item}
-            className="mt-8 flex justify-center"
+            className="mt-4 flex justify-center"
           >
             <a
               href="https://www.instagram.com/barcode.dao/"
