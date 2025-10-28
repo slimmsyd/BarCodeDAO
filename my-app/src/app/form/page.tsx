@@ -211,28 +211,35 @@ export default function FormPage() {
       exit="exit"
       className="relative min-h-screen w-full overflow-x-hidden "
     >
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src="/assets/BarcodeBG.jpg"
-          alt="Community background"
-          fill
-          className="object-cover"
-          priority
-          quality={90}
-        />
-        {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black/40" />
+      {/* Background Video with Enhanced Glass Effect */}
+      <div className="absolute inset-0 z-0 bg-black">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="h-full w-full object-contain"
+        >
+          <source src="/assets/Only_Group.mp4" type="video/mp4" />
+        </video>
+        {/* Multi-layer Gradient Overlay for Enhanced Glass */}
+        <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/40 to-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/30" />
       </div>
 
       {/* Content Container */}
       <div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-12 md:px-8">
-        {/* Form Container Card */}
+        {/* Form Container Card with Enhanced Liquid Glass */}
         <motion.div
           variants={content}
           initial="initial"
           animate="animate"
-          className="w-full max-w-2xl rounded-3xl bg-black px-8 py-10 shadow-2xl md:px-12 md:py-14"
+          className="w-full max-w-2xl rounded-3xl bg-black/70 px-8 py-10 shadow-2xl md:px-12 md:py-14 border border-white/10"
+          style={{
+            backdropFilter: 'blur(40px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(40px) saturate(180%)',
+            boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37), inset 0 1px 0 0 rgba(255, 255, 255, 0.1)',
+          }}
         >
           {/* Back Button */}
           <motion.div variants={item} className="mb-6">
@@ -267,12 +274,20 @@ export default function FormPage() {
                 {Math.round((currentStep / 7) * 100)}%
               </span>
             </div>
-            <div className="h-2 w-full rounded-full bg-white/10">
+            <div className="h-2 w-full rounded-full bg-white/5 border border-white/10 overflow-hidden backdrop-blur-xl"
+              style={{
+                backdropFilter: 'blur(20px) saturate(150%)',
+                WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+              }}
+            >
               <motion.div
-                className="h-full rounded-full bg-white"
+                className="h-full rounded-full bg-gradient-to-r from-white via-white/90 to-white shadow-lg"
                 initial={{ width: 0 }}
                 animate={{ width: `${(currentStep / 7) * 100}%` }}
                 transition={{ duration: 0.3 }}
+                style={{
+                  boxShadow: '0 0 20px rgba(255, 255, 255, 0.5)',
+                }}
               />
             </div>
           </motion.div>
@@ -321,7 +336,11 @@ export default function FormPage() {
                       value={formData.firstName}
                       onChange={handleChange}
                       required
-                      className="w-full rounded-xl bg-white/10 px-4 py-3 text-white placeholder-gray-500 backdrop-blur-sm transition-all focus:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/50"
+                      className="w-full rounded-xl bg-white/5 px-4 py-3 text-white placeholder-gray-500 border border-white/10 backdrop-blur-xl transition-all focus:bg-white/10 focus:border-white/30 focus:outline-none focus:ring-2 focus:ring-white/20 hover:border-white/20"
+                      style={{
+                        backdropFilter: 'blur(20px) saturate(150%)',
+                        WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                      }}
                       placeholder="John"
                     />
                   </div>
@@ -339,7 +358,11 @@ export default function FormPage() {
                       value={formData.lastName}
                       onChange={handleChange}
                       required
-                      className="w-full rounded-xl bg-white/10 px-4 py-3 text-white placeholder-gray-500 backdrop-blur-sm transition-all focus:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/50"
+                      className="w-full rounded-xl bg-white/5 px-4 py-3 text-white placeholder-gray-500 border border-white/10 backdrop-blur-xl transition-all focus:bg-white/10 focus:border-white/30 focus:outline-none focus:ring-2 focus:ring-white/20 hover:border-white/20"
+                      style={{
+                        backdropFilter: 'blur(20px) saturate(150%)',
+                        WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                      }}
                       placeholder="Doe"
                     />
                   </div>
@@ -453,15 +476,19 @@ export default function FormPage() {
                             })
                           }
                           disabled={isConnectedChain}
-                          className={`rounded-full cursor-pointer px-5 py-2 text-sm font-medium transition-all ${
+                          className={`rounded-full cursor-pointer px-5 py-2 text-sm font-medium transition-all border backdrop-blur-xl ${
                             isSelected
-                              ? "bg-white text-gray-900"
-                              : "bg-white/10 text-gray-300 hover:bg-white/20"
+                              ? "bg-white text-gray-900 border-white shadow-lg"
+                              : "bg-white/5 text-gray-300 hover:bg-white/10 border-white/10 hover:border-white/20"
                           } ${
                             isConnectedChain
-                              ? "ring-2 ring-green-400"
+                              ? "ring-2 ring-green-400/50"
                               : ""
                           }`}
+                          style={!isSelected ? {
+                            backdropFilter: 'blur(20px) saturate(150%)',
+                            WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                          } : {}}
                         >
                           {network}
                           {isConnectedChain && (
@@ -489,7 +516,12 @@ export default function FormPage() {
                 <div className="flex justify-end gap-4 pt-6">
                   <button
                     type="submit"
-                    className="flex cursor-pointer items-center justify-center rounded-xl bg-[#53361C]/30 backdrop-blur-sm border border-[#53361C]/50 px-8 py-3 text-base font-semibold text-white transition-all hover:bg-[#53361C]/50 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-[#53361C]/50"
+                    className="flex cursor-pointer items-center justify-center rounded-xl bg-[#53361C]/40 backdrop-blur-xl border border-[#53361C]/60 px-8 py-3 text-base font-semibold text-white transition-all hover:bg-[#53361C]/60 hover:scale-105 hover:border-[#53361C]/80 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#53361C]/50"
+                    style={{
+                      backdropFilter: 'blur(20px) saturate(150%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                      boxShadow: '0 4px 16px 0 rgba(83, 54, 28, 0.2)',
+                    }}
                   >
                     Continue
                     <svg
@@ -618,7 +650,11 @@ export default function FormPage() {
                   <button
                     type="button"
                     onClick={handleBack}
-                    className="flex items-center justify-center rounded-xl bg-white/10 px-6 py-3 text-base font-medium text-white transition-all hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/30"
+                    className="flex items-center justify-center rounded-xl bg-white/5 backdrop-blur-xl border border-white/10 px-6 py-3 text-base font-medium text-white transition-all hover:bg-white/10 hover:border-white/20 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white/20"
+                    style={{
+                      backdropFilter: 'blur(20px) saturate(150%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                    }}
                   >
                     <svg
                       className="mr-2 h-4 w-4"
@@ -637,7 +673,12 @@ export default function FormPage() {
                   </button>
                   <button
                     type="submit"
-                    className="flex cursor-pointer items-center justify-center rounded-xl bg-[#53361C]/30 backdrop-blur-sm border border-[#53361C]/50 px-8 py-3 text-base font-semibold text-white transition-all hover:bg-[#53361C]/50 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-[#53361C]/50"
+                    className="flex cursor-pointer items-center justify-center rounded-xl bg-[#53361C]/40 backdrop-blur-xl border border-[#53361C]/60 px-8 py-3 text-base font-semibold text-white transition-all hover:bg-[#53361C]/60 hover:scale-105 hover:border-[#53361C]/80 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#53361C]/50"
+                    style={{
+                      backdropFilter: 'blur(20px) saturate(150%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                      boxShadow: '0 4px 16px 0 rgba(83, 54, 28, 0.2)',
+                    }}
                   >
                     Continue
                     <svg
@@ -698,11 +739,15 @@ export default function FormPage() {
                         key={interest}
                         type="button"
                         onClick={() => toggleInterest(interest)}
-                        className={`cursor-pointer rounded-full px-5 py-2 text-sm font-medium transition-all ${
+                        className={`cursor-pointer rounded-full px-5 py-2 text-sm font-medium transition-all border backdrop-blur-xl hover:scale-105 ${
                           formData.interests.includes(interest)
-                            ? "bg-white text-gray-900"
-                            : "bg-white/10 text-gray-300 hover:bg-white/20"
+                            ? "bg-white text-gray-900 border-white shadow-lg"
+                            : "bg-white/5 text-gray-300 hover:bg-white/10 border-white/10 hover:border-white/20"
                         }`}
+                        style={!formData.interests.includes(interest) ? {
+                          backdropFilter: 'blur(20px) saturate(150%)',
+                          WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                        } : {}}
                       >
                         {interest}
                       </button>
@@ -715,7 +760,11 @@ export default function FormPage() {
                   <button
                     type="button"
                     onClick={handleBack}
-                    className="flex items-center justify-center rounded-xl bg-white/10 px-6 py-3 text-base font-medium text-white transition-all hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/30"
+                    className="flex items-center justify-center rounded-xl bg-white/5 backdrop-blur-xl border border-white/10 px-6 py-3 text-base font-medium text-white transition-all hover:bg-white/10 hover:border-white/20 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white/20"
+                    style={{
+                      backdropFilter: 'blur(20px) saturate(150%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                    }}
                   >
                     <svg
                       className="mr-2 h-4 w-4"
@@ -734,7 +783,12 @@ export default function FormPage() {
                   </button>
                   <button
                     type="submit"
-                    className="flex cursor-pointer items-center justify-center rounded-xl bg-[#53361C]/30 backdrop-blur-sm border border-[#53361C]/50 px-8 py-3 text-base font-semibold text-white transition-all hover:bg-[#53361C]/50 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-[#53361C]/50"
+                    className="flex cursor-pointer items-center justify-center rounded-xl bg-[#53361C]/40 backdrop-blur-xl border border-[#53361C]/60 px-8 py-3 text-base font-semibold text-white transition-all hover:bg-[#53361C]/60 hover:scale-105 hover:border-[#53361C]/80 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#53361C]/50"
+                    style={{
+                      backdropFilter: 'blur(20px) saturate(150%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                      boxShadow: '0 4px 16px 0 rgba(83, 54, 28, 0.2)',
+                    }}
                   >
                     Continue
                     <svg
@@ -795,11 +849,15 @@ export default function FormPage() {
                         key={area}
                         type="button"
                         onClick={() => toggleLearningArea(area)}
-                        className={`cursor-pointer rounded-full px-5 py-2 text-sm font-medium transition-all ${
+                        className={`cursor-pointer rounded-full px-5 py-2 text-sm font-medium transition-all border backdrop-blur-xl hover:scale-105 ${
                           formData.learningAreas.includes(area)
-                            ? "bg-white text-gray-900"
-                            : "bg-white/10 text-gray-300 hover:bg-white/20"
+                            ? "bg-white text-gray-900 border-white shadow-lg"
+                            : "bg-white/5 text-gray-300 hover:bg-white/10 border-white/10 hover:border-white/20"
                         }`}
+                        style={!formData.learningAreas.includes(area) ? {
+                          backdropFilter: 'blur(20px) saturate(150%)',
+                          WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                        } : {}}
                       >
                         {area}
                       </button>
@@ -812,7 +870,11 @@ export default function FormPage() {
                   <button
                     type="button"
                     onClick={handleBack}
-                    className="flex items-center justify-center rounded-xl bg-white/10 px-6 py-3 text-base font-medium text-white transition-all hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/30"
+                    className="flex items-center justify-center rounded-xl bg-white/5 backdrop-blur-xl border border-white/10 px-6 py-3 text-base font-medium text-white transition-all hover:bg-white/10 hover:border-white/20 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white/20"
+                    style={{
+                      backdropFilter: 'blur(20px) saturate(150%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                    }}
                   >
                     <svg
                       className="mr-2 h-4 w-4"
@@ -831,7 +893,12 @@ export default function FormPage() {
                   </button>
                   <button
                     type="submit"
-                    className="flex cursor-pointer items-center justify-center rounded-xl bg-[#53361C]/30 backdrop-blur-sm border border-[#53361C]/50 px-8 py-3 text-base font-semibold text-white transition-all hover:bg-[#53361C]/50 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-[#53361C]/50"
+                    className="flex cursor-pointer items-center justify-center rounded-xl bg-[#53361C]/40 backdrop-blur-xl border border-[#53361C]/60 px-8 py-3 text-base font-semibold text-white transition-all hover:bg-[#53361C]/60 hover:scale-105 hover:border-[#53361C]/80 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#53361C]/50"
+                    style={{
+                      backdropFilter: 'blur(20px) saturate(150%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                      boxShadow: '0 4px 16px 0 rgba(83, 54, 28, 0.2)',
+                    }}
                   >
                     Continue
                     <svg
@@ -876,11 +943,15 @@ export default function FormPage() {
                       onClick={() =>
                         setFormData({ ...formData, participationTrack: "citizen" })
                       }
-                      className={`group cursor-pointer relative w-full rounded-2xl border-2 p-6 text-left transition-all ${
+                      className={`group cursor-pointer relative w-full rounded-2xl border-2 p-6 text-left transition-all backdrop-blur-xl ${
                         formData.participationTrack === "citizen"
-                          ? "border-[#53361C] bg-[#53361C]/20 backdrop-blur-sm"
-                          : "border-white/20 bg-transparent hover:border-white/40 hover:bg-white/5"
+                          ? "border-[#53361C]/80 bg-[#53361C]/30 shadow-lg"
+                          : "border-white/10 bg-white/5 hover:border-white/30 hover:bg-white/10 hover:scale-105"
                       }`}
+                      style={{
+                        backdropFilter: 'blur(20px) saturate(150%)',
+                        WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                      }}
                     >
                       <div className="flex items-start justify-between">
                         <div>
@@ -917,11 +988,15 @@ export default function FormPage() {
                       onClick={() =>
                         setFormData({ ...formData, participationTrack: "company" })
                       }
-                      className={`group relative w-full rounded-2xl border-2 p-6 text-left transition-all ${
+                      className={`group cursor-pointer relative w-full rounded-2xl border-2 p-6 text-left transition-all backdrop-blur-xl ${
                         formData.participationTrack === "company"
-                          ? "border-[#53361C] bg-[#53361C]/20 backdrop-blur-sm"
-                          : "border-white/20 bg-transparent hover:border-white/40 hover:bg-white/5"
+                          ? "border-[#53361C]/80 bg-[#53361C]/30 shadow-lg"
+                          : "border-white/10 bg-white/5 hover:border-white/30 hover:bg-white/10 hover:scale-105"
                       }`}
+                      style={{
+                        backdropFilter: 'blur(20px) saturate(150%)',
+                        WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                      }}
                     >
                       <div className="flex items-start justify-between">
                         <div>
@@ -1004,7 +1079,11 @@ export default function FormPage() {
                   <button
                     type="button"
                     onClick={handleBack}
-                    className="flex items-center justify-center rounded-xl bg-white/10 px-6 py-3 text-base font-medium text-white transition-all hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/30"
+                    className="flex items-center justify-center rounded-xl bg-white/5 backdrop-blur-xl border border-white/10 px-6 py-3 text-base font-medium text-white transition-all hover:bg-white/10 hover:border-white/20 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white/20"
+                    style={{
+                      backdropFilter: 'blur(20px) saturate(150%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                    }}
                   >
                     <svg
                       className="mr-2 h-4 w-4"
@@ -1023,7 +1102,12 @@ export default function FormPage() {
                   </button>
                   <button
                     type="submit"
-                    className="flex cursor-pointer items-center justify-center rounded-xl bg-[#53361C]/30 backdrop-blur-sm border border-[#53361C]/50 px-8 py-3 text-base font-semibold text-white transition-all hover:bg-[#53361C]/50 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-[#53361C]/50"
+                    className="flex cursor-pointer items-center justify-center rounded-xl bg-[#53361C]/40 backdrop-blur-xl border border-[#53361C]/60 px-8 py-3 text-base font-semibold text-white transition-all hover:bg-[#53361C]/60 hover:scale-105 hover:border-[#53361C]/80 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#53361C]/50"
+                    style={{
+                      backdropFilter: 'blur(20px) saturate(150%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                      boxShadow: '0 4px 16px 0 rgba(83, 54, 28, 0.2)',
+                    }}
                   >
                     Continue
                     <svg
@@ -1226,7 +1310,11 @@ export default function FormPage() {
                   <button
                     type="button"
                     onClick={handleBack}
-                    className="flex items-center justify-center rounded-xl bg-white/10 px-6 py-3 text-base font-medium text-white transition-all hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/30"
+                    className="flex items-center justify-center rounded-xl bg-white/5 backdrop-blur-xl border border-white/10 px-6 py-3 text-base font-medium text-white transition-all hover:bg-white/10 hover:border-white/20 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white/20"
+                    style={{
+                      backdropFilter: 'blur(20px) saturate(150%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                    }}
                   >
                     <svg
                       className="mr-2 h-4 w-4"
