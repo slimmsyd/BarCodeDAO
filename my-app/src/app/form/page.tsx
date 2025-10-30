@@ -118,6 +118,7 @@ interface FormData {
   learningAreas: string[];
   participationTrack: string;
   agreedToTerms: boolean;
+  timestamp: string;
 }
 
 export default function FormPage() {
@@ -125,6 +126,10 @@ export default function FormPage() {
   const evmWallet = useAccount();
   const [currentStep, setCurrentStep] = useState(1);
   const [showDidYouKnow, setShowDidYouKnow] = useState(true);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showTermsError, setShowTermsError] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
@@ -141,6 +146,7 @@ export default function FormPage() {
     learningAreas: [],
     participationTrack: "",
     agreedToTerms: false,
+    timestamp: new Date().toISOString(),
   });
 
   const connected = solanaWallet.connected || evmWallet.isConnected;
@@ -215,15 +221,50 @@ export default function FormPage() {
     }
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!formData.agreedToTerms) {
-      alert("Please agree to the terms before submitting");
+      setShowTermsError(true);
+      setTimeout(() => setShowTermsError(false), 3000);
       return;
     }
-    console.log("Form submitted:", formData);
-    // Handle submission logic here
-    alert("Application submitted successfully!");
+
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      // Determine which endpoint to use based on environment
+      const isProduction = process.env.NODE_ENV === 'production' || 
+                          (typeof window !== 'undefined' && !window.location.hostname.includes('localhost'));
+      
+      const webhookUrl = isProduction
+        ? 'https://oncode.app.n8n.cloud/webhook/4170702c-3177-418d-a652-5f7fc8312286'
+        : 'https://oncode.app.n8n.cloud/webhook-test/4170702c-3177-418d-a652-5f7fc8312286';
+
+      const response = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Submission failed: ${response.status} ${response.statusText}`);
+      }
+
+      // Success - show success modal
+      setShowSuccessModal(true);
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setSubmitError(
+        error instanceof Error 
+          ? error.message 
+          : 'Failed to submit application. Please try again.'
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   function handleBack() {
@@ -269,13 +310,13 @@ export default function FormPage() {
       className="relative min-h-screen w-full overflow-x-hidden "
     >
       {/* Background Video with Enhanced Glass Effect */}
-      <div className="absolute inset-0 z-0 bg-black">
+      <div className="fixed inset-0 z-0 bg-black">
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="h-full w-full object-contain"
+          className="h-full w-full object-cover"
         >
           <source src="/assets/Only_Group.mp4" type="video/mp4" />
         </video>
@@ -372,6 +413,114 @@ export default function FormPage() {
                   />
                 </svg>
               </a>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Success Modal */}
+        <AnimatePresence>
+          {showSuccessModal && (
+            <>
+              {/* Backdrop */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setShowSuccessModal(false)}
+                className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
+              />
+              
+              {/* Modal */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                className="fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-3xl border border-white/20 bg-black/90 p-8 shadow-2xl md:p-10"
+                style={{
+                  backdropFilter: 'blur(40px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(40px) saturate(180%)',
+                  boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.1)',
+                }}
+              >
+                {/* Success Icon */}
+                <div className="mb-6 flex justify-center">
+                  <div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-500/20 backdrop-blur-sm border border-green-500/30">
+                    <svg
+                      className="h-12 w-12 text-green-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                  </div>
+                </div>
+
+                {/* Title */}
+                <h2 className="mb-4 text-center text-2xl font-bold text-white md:text-3xl">
+                  Application Submitted!
+                </h2>
+
+                {/* Message */}
+                <p className="mb-8 text-center text-base leading-relaxed text-gray-300 md:text-lg">
+                  Thank you for your interest in joining BARCODE. Please check your email for confirmation.
+                </p>
+
+                {/* Close Button */}
+                <button
+                  onClick={() => setShowSuccessModal(false)}
+                  className="w-full rounded-xl bg-[#53361C]/40 backdrop-blur-xl border border-[#53361C]/60 px-8 py-3 text-base font-semibold text-white transition-all hover:bg-[#53361C]/60 hover:scale-105 hover:border-[#53361C]/80 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#53361C]/50"
+                  style={{
+                    backdropFilter: 'blur(20px) saturate(150%)',
+                    WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                    boxShadow: '0 4px 16px 0 rgba(83, 54, 28, 0.2)',
+                  }}
+                >
+                  Close
+                </button>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
+
+        {/* Terms Error Toast */}
+        <AnimatePresence>
+          {showTermsError && (
+            <motion.div
+              initial={{ y: 100, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 100, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              className="fixed bottom-6 left-1/2 z-50 w-full max-w-md -translate-x-1/2 rounded-2xl border border-red-500/30 bg-red-500/20 p-4 shadow-2xl backdrop-blur-xl"
+              style={{
+                backdropFilter: 'blur(40px) saturate(180%)',
+                WebkitBackdropFilter: 'blur(40px) saturate(180%)',
+              }}
+            >
+              <div className="flex items-center gap-3">
+                <svg
+                  className="h-5 w-5 text-red-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <p className="text-sm font-medium text-white">
+                  Please agree to the terms before submitting
+                </p>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -1519,12 +1668,42 @@ export default function FormPage() {
                   </div>
                 </div>
 
+                {/* Error Message */}
+                {submitError && (
+                  <div className="rounded-2xl border border-red-500/30 bg-red-500/20 p-4 backdrop-blur-xl"
+                    style={{
+                      backdropFilter: 'blur(20px) saturate(150%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                    }}
+                  >
+                    <div className="flex items-center gap-3">
+                      <svg
+                        className="h-5 w-5 flex-shrink-0 text-red-400"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                      <p className="text-sm font-medium text-white">
+                        {submitError}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
                 {/* Navigation Buttons */}
                 <div className="flex justify-between gap-4 pt-6">
                   <button
                     type="button"
                     onClick={handleBack}
-                    className="flex items-center justify-center rounded-xl bg-white/5 backdrop-blur-xl border border-white/10 px-6 py-3 text-base font-medium text-white transition-all hover:bg-white/10 hover:border-white/20 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white/20"
+                    disabled={isSubmitting}
+                    className="flex items-center justify-center rounded-xl bg-white/5 backdrop-blur-xl border border-white/10 px-6 py-3 text-base font-medium text-white transition-all hover:bg-white/10 hover:border-white/20 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white/20 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
                     style={{
                       backdropFilter: 'blur(20px) saturate(150%)',
                       WebkitBackdropFilter: 'blur(20px) saturate(150%)',
@@ -1547,10 +1726,39 @@ export default function FormPage() {
                   </button>
                   <button
                     onClick={handleSubmit}
-                    disabled={!formData.agreedToTerms}
+                    disabled={!formData.agreedToTerms || isSubmitting}
                     className="flex cursor-pointer items-center justify-center rounded-xl bg-[#53361C]/30 backdrop-blur-sm border border-[#53361C]/50 px-8 py-3 text-base font-semibold text-white transition-all hover:bg-[#53361C]/50 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-[#53361C]/50 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
+                    style={{
+                      backdropFilter: 'blur(20px) saturate(150%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                    }}
                   >
-                    Submit
+                    {isSubmitting ? (
+                      <>
+                        <svg
+                          className="mr-2 h-5 w-5 animate-spin"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          />
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          />
+                        </svg>
+                        Submitting...
+                      </>
+                    ) : (
+                      'Submit'
+                    )}
                   </button>
                 </div>
               </motion.div>
