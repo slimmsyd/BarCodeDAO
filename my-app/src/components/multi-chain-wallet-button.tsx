@@ -15,10 +15,20 @@ export function MultiChainWalletButton() {
   const [showOptions, setShowOptions] = useState(false);
   const solana = useSolanaWallet();
   const evm = useAccount();
+  const { disconnect: disconnectEVM } = useDisconnect();
 
   const isSolanaConnected = solana.connected && solana.publicKey;
   const isEVMConnected = evm.isConnected && evm.address;
   const isAnyConnected = isSolanaConnected || isEVMConnected;
+
+  function handleDisconnect() {
+    if (isSolanaConnected) {
+      solana.disconnect();
+    }
+    if (isEVMConnected) {
+      disconnectEVM();
+    }
+  }
 
   return (
     <motion.div
@@ -118,14 +128,12 @@ export function MultiChainWalletButton() {
               truncateAddress(solana.publicKey.toBase58())}
             {isEVMConnected && evm.address && truncateAddress(evm.address)}
           </span>
-          {isSolanaConnected && (
-            <WalletMultiButton className="!ml-auto !rounded-lg !bg-white/10 !px-4 !py-2 !text-sm !text-white hover:!bg-white/20" />
-          )}
-          {isEVMConnected && (
-            <div className="ml-auto">
-              <ConnectButton />
-            </div>
-          )}
+          <button
+            onClick={handleDisconnect}
+            className="ml-auto cursor-pointer rounded-lg bg-white/10 px-4 py-2 text-sm font-medium text-white transition-all hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/50"
+          >
+            Disconnect
+          </button>
         </div>
       )}
     </motion.div>

@@ -58,6 +58,50 @@ const stepTransition = {
   transition: { duration: 0.3 },
 };
 
+interface DidYouKnow {
+  text: string;
+  source: string;
+  sourceUrl: string;
+}
+
+const didYouKnowFacts: DidYouKnow[] = [
+  {
+    text: "If the Black U.S. population were a country, their $2.1 trillion spending power would position them as the 10th richest nation in the world, ahead of Canada, South Korea, Russia, and Brazil—representing a level of economic activity larger than most countries on Earth.",
+    source: "NOIR Press",
+    sourceUrl: "https://noirpress.org/tenet5-you-got-money-how-the-world-runs-on-black-power/"
+  },
+  {
+    text: "Dr. Amos N. Wilson is one of the clearest 20th-century voices on how real power works. He speaks on 'Intrusive Power'—the ability to enter the personality, occupy the ego and edit perception, memory and desire so that the oppressed person needs no external whip.",
+    source: "Dr. Amos N. Wilson",
+    sourceUrl: "https://noirpress.org/tenet5-you-got-money-how-the-world-runs-on-black-power/"
+  },
+  {
+    text: "Did you know? According to multiple credible sources including the University of Georgia’s Selig Center for Economic Growth, Nielsen, NAACP, The Famuan, and Greenwood reports, the average lifespan of a dollar circulating within the Black community is estimated at about 6 hours. This contrasts sharply with other communities, where the dollar circulates much longer—approximately 28 to 30 days in Asian communities, about 19 to 20 days in Jewish communities, and nearly unlimited or around 17 days in White communities. Moreover, only about 2 percent of the money spent by Black consumers is reinvested back into Black-owned businesses, reflecting a very low recirculation rate that contributes to limited local wealth building.",
+    source: "Selig Center, Nielsen, NAACP, The Famuan, Greenwood",
+    sourceUrl: "https://www.terry.uga.edu/selig-center/"
+  },
+  {
+    text: "Did you know… When the same group owns the television networks, the textbook publishers, the census machinery and the patents on the micro-chips inside those census computers, ‘technological power’ and ‘informational power’ collapse into one seamless lever of control? Dr. Amos N. Wilson spelled out that merger on page 96, column 1, paragraph 3 of his 1998 book Blueprint for Black Power (Afrikan World InfoSystems).",
+    source: "Dr. Amos N. Wilson — Blueprint for Black Power (1998), p.96",
+    sourceUrl: "https://www.amazon.com/Blueprint-Black-Power-Imperative-Twenty-First/dp/1879164078"
+  },
+  {
+    text: "Black Americans have increased their buying power by 240% since 2000, demonstrating sustained economic growth and resilience.",
+    source: "NOIR Press",
+    sourceUrl: "https://noirpress.org/tenet5-you-got-money-how-the-world-runs-on-black-power/"
+  },
+  {
+    text: "Africa's household and business consumption is projected to approach $4 trillion by 2025, fueled by a rapidly growing middle class and urbanization.",
+    source: "NOIR Press",
+    sourceUrl: "https://noirpress.org/tenet5-you-got-money-how-the-world-runs-on-black-power/"
+  },
+  {
+    text: "When Black people globally organize their finances and spending power through Black-owned enterprises, it creates a pathway to economic liberation and self-determination.",
+    source: "NOIR Press",
+    sourceUrl: "https://noirpress.org/tenet5-you-got-money-how-the-world-runs-on-black-power/"
+  }
+];
+
 interface FormData {
   firstName: string;
   lastName: string;
@@ -80,6 +124,7 @@ export default function FormPage() {
   const solanaWallet = useWallet();
   const evmWallet = useAccount();
   const [currentStep, setCurrentStep] = useState(1);
+  const [showDidYouKnow, setShowDidYouKnow] = useState(true);
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
@@ -99,11 +144,24 @@ export default function FormPage() {
   });
 
   const connected = solanaWallet.connected || evmWallet.isConnected;
+  
+  // Get the current "Did You Know" fact based on current step
+  const currentFact = didYouKnowFacts[Math.min(currentStep - 1, didYouKnowFacts.length - 1)];
 
   // Ensure scrolling is always enabled on this page
   useEffect(() => {
     document.body.classList.remove("overflow-hidden");
   }, []);
+
+  // Show "Did You Know" popup when step changes
+  useEffect(() => {
+    setShowDidYouKnow(true);
+    // Auto-hide after 15 seconds
+    const timer = setTimeout(() => {
+      setShowDidYouKnow(false);
+    }, 15000);
+    return () => clearTimeout(timer);
+  }, [currentStep]);
 
   // Auto-populate wallet address when wallet is connected
   useEffect(() => {
@@ -228,6 +286,96 @@ export default function FormPage() {
 
       {/* Content Container */}
       <div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-12 md:px-8">
+        {/* "Did You Know" Popup */}
+        <AnimatePresence>
+          {showDidYouKnow && (
+            <motion.div
+              initial={{ x: 400, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: 400, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 100, damping: 20 }}
+              className="fixed bottom-6 right-6 z-50 w-80 rounded-2xl border border-white/20 bg-black/80 p-5 shadow-2xl md:w-96"
+              style={{
+                backdropFilter: 'blur(40px) saturate(180%)',
+                WebkitBackdropFilter: 'blur(40px) saturate(180%)',
+                boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.1)',
+              }}
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setShowDidYouKnow(false)}
+                className="absolute right-3 top-3 flex h-6 w-6 items-center justify-center rounded-full bg-white/10 text-gray-400 transition-all hover:bg-white/20 hover:text-white"
+                aria-label="Close"
+              >
+                <svg
+                  className="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+
+              {/* Header */}
+              <div className="mb-3 flex items-center gap-2">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#53361C]/40 backdrop-blur-sm">
+                  <svg
+                    className="h-5 w-5 text-white"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </div>
+                <h3 className="text-sm font-bold uppercase tracking-wider text-white">
+                  Did You Know?
+                </h3>
+              </div>
+
+              {/* Content */}
+              <p className="mb-4 text-sm leading-relaxed text-gray-300">
+                {currentFact.text}
+              </p>
+
+              {/* Source Link */}
+              <a
+                href={currentFact.sourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-xs font-medium text-[#53361C] transition-colors hover:text-[#6b4524]"
+                style={{ color: '#D4A574' }}
+              >
+                <span>Source: {currentFact.source}</span>
+                <svg
+                  className="h-3 w-3"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                  />
+                </svg>
+              </a>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* Form Container Card with Enhanced Liquid Glass */}
         <motion.div
           variants={content}
