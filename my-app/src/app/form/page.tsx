@@ -76,30 +76,10 @@ const didYouKnowFacts: DidYouKnow[] = [
     sourceUrl: "https://noirpress.org/tenet5-you-got-money-how-the-world-runs-on-black-power/"
   },
   {
-    text: "Did you know? According to multiple credible sources including the University of Georgia’s Selig Center for Economic Growth, Nielsen, NAACP, The Famuan, and Greenwood reports, the average lifespan of a dollar circulating within the Black community is estimated at about 6 hours. This contrasts sharply with other communities, where the dollar circulates much longer—approximately 28 to 30 days in Asian communities, about 19 to 20 days in Jewish communities, and nearly unlimited or around 17 days in White communities. Moreover, only about 2 percent of the money spent by Black consumers is reinvested back into Black-owned businesses, reflecting a very low recirculation rate that contributes to limited local wealth building.",
-    source: "Selig Center, Nielsen, NAACP, The Famuan, Greenwood",
-    sourceUrl: "https://www.terry.uga.edu/selig-center/"
-  },
-  {
-    text: "Did you know… When the same group owns the television networks, the textbook publishers, the census machinery and the patents on the micro-chips inside those census computers, ‘technological power’ and ‘informational power’ collapse into one seamless lever of control? Dr. Amos N. Wilson spelled out that merger on page 96, column 1, paragraph 3 of his 1998 book Blueprint for Black Power (Afrikan World InfoSystems).",
-    source: "Dr. Amos N. Wilson — Blueprint for Black Power (1998), p.96",
-    sourceUrl: "https://www.amazon.com/Blueprint-Black-Power-Imperative-Twenty-First/dp/1879164078"
-  },
-  {
-    text: "Black Americans have increased their buying power by 240% since 2000, demonstrating sustained economic growth and resilience.",
-    source: "NOIR Press",
-    sourceUrl: "https://noirpress.org/tenet5-you-got-money-how-the-world-runs-on-black-power/"
-  },
-  {
     text: "Africa's household and business consumption is projected to approach $4 trillion by 2025, fueled by a rapidly growing middle class and urbanization.",
     source: "NOIR Press",
     sourceUrl: "https://noirpress.org/tenet5-you-got-money-how-the-world-runs-on-black-power/"
   },
-  {
-    text: "When Black people globally organize their finances and spending power through Black-owned enterprises, it creates a pathway to economic liberation and self-determination.",
-    source: "NOIR Press",
-    sourceUrl: "https://noirpress.org/tenet5-you-got-money-how-the-world-runs-on-black-power/"
-  }
 ];
 
 interface FormData {
@@ -159,14 +139,19 @@ export default function FormPage() {
     document.body.classList.remove("overflow-hidden");
   }, []);
 
-  // Show "Did You Know" popup when step changes
+  // Show "Did You Know" popup when step changes (only for first 3 steps)
   useEffect(() => {
-    setShowDidYouKnow(true);
-    // Auto-hide after 15 seconds
-    const timer = setTimeout(() => {
+    if (currentStep <= 3) {
+      setShowDidYouKnow(true);
+      // Auto-hide after 15 seconds
+      const timer = setTimeout(() => {
+        setShowDidYouKnow(false);
+      }, 15000);
+      return () => clearTimeout(timer);
+    } else {
+      // Hide popup if on step 4 or later
       setShowDidYouKnow(false);
-    }, 15000);
-    return () => clearTimeout(timer);
+    }
   }, [currentStep]);
 
   // Auto-populate wallet address when wallet is connected
@@ -213,10 +198,7 @@ export default function FormPage() {
 
   function handleNext(e: React.FormEvent) {
     e.preventDefault();
-    // Skip step 6, go directly to review (step 7)
-    if (currentStep === 5) {
-      setCurrentStep(7);
-    } else if (currentStep < 7) {
+    if (currentStep < 6) {
       setCurrentStep(currentStep + 1);
     }
   }
@@ -268,10 +250,7 @@ export default function FormPage() {
   }
 
   function handleBack() {
-    // If on step 7 (review), go back to step 5 (participation track)
-    if (currentStep === 7) {
-      setCurrentStep(5);
-    } else if (currentStep > 1) {
+    if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
     }
   }
@@ -299,6 +278,32 @@ export default function FormPage() {
         ? prev.learningAreas.filter((a) => a !== area)
         : [...prev.learningAreas, area],
     }));
+  }
+
+  // Get step-specific heading
+  function getStepHeading(step: number): string {
+    const headings: Record<number, string> = {
+      1: "IDENTITY",
+      2: "PROFESSIONAL BACKGROUND",
+      3: "CONTRIBUTION & SKILLS",
+      4: "INTEREST",
+      5: "PARTICIPATION TRACK",
+      6: "REVIEW & SUBMIT",
+    };
+    return headings[step] || "IDENTITY";
+  }
+
+  // Get step-specific subtext
+  function getStepSubtext(step: number): string {
+    const subtexts: Record<number, string> = {
+      1: "Complete the application to join our DAO community",
+      2: "Complete the application to join our DAO community",
+      3: "Complete the application to join our DAO community",
+      4: "Please share your professional background",
+      5: "Complete the application to join our DAO community",
+      6: "Complete the application to join our DAO community",
+    };
+    return subtexts[step] || "Complete the application to join our DAO community";
   }
 
   return (
@@ -329,7 +334,7 @@ export default function FormPage() {
       <div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-12 md:px-8">
         {/* "Did You Know" Popup */}
         <AnimatePresence>
-          {showDidYouKnow && (
+          {showDidYouKnow && currentStep <= 3 && (
             <motion.div
               initial={{ x: 400, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
@@ -564,10 +569,10 @@ export default function FormPage() {
           <motion.div variants={item} className="mb-8">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium text-gray-400">
-                Step {currentStep} of 7
+                Step {currentStep} of 6
               </span>
               <span className="text-sm text-gray-500">
-                {Math.round((currentStep / 7) * 100)}%
+                {Math.round((currentStep / 6) * 100)}%
               </span>
             </div>
             <div className="h-2 w-full rounded-full bg-white/5 border border-white/10 overflow-hidden backdrop-blur-xl"
@@ -579,7 +584,7 @@ export default function FormPage() {
               <motion.div
                 className="h-full rounded-full bg-gradient-to-r from-white via-white/90 to-white shadow-lg"
                 initial={{ width: 0 }}
-                animate={{ width: `${(currentStep / 7) * 100}%` }}
+                animate={{ width: `${(currentStep / 6) * 100}%` }}
                 transition={{ duration: 0.3 }}
                 style={{
                   boxShadow: '0 0 20px rgba(255, 255, 255, 0.5)',
@@ -593,7 +598,7 @@ export default function FormPage() {
             variants={item}
             className="mb-2 text-3xl font-bold text-white md:text-4xl"
           >
-            Join BARCODE
+            {getStepHeading(currentStep)}
           </motion.h1>
 
           {/* Subtext */}
@@ -601,7 +606,7 @@ export default function FormPage() {
             variants={item}
             className="mb-8 text-sm text-gray-400 md:text-base"
           >
-            Complete the application to join our DAO community
+            {getStepSubtext(currentStep)}
           </motion.p>
 
           {/* Form Steps */}
@@ -631,7 +636,6 @@ export default function FormPage() {
                       name="firstName"
                       value={formData.firstName}
                       onChange={handleChange}
-                      required
                       className="w-full rounded-xl bg-white/5 px-4 py-3 text-white placeholder-gray-500 border border-white/10 backdrop-blur-xl transition-all focus:bg-white/10 focus:border-white/30 focus:outline-none focus:ring-2 focus:ring-white/20 hover:border-white/20"
                       style={{
                         backdropFilter: 'blur(20px) saturate(150%)',
@@ -653,7 +657,6 @@ export default function FormPage() {
                       name="lastName"
                       value={formData.lastName}
                       onChange={handleChange}
-                      required
                       className="w-full rounded-xl bg-white/5 px-4 py-3 text-white placeholder-gray-500 border border-white/10 backdrop-blur-xl transition-all focus:bg-white/10 focus:border-white/30 focus:outline-none focus:ring-2 focus:ring-white/20 hover:border-white/20"
                       style={{
                         backdropFilter: 'blur(20px) saturate(150%)',
@@ -670,7 +673,7 @@ export default function FormPage() {
                     htmlFor="email"
                     className="mb-2 block text-sm font-medium text-gray-300"
                   >
-                    Email Address
+                    Email Address <span className="text-red-400">*</span>
                   </label>
                   <input
                     type="email"
@@ -696,14 +699,13 @@ export default function FormPage() {
                   >
                     Phone Number
                   </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    required
-                    className="w-full rounded-xl bg-white/5 px-4 py-3 text-white placeholder-gray-500 border border-white/10 backdrop-blur-xl transition-all focus:bg-white/10 focus:border-white/30 focus:outline-none focus:ring-2 focus:ring-white/20 hover:border-white/20"
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className="w-full rounded-xl bg-white/5 px-4 py-3 text-white placeholder-gray-500 border border-white/10 backdrop-blur-xl transition-all focus:bg-white/10 focus:border-white/30 focus:outline-none focus:ring-2 focus:ring-white/20 hover:border-white/20"
                     style={{
                       backdropFilter: 'blur(20px) saturate(150%)',
                       WebkitBackdropFilter: 'blur(20px) saturate(150%)',
@@ -1456,10 +1458,10 @@ export default function FormPage() {
               </motion.form>
             )}
 
-            {/* Step 7 - Review & Submit */}
-            {currentStep === 7 && (
+            {/* Step 6 - Review & Submit */}
+            {currentStep === 6 && (
               <motion.div
-                key="step7"
+                key="step6"
                 {...stepTransition}
                 className="space-y-6"
               >
@@ -1661,9 +1663,11 @@ export default function FormPage() {
                       className="mt-1 h-5 w-5 cursor-pointer rounded border-white/20 bg-white/10 text-white focus:ring-2 focus:ring-white/50"
                     />
                     <label htmlFor="terms" className="cursor-pointer text-sm text-gray-400">
-                      <span className="font-semibold text-white">get on code</span>
+                      <span className="font-semibold text-white">GET ON CODE</span>
                       <br />
-                      By proceeding, you agree to the terms outlined.
+                      <span className="text-xs text-gray-500 mt-1 block">
+                        I agree to the Terms & Conditions and acknowledge the Privacy Policy by proceeding.
+                      </span>
                     </label>
                   </div>
                 </div>
@@ -1764,22 +1768,6 @@ export default function FormPage() {
               </motion.div>
             )}
 
-            {/* Placeholder for step 6 if needed later */}
-            {currentStep === 6 && (
-              <motion.div
-                key="step6"
-                {...stepTransition}
-                className="py-12 text-center"
-              >
-                <p className="text-gray-400">Step 6 coming soon...</p>
-                <button
-                  onClick={handleBack}
-                  className="mt-6 rounded-xl bg-white/10 px-6 py-2 text-white transition-colors hover:bg-white/20"
-                >
-                  Go Back
-                </button>
-              </motion.div>
-            )}
           </AnimatePresence>
         </motion.div>
       </div>
