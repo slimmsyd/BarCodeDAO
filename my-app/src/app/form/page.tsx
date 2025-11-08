@@ -1467,9 +1467,6 @@ export default function FormPage() {
               >
                 {/* Header */}
                 <div className="mb-8">
-                  <h2 className="mb-2 text-3xl font-bold text-white md:text-4xl">
-                    REVIEW & SUBMIT
-                  </h2>
                   <p className="text-sm text-gray-400">
                     Review your application before submitting
                   </p>
