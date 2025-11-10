@@ -127,11 +127,7 @@ export default function Home() {
         animate={{ opacity: 1 }}
         transition={{ delay: isFirstMount ? 1.5 : 0 }}
         onClick={toggleMute}
-        className="fixed right-6 top-6 z-20 rounded-full bg-black/40 p-3 backdrop-blur-xl border border-white/10 transition-all hover:bg-black/60 hover:scale-110 hover:border-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 shadow-lg"
-        style={{
-          backdropFilter: 'blur(20px) saturate(150%)',
-          WebkitBackdropFilter: 'blur(20px) saturate(150%)',
-        }}
+        className="fixed right-6 top-6 z-20 rounded-full bg-black/80 p-3 border border-white/10 transition-all hover:bg-black hover:scale-110 hover:border-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 shadow-lg"
         aria-label={isMuted ? "Unmute video" : "Mute video"}
       >
         {isMuted ? (
@@ -188,16 +184,12 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Black Container - Centered with Liquid Glass Effect */}
+        {/* Black Container - Centered */}
         <motion.div
           variants={content(isFirstMount)}
           initial="initial"
           animate="animate"
-          className="w-full bg-black/80 backdrop-blur-3xl px-8 py-12 my-8 md:min-h-0 md:w-5/12 md:px-12 md:py-16 md:my-12 lg:w-1/3 lg:px-16 lg:py-20 flex flex-col justify-center border border-white/10 shadow-2xl rounded-lg"
-          style={{
-            backdropFilter: 'blur(40px) saturate(180%)',
-            WebkitBackdropFilter: 'blur(40px) saturate(180%)',
-          }}
+          className="w-full bg-black px-8 py-12 my-8 md:min-h-0 md:w-5/12 md:px-12 md:py-16 md:my-12 lg:w-1/3 lg:px-16 lg:py-20 flex flex-col justify-center border border-white/10 shadow-2xl rounded-lg"
         >
           {/* Barcode Icon */}
           <motion.div variants={item} className="mb-8 flex justify-start">
@@ -261,11 +253,7 @@ export default function Home() {
 
                <motion.div
             variants={item}
-            className="mb-6 rounded-lg mt-4 border border-white/10 bg-white/5 p-6 backdrop-blur-xl shadow-lg"
-            style={{
-              backdropFilter: 'blur(20px) saturate(150%)',
-              WebkitBackdropFilter: 'blur(20px) saturate(150%)',
-            }}
+            className="mb-6 rounded-lg mt-4 border border-white/10 bg-black/50 p-6 shadow-lg"
           >
             <h2 className="mb-4 text-2xl font-bold text-white">
               EARLY ACCESS
@@ -368,7 +356,7 @@ export default function Home() {
 
             {/* YouTube */}
             <a
-              href="https://www.youtube.com/@barcode_dao"
+              href="https://youtube.com/@barcodedao"
               target="_blank"
               rel="noopener noreferrer"
               className="group rounded-full bg-white/10 p-3 transition-all hover:bg-white/20 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"

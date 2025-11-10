@@ -33,8 +33,8 @@ const pageVariants = {
 const content = {
   animate: {
     transition: {
-      staggerChildren: 0.08,
-      delayChildren: 0.2,
+      staggerChildren: 0.08 as const,
+      delayChildren: 0.2 as const,
     },
   },
 };
