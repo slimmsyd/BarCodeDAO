@@ -1766,6 +1766,98 @@ export default function FormPage() {
             )}
 
           </AnimatePresence>
+
+          {/* Social Icons Footer */}
+          <motion.div
+            variants={item}
+            className="mt-8 flex justify-center gap-3"
+          >
+            {/* Instagram */}
+            <a
+              href="https://www.instagram.com/barcode.dao/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group rounded-full bg-white/10 p-3 transition-all hover:bg-white/20 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
+              aria-label="Instagram"
+            >
+              <svg
+                className="h-6 w-6 text-white transition-colors group-hover:text-pink-400"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+              </svg>
+            </a>
+
+            {/* YouTube */}
+            <a
+              href="https://youtube.com/@barcodedao"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group rounded-full bg-white/10 p-3 transition-all hover:bg-white/20 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
+              aria-label="YouTube"
+            >
+              <svg
+                className="h-6 w-6 text-white transition-colors group-hover:text-red-500"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+              </svg>
+            </a>
+
+            {/* Threads */}
+            <a
+              href="https://www.threads.net/@barcode.dao"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group rounded-full bg-white/10 p-3 transition-all hover:bg-white/20 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
+              aria-label="Threads"
+            >
+              <svg
+                className="h-6 w-6 text-white transition-colors group-hover:text-black group-hover:bg-white group-hover:rounded-full"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-.542-1.891-1.454-3.322-2.714-4.257-1.447-1.084-3.346-1.634-5.643-1.651-2.966.02-5.195.906-6.826 2.71-1.489 1.65-2.237 3.975-2.26 7.005v.017c.02 3.024.753 5.344 2.235 7.003 1.625 1.815 3.857 2.71 6.824 2.731 1.558-.012 3.097-.266 4.576-.76 1.315-.44 2.548-1.05 3.675-1.816l1.042 1.674c-1.325.873-2.74 1.584-4.217 2.117-1.737.628-3.549.945-5.386.957z"/>
+                <path d="M15.914 16.571c-.62.379-1.298.654-2.015.818-.759.174-1.554.262-2.362.262-2.037 0-3.628-.506-4.732-1.505-1.104-.998-1.662-2.407-1.662-4.187 0-1.793.557-3.198 1.655-4.177 1.097-.978 2.669-1.475 4.674-1.475.738 0 1.464.083 2.16.247.644.151 1.266.387 1.855.704l-.858 1.915c-.515-.264-1.053-.464-1.604-.597-.59-.142-1.195-.214-1.8-.214-1.298 0-2.288.315-2.942.938-.654.622-.983 1.506-.983 2.629 0 1.135.329 2.021.98 2.634.65.613 1.618.923 2.878.923.728 0 1.421-.116 2.062-.344.567-.202 1.107-.484 1.607-.84l.975 1.715z"/>
+              </svg>
+            </a>
+
+            {/* X (Twitter) */}
+            <a
+              href="https://x.com/barcode_dao"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group rounded-full bg-white/10 p-3 transition-all hover:bg-white/20 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
+              aria-label="X"
+            >
+              <svg
+                className="h-6 w-6 text-white transition-colors group-hover:text-black group-hover:bg-white group-hover:rounded-full"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </a>
+
+            {/* LinkedIn */}
+            <a
+              href="https://www.linkedin.com/company/barcode-dao"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group rounded-full bg-white/10 p-3 transition-all hover:bg-white/20 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
+              aria-label="LinkedIn"
+            >
+              <svg
+                className="h-6 w-6 text-white transition-colors group-hover:text-blue-500"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+          </motion.div>
         </motion.div>
       </div>
     </motion.div>

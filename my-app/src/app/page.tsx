@@ -105,9 +105,8 @@ export default function Home() {
       {isFirstMount && showTransition && (
         <InitialTransition onComplete={handleTransitionComplete} />
       )}
-      {/* Background Video - Fixed Position */}
       <div className="fixed inset-0 z-0 bg-black">
-        <video
+        {/* <video
           ref={videoRef}
           autoPlay
           loop
@@ -116,13 +115,12 @@ export default function Home() {
           className="h-full w-full object-contain"
         >
           <source src="/assets/Only_Group.mp4" type="video/mp4" />
-        </video>
-        {/* Subtle Gradient Overlay for Glass Effect */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent" />
+        </video> */}
+        {/* <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent" /> */}
       </div>
 
       {/* Sound Toggle Button */}
-      <motion.button
+      {/* <motion.button
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: isFirstMount ? 1.5 : 0 }}
@@ -165,12 +163,12 @@ export default function Home() {
             />
           </svg>
         )}
-      </motion.button>
+      </motion.button> */}
 
       {/* Content Container */}
       <div className="relative z-10 flex min-h-screen flex-col md:flex-row md:justify-center md:items-center">
         {/* Mobile Top Video - Only visible on mobile */}
-        <div className="block w-full md:hidden">
+        {/* <div className="block w-full md:hidden">
           <div className="relative h-48 w-full overflow-hidden bg-black">
             <video
               autoPlay
@@ -182,14 +180,18 @@ export default function Home() {
               <source src="/assets/Only_Group.mp4" type="video/mp4" />
             </video>
           </div>
-        </div>
+        </div> */}
 
-        {/* Black Container - Centered */}
+        {/* Black Container - Centered with Liquid Glass Effect */}
         <motion.div
           variants={content(isFirstMount)}
           initial="initial"
           animate="animate"
-          className="w-full bg-black px-8 py-12 my-8 md:min-h-0 md:w-5/12 md:px-12 md:py-16 md:my-12 lg:w-1/3 lg:px-16 lg:py-20 flex flex-col justify-center border border-white/10 shadow-2xl rounded-lg"
+          className="w-full bg-black/80 backdrop-blur-3xl px-8 py-12 my-8 md:min-h-0 md:w-5/12 md:px-12 md:py-16 md:my-12 lg:w-1/3 lg:px-16 lg:py-20 flex flex-col justify-center border border-white/10 shadow-2xl rounded-lg"
+          style={{
+            backdropFilter: 'blur(40px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(40px) saturate(180%)',
+          }}
         >
           {/* Barcode Icon */}
           <motion.div variants={item} className="mb-8 flex justify-start">
@@ -253,7 +255,11 @@ export default function Home() {
 
                <motion.div
             variants={item}
-            className="mb-6 rounded-lg mt-4 border border-white/10 bg-black/50 p-6 shadow-lg"
+            className="mb-6 rounded-lg mt-4 border border-white/10 bg-white/5 p-6 backdrop-blur-xl shadow-lg"
+            style={{
+              backdropFilter: 'blur(20px) saturate(150%)',
+              WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+            }}
           >
             <h2 className="mb-4 text-2xl font-bold text-white">
               EARLY ACCESS
@@ -317,20 +323,7 @@ export default function Home() {
               </li>
             </ul>
           </motion.div>
-          {/* Footer Text */}
-          <motion.p
-            variants={item}
-            className="text-center text-sm mt-4 text-gray-400 md:text-base"
-          >
-            Fill out our{" "}
-            <Link
-              href="/form"
-              className="font-semibold text-white underline transition-colors hover:text-gray-300"
-            >
-              Contributor Application
-            </Link>
-            .
-          </motion.p>
+     
 
           {/* Social Icons */}
           <motion.div
@@ -356,7 +349,7 @@ export default function Home() {
 
             {/* YouTube */}
             <a
-              href="https://youtube.com/@barcodedao"
+              href="https://www.youtube.com/@barcode_dao"
               target="_blank"
               rel="noopener noreferrer"
               className="group rounded-full bg-white/10 p-3 transition-all hover:bg-white/20 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"

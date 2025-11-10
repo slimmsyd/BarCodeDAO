@@ -65,7 +65,7 @@ export function MultiChainWalletButton() {
                       className="w-full cursor-pointer rounded-lg bg-white/10 px-4 py-3 text-left text-sm font-medium text-white transition-all hover:bg-white/20"
                     >
                       <div className="flex items-center justify-between">
-                        <span>Ethereum, Polygon, Base, Arbitrum, Optimism</span>
+                        <span>EVM chains</span>
                         <svg
                           className="h-4 w-4"
                           fill="none"
