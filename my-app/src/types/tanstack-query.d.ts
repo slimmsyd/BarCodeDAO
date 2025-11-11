@@ -1,5 +1,8 @@
 declare module '@tanstack/react-query' {
-  export * from '@tanstack/react-query/build/modern/index';
+  export class QueryClient {
+    constructor(config?: any);
+  }
+  export const QueryClientProvider: any;
 }
 
 
