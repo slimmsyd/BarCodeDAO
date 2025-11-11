@@ -314,9 +314,9 @@ export default function FormPage() {
       exit="exit"
       className="relative min-h-screen w-full overflow-x-hidden "
     >
-      {/* Background Video with Enhanced Glass Effect */}
+      {/* Background - Black backdrop */}
       <div className="fixed inset-0 z-0 bg-black">
-        <video
+        {/* <video
           autoPlay
           loop
           muted
@@ -324,10 +324,10 @@ export default function FormPage() {
           className="h-full w-full object-cover"
         >
           <source src="/assets/Only_Group.mp4" type="video/mp4" />
-        </video>
+        </video> */}
         {/* Multi-layer Gradient Overlay for Enhanced Glass */}
-        <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/40 to-black/60" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/30" />
+        {/* <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/40 to-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/30" /> */}
       </div>
 
       {/* Content Container */}

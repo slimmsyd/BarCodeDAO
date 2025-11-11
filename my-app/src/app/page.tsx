@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { InitialTransition } from "@/components/initial-transition";
@@ -30,8 +30,6 @@ const item = {
 export default function Home() {
   const [isFirstMount, setIsFirstMount] = useState(true);
   const [showTransition, setShowTransition] = useState(true);
-  const [isMuted, setIsMuted] = useState(true);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const hasVisited = sessionStorage.getItem("hasVisited");
@@ -46,51 +44,9 @@ export default function Home() {
     }
   }, []);
 
-  // Try to autoplay with sound after transition completes
-  useEffect(() => {
-    if (!showTransition && videoRef.current) {
-      // Add a slight delay to ensure video is ready
-      const timer = setTimeout(() => {
-        if (videoRef.current) {
-          videoRef.current.muted = false;
-          videoRef.current.play().then(() => {
-            setIsMuted(false);
-          }).catch(() => {
-            // If autoplay with sound fails (most browsers), keep it muted
-            videoRef.current!.muted = true;
-            setIsMuted(true);
-          });
-        }
-      }, 100);
-
-      return () => clearTimeout(timer);
-    }
-  }, [showTransition]);
-
-  // Try to autoplay with sound immediately on mount
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.muted = false;
-      videoRef.current.play().then(() => {
-        setIsMuted(false);
-      }).catch(() => {
-        // If autoplay with sound fails, keep it muted
-        videoRef.current!.muted = true;
-        setIsMuted(true);
-      });
-    }
-  }, []);
-
   const handleTransitionComplete = () => {
     // Remove the transition component after animation completes
     setShowTransition(false);
-  };
-
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !isMuted;
-      setIsMuted(!isMuted);
-    }
   };
 
   return (
