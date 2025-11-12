@@ -70,6 +70,21 @@ const didYouKnowFacts: DidYouKnow[] = [
     source: "NOIR Press",
     sourceUrl: "https://noirpress.org/tenet5-you-got-money-how-the-world-runs-on-black-power/"
   },
+  {
+    text: "Did you know that the Moors introduced algebra, the concept of zero, and advanced mathematics to Europe while most of the continent was still using Roman numerals? Their intellectual revolution in Spain created centers of learning that would later spark the European Renaissance.",
+    source: "Moorish Influence on Europe",
+    sourceUrl: "https://www.thecollector.com/how-the-moors-shaped-european-science-architecture/"
+  },
+  {
+    text: "Did you know that Lewis H. Latimer, a Black inventor, not only helped Alexander Graham Bell patent the telephone but also developed the carbon filament that made Edison's light bulbs actually practical? His innovations in electrical engineering literally lit up the modern world.",
+    source: "Lewis H. Latimer",
+    sourceUrl: "https://michelsonip.com/news/five-black-inventors-whose-innovation-forever-changed-the-world/"
+  },
+  {
+    text: "Dr. Amos N. Wilson is one of the clearest 20th-century voices on how real power works. He speaks on 'Intrusive Power'—the ability to enter the personality, occupy the ego and edit perception, memory and desire so that the oppressed person needs no external whip.",
+    source: "Dr. Amos N. Wilson",
+    sourceUrl: "https://noirpress.org/tenet5-you-got-money-how-the-world-runs-on-black-power/"
+  },
 ];
 
 interface FormData {
@@ -1267,9 +1282,7 @@ export default function FormPage() {
               >
                 {/* Participation Track Selection */}
                 <div>
-                  <label className="mb-6 block text-2xl font-bold text-white">
-                    PARTICIPATION TRACK
-                  </label>
+            
                   <p className="mb-6 text-sm text-gray-400">
                     Choose your preferred level of participation
                   </p>

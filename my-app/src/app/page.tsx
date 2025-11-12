@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { InitialTransition } from "@/components/initial-transition";
 import { MultiChainWalletButton } from "@/components/multi-chain-wallet-button";
 
@@ -151,17 +152,14 @@ export default function Home() {
         >
           {/* Barcode Icon */}
           <motion.div variants={item} className="mb-8 flex justify-start">
-            <div className="flex gap-[3px]">
-              <div className="h-12 w-[3px] bg-white"></div>
-              <div className="h-12 w-[2px] bg-white"></div>
-              <div className="h-12 w-[3px] bg-white"></div>
-              <div className="h-12 w-[2px] bg-white"></div>
-              <div className="h-12 w-[4px] bg-white"></div>
-              <div className="h-12 w-[2px] bg-white"></div>
-              <div className="h-12 w-[3px] bg-white"></div>
-              <div className="h-12 w-[2px] bg-white"></div>
-              <div className="h-12 w-[3px] bg-white"></div>
-            </div>
+            <Image
+              src="/assets/BarCodeLogo-removebg-preview.png"
+              alt="BarCode Logo"
+              width={200}
+              height={80}
+              className="object-contain"
+              priority
+            />
           </motion.div>
 
           {/* Heading */}
