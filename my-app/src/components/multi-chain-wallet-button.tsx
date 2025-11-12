@@ -57,7 +57,7 @@ export function MultiChainWalletButton() {
               </p>
 
               {/* EVM Chains Option */}
-              <div className="wallet-connect-button">
+              <div className="w-full">
                 <ConnectButton.Custom>
                   {({ openConnectModal }) => (
                     <button
@@ -86,8 +86,8 @@ export function MultiChainWalletButton() {
               </div>
 
               {/* Solana Option */}
-              <div className="wallet-adapter-dropdown">
-                <WalletMultiButton className="!w-full cursor-pointer !rounded-lg !bg-white/10 !px-4 !py-3 !text-left !text-sm !font-medium !text-white !transition-all hover:!bg-white/20">
+              <div className="w-full">
+                <WalletMultiButton className="!w-full !max-w-none cursor-pointer !rounded-lg !bg-white/10 !px-4 !py-3 !text-left !text-sm !font-medium !text-white !transition-all hover:!bg-white/20">
                   <div className="flex w-full items-center justify-between">
                     <span>Solana</span>
                     <svg
@@ -106,6 +106,7 @@ export function MultiChainWalletButton() {
                   </div>
                 </WalletMultiButton>
               </div>
+
             </motion.div>
           )}
         </div>

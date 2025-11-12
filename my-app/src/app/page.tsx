@@ -169,7 +169,7 @@ export default function Home() {
             variants={item}
             className="mb-6 text-5xl font-bold leading-tight text-white md:text-6xl lg:text-7xl"
           >
-            BARCODE
+            JOIN BARCODE
           </motion.h1>
 
           {/* Subtext */}
@@ -177,7 +177,7 @@ export default function Home() {
             variants={item}
             className="mb-10 text-base text-gray-300 md:text-lg lg:text-xl"
           >
-            We&apos;re industrializing culture and shaping the future of technology and community
+            We&apos;re industrializing culture and shaping the future of technology and community.
           </motion.p>
 
      
@@ -305,7 +305,7 @@ export default function Home() {
 
             {/* YouTube */}
             <a
-              href="https://www.youtube.com/@barcode_dao"
+              href="https://youtube.com/@barcodedao"
               target="_blank"
               rel="noopener noreferrer"
               className="group rounded-full bg-white/10 p-3 transition-all hover:bg-white/20 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
@@ -322,25 +322,25 @@ export default function Home() {
 
             {/* Threads */}
             <a
-              href="https://www.threads.net/@barcode.dao"
+              href="https://www.threads.com/@barcode.dao"
               target="_blank"
               rel="noopener noreferrer"
               className="group rounded-full bg-white/10 p-3 transition-all hover:bg-white/20 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
               aria-label="Threads"
             >
               <svg
-                className="h-6 w-6 text-white transition-colors group-hover:text-black group-hover:bg-white group-hover:rounded-full"
+                className="h-6 w-6 text-white transition-colors group-hover:text-gray-200"
                 fill="currentColor"
-                viewBox="0 0 24 24"
+                viewBox="0 0 192 192"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-.542-1.891-1.454-3.322-2.714-4.257-1.447-1.084-3.346-1.634-5.643-1.651-2.966.02-5.195.906-6.826 2.71-1.489 1.65-2.237 3.975-2.26 7.005v.017c.02 3.024.753 5.344 2.235 7.003 1.625 1.815 3.857 2.71 6.824 2.731 1.558-.012 3.097-.266 4.576-.76 1.315-.44 2.548-1.05 3.675-1.816l1.042 1.674c-1.325.873-2.74 1.584-4.217 2.117-1.737.628-3.549.945-5.386.957z"/>
-                <path d="M15.914 16.571c-.62.379-1.298.654-2.015.818-.759.174-1.554.262-2.362.262-2.037 0-3.628-.506-4.732-1.505-1.104-.998-1.662-2.407-1.662-4.187 0-1.793.557-3.198 1.655-4.177 1.097-.978 2.669-1.475 4.674-1.475.738 0 1.464.083 2.16.247.644.151 1.266.387 1.855.704l-.858 1.915c-.515-.264-1.053-.464-1.604-.597-.59-.142-1.195-.214-1.8-.214-1.298 0-2.288.315-2.942.938-.654.622-.983 1.506-.983 2.629 0 1.135.329 2.021.98 2.634.65.613 1.618.923 2.878.923.728 0 1.421-.116 2.062-.344.567-.202 1.107-.484 1.607-.84l.975 1.715z"/>
+                <path d="M141.537 88.9883C140.71 88.5919 139.87 88.2104 139.019 87.8451C137.537 60.5382 122.616 44.905 97.5619 44.745C97.4484 44.7443 97.3355 44.7443 97.222 44.7443C82.2364 44.7443 69.7731 51.1409 62.102 62.7807L75.881 72.2328C81.6116 63.5383 90.6052 61.6848 97.2286 61.6848C97.3051 61.6848 97.3819 61.6848 97.4576 61.6855C105.707 61.7381 111.932 64.1366 115.961 68.814C118.893 72.2193 120.854 76.925 121.825 82.8638C114.511 81.6207 106.601 81.2385 98.145 81.7233C74.3247 83.0954 59.0111 96.9879 60.0396 116.292C60.5615 126.084 65.4397 134.508 73.775 140.011C80.8224 144.663 89.899 146.938 99.3323 146.423C111.79 145.74 121.563 140.987 128.381 132.296C133.559 125.696 136.834 117.143 138.28 106.366C144.217 109.949 148.617 114.664 151.047 120.332C155.179 129.967 155.42 145.8 142.501 158.708C131.182 170.016 117.576 174.908 97.0135 175.059C74.2042 174.89 56.9538 167.575 45.7381 153.317C35.2355 139.966 29.8077 120.682 29.6052 96C29.8077 71.3178 35.2355 52.0336 45.7381 38.6827C56.9538 24.4249 74.2039 17.11 97.0132 16.9405C119.988 17.1113 137.539 24.4614 149.184 38.788C154.894 45.8136 159.199 54.6488 162.037 64.9503L178.184 60.6422C174.744 47.9622 169.331 37.0357 161.965 27.974C147.036 9.60668 125.202 0.195148 97.0695 0H96.9569C68.8816 0.19447 47.2921 9.6418 32.7883 28.0793C19.8819 44.4864 13.2244 67.3157 13.0007 95.9325L13 96L13.0007 96.0675C13.2244 124.684 19.8819 147.514 32.7883 163.921C47.2921 182.358 68.8816 191.806 96.9569 192H97.0695C122.03 191.827 139.624 185.292 154.118 170.811C173.081 151.866 172.51 128.119 166.26 113.541C161.776 103.087 153.227 94.5962 141.537 88.9883ZM98.4405 129.507C88.0005 130.095 77.1544 125.409 76.6196 115.372C76.2232 107.93 81.9158 99.626 99.0812 98.6368C101.047 98.5234 102.976 98.468 104.871 98.468C111.106 98.468 116.939 99.0737 122.242 100.233C120.264 124.935 108.662 128.946 98.4405 129.507Z"/>
               </svg>
             </a>
 
             {/* X (Twitter) */}
             <a
-              href="https://x.com/barcode_dao"
+              href="https://www.twitter.com/barcodedao"
               target="_blank"
               rel="noopener noreferrer"
               className="group rounded-full bg-white/10 p-3 transition-all hover:bg-white/20 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
