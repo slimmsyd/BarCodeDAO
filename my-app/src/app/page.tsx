@@ -125,7 +125,7 @@ export default function Home() {
       </motion.button> */}
 
       {/* Content Container */}
-      <div className="relative z-10 flex min-h-screen flex-col md:flex-row md:justify-center md:items-center">
+      <div className="relative z-10 flex min-h-screen flex-col md:flex-row md:justify-end md:items-center md:pr-8 lg:pr-12">
         {/* Mobile Top Video - Only visible on mobile */}
         {/* <div className="block w-full md:hidden">
           <div className="relative h-48 w-full overflow-hidden bg-black">
@@ -146,19 +146,19 @@ export default function Home() {
           variants={content(isFirstMount)}
           initial="initial"
           animate="animate"
-          className="w-full bg-black/40 backdrop-blur-2xl px-8 py-12 my-8 md:min-h-0 md:w-5/12 md:px-12 md:py-16 md:my-12 lg:w-1/3 lg:px-16 lg:py-20 flex flex-col justify-center border border-white/20 shadow-2xl rounded-lg"
+          className="w-full bg-black/40 backdrop-blur-2xl px-6 py-8 !pt-0 my-6 md:min-h-0 md:w-5/12 md:px-10 md:py-10 !md:pt-0 md:my-8 lg:w-1/3 lg:px-12 lg:py-12 flex flex-col justify-center border border-white/20 shadow-2xl rounded-lg"
           style={{
             backdropFilter: 'blur(24px) saturate(150%)',
             WebkitBackdropFilter: 'blur(24px) saturate(150%)',
           }}
         >
           {/* Barcode Icon */}
-          <motion.div variants={item} className="mb-8 flex justify-start">
+          <motion.div variants={item} className="mb-4 flex justify-start">
             <Image
               src="/assets/BARCODELogo.png"
               alt="BarCode Logo"
-              width={200}
-              height={80}
+              width={140}
+              height={56}
               className="object-contain"
               priority
             />
@@ -167,7 +167,7 @@ export default function Home() {
           {/* Heading */}
           <motion.h1
             variants={item}
-            className="mb-6 text-5xl font-bold leading-tight text-white md:text-6xl lg:text-7xl"
+            className="mb-4 text-4xl font-bold leading-tight text-white md:text-5xl lg:text-6xl"
           >
             JOIN BARCODE
           </motion.h1>
@@ -175,7 +175,7 @@ export default function Home() {
           {/* Subtext */}
           <motion.p
             variants={item}
-            className="mb-10 text-base text-gray-300 md:text-lg lg:text-xl"
+            className="mb-6 text-sm text-gray-300 md:text-base lg:text-lg"
           >
             We&apos;re industrializing culture and shaping the future of technology and community.
           </motion.p>
@@ -186,9 +186,9 @@ export default function Home() {
     
                {/* Wallet Connection */}
                <MultiChainWalletButton />
-               <motion.div variants={item} className="mb-10 mt-6">
+               <motion.div variants={item} className="mb-6 mt-4">
             <Link href="/form">
-              <button className="flex w-full text-center  justify-center *:items-center cursor-pointer rounded-xl bg-[#53361C]/30 backdrop-blur-sm border border-[#53361C]/50 px-8 py-4 text-base font-semibold text-white transition-all hover:bg-[#53361C]/50 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-[#53361C]/50 md:px-10 md:py-5 md:text-lg">
+              <button className="flex w-full text-center  justify-center *:items-center cursor-pointer rounded-xl bg-[#53361C]/30 backdrop-blur-sm border border-[#53361C]/50 px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-[#53361C]/50 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-[#53361C]/50 md:px-8 md:py-4 md:text-base">
                 <span>Begin Application</span>
                 <svg
                   className="ml-3 h-5 w-5"
@@ -211,16 +211,16 @@ export default function Home() {
 
                <motion.div
             variants={item}
-            className="mb-6 rounded-lg mt-4 border border-white/20 bg-white/5 p-6 backdrop-blur-xl shadow-lg"
+            className="mb-4 rounded-lg mt-2 border border-white/20 bg-white/5 p-4 backdrop-blur-xl shadow-lg"
             style={{
               backdropFilter: 'blur(16px) saturate(140%)',
               WebkitBackdropFilter: 'blur(16px) saturate(140%)',
             }}
           >
-            <h2 className="mb-4 text-2xl font-bold text-white">
+            <h2 className="mb-3 text-xl font-bold text-white">
               EARLY ACCESS
             </h2>
-            <ul className="space-y-2 text-sm text-gray-300 md:text-base">
+            <ul className="space-y-1.5 text-sm text-gray-300 md:text-base">
               <li className="flex items-start">
                 <svg
                   className="mr-3 mt-1 h-5 w-5 flex-shrink-0 text-[#53361C]"
@@ -284,18 +284,18 @@ export default function Home() {
           {/* Social Icons */}
           <motion.div
             variants={item}
-            className="mt-4 flex justify-center gap-3"
+            className="mt-2 flex justify-center gap-2.5"
           >
             {/* Instagram */}
             <a
               href="https://www.instagram.com/barcode.dao/"
               target="_blank"
               rel="noopener noreferrer"
-              className="group rounded-full bg-white/10 p-3 transition-all hover:bg-white/20 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
+              className="group rounded-full bg-white/10 p-2.5 transition-all hover:bg-white/20 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
               aria-label="Instagram"
             >
               <svg
-                className="h-6 w-6 text-white transition-colors group-hover:text-pink-400"
+                className="h-5 w-5 text-white transition-colors group-hover:text-pink-400"
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >
@@ -308,11 +308,11 @@ export default function Home() {
               href="https://youtube.com/@barcodedao"
               target="_blank"
               rel="noopener noreferrer"
-              className="group rounded-full bg-white/10 p-3 transition-all hover:bg-white/20 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
+              className="group rounded-full bg-white/10 p-2.5 transition-all hover:bg-white/20 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
               aria-label="YouTube"
             >
               <svg
-                className="h-6 w-6 text-white transition-colors group-hover:text-red-500"
+                className="h-5 w-5 text-white transition-colors group-hover:text-red-500"
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >
@@ -325,11 +325,11 @@ export default function Home() {
               href="https://www.threads.com/@barcode.dao"
               target="_blank"
               rel="noopener noreferrer"
-              className="group rounded-full bg-white/10 p-3 transition-all hover:bg-white/20 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
+              className="group rounded-full bg-white/10 p-2.5 transition-all hover:bg-white/20 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
               aria-label="Threads"
             >
               <svg
-                className="h-6 w-6 text-white transition-colors group-hover:text-gray-200"
+                className="h-5 w-5 text-white transition-colors group-hover:text-gray-200"
                 fill="currentColor"
                 viewBox="0 0 192 192"
                 xmlns="http://www.w3.org/2000/svg"
@@ -343,11 +343,11 @@ export default function Home() {
               href="https://www.twitter.com/barcodedao"
               target="_blank"
               rel="noopener noreferrer"
-              className="group rounded-full bg-white/10 p-3 transition-all hover:bg-white/20 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
+              className="group rounded-full bg-white/10 p-2.5 transition-all hover:bg-white/20 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
               aria-label="X"
             >
               <svg
-                className="h-6 w-6 text-white transition-colors group-hover:text-black group-hover:bg-white group-hover:rounded-full"
+                className="h-5 w-5 text-white transition-colors group-hover:text-black group-hover:bg-white group-hover:rounded-full"
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >
@@ -360,11 +360,11 @@ export default function Home() {
               href="https://www.linkedin.com/company/barcode-dao"
               target="_blank"
               rel="noopener noreferrer"
-              className="group rounded-full bg-white/10 p-3 transition-all hover:bg-white/20 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
+              className="group rounded-full bg-white/10 p-2.5 transition-all hover:bg-white/20 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
               aria-label="LinkedIn"
             >
               <svg
-                className="h-6 w-6 text-white transition-colors group-hover:text-blue-500"
+                className="h-5 w-5 text-white transition-colors group-hover:text-blue-500"
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >
