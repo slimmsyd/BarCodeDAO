@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useAccount } from "wagmi";
 import { WalletConnectPrompt } from "@/components/wallet-connect-prompt";
+import { D3WorldTourBg } from "@/components/d3-world-tour-bg";
 
 const pageVariants = {
   initial: {
@@ -319,8 +320,9 @@ export default function FormPage() {
       exit="exit"
       className="relative min-h-screen w-full overflow-x-hidden "
     >
-      {/* Background - Black backdrop */}
+      {/* Background - Black backdrop with Globe */}
       <div className="fixed inset-0 z-0 bg-black">
+        <D3WorldTourBg />
         {/* <video
           autoPlay
           loop
@@ -562,10 +564,10 @@ export default function FormPage() {
           variants={content}
           initial="initial"
           animate="animate"
-          className="w-full max-w-2xl rounded-3xl bg-black/70 px-8 py-10 shadow-2xl md:px-12 md:py-14 border border-white/10"
+          className="w-full max-w-2xl rounded-3xl bg-black/45 px-8 py-10 shadow-2xl md:px-12 md:py-14 border border-white/20"
           style={{
-            backdropFilter: 'blur(40px) saturate(180%)',
-            WebkitBackdropFilter: 'blur(40px) saturate(180%)',
+            backdropFilter: 'blur(24px) saturate(150%)',
+            WebkitBackdropFilter: 'blur(24px) saturate(150%)',
             boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37), inset 0 1px 0 0 rgba(255, 255, 255, 0.1)',
           }}
         >

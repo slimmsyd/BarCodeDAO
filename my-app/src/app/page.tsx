@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { InitialTransition } from "@/components/initial-transition";
 import { MultiChainWalletButton } from "@/components/multi-chain-wallet-button";
+import { D3WorldTourBg } from "@/components/d3-world-tour-bg";
 
 const content = (isFirstMount: boolean) => ({
   animate: {
@@ -63,6 +64,7 @@ export default function Home() {
         <InitialTransition onComplete={handleTransitionComplete} />
       )}
       <div className="fixed inset-0 z-0 bg-black">
+        <D3WorldTourBg />
         {/* <video
           ref={videoRef}
           autoPlay
@@ -144,16 +146,16 @@ export default function Home() {
           variants={content(isFirstMount)}
           initial="initial"
           animate="animate"
-          className="w-full bg-black/80 backdrop-blur-3xl px-8 py-12 my-8 md:min-h-0 md:w-5/12 md:px-12 md:py-16 md:my-12 lg:w-1/3 lg:px-16 lg:py-20 flex flex-col justify-center border border-white/10 shadow-2xl rounded-lg"
+          className="w-full bg-black/40 backdrop-blur-2xl px-8 py-12 my-8 md:min-h-0 md:w-5/12 md:px-12 md:py-16 md:my-12 lg:w-1/3 lg:px-16 lg:py-20 flex flex-col justify-center border border-white/20 shadow-2xl rounded-lg"
           style={{
-            backdropFilter: 'blur(40px) saturate(180%)',
-            WebkitBackdropFilter: 'blur(40px) saturate(180%)',
+            backdropFilter: 'blur(24px) saturate(150%)',
+            WebkitBackdropFilter: 'blur(24px) saturate(150%)',
           }}
         >
           {/* Barcode Icon */}
           <motion.div variants={item} className="mb-8 flex justify-start">
             <Image
-              src="/assets/BarCodeLogo-removebg-preview.png"
+              src="/assets/BARCODELogo.png"
               alt="BarCode Logo"
               width={200}
               height={80}
@@ -209,10 +211,10 @@ export default function Home() {
 
                <motion.div
             variants={item}
-            className="mb-6 rounded-lg mt-4 border border-white/10 bg-white/5 p-6 backdrop-blur-xl shadow-lg"
+            className="mb-6 rounded-lg mt-4 border border-white/20 bg-white/5 p-6 backdrop-blur-xl shadow-lg"
             style={{
-              backdropFilter: 'blur(20px) saturate(150%)',
-              WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+              backdropFilter: 'blur(16px) saturate(140%)',
+              WebkitBackdropFilter: 'blur(16px) saturate(140%)',
             }}
           >
             <h2 className="mb-4 text-2xl font-bold text-white">
