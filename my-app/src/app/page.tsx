@@ -188,7 +188,7 @@ export default function Home() {
                <MultiChainWalletButton />
                <motion.div variants={item} className="mb-6 mt-4">
             <Link href="/form">
-              <button className="flex w-full text-center  justify-center *:items-center cursor-pointer rounded-xl bg-[#53361C]/30 backdrop-blur-sm border border-[#53361C]/50 px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-[#53361C]/50 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-[#53361C]/50 md:px-8 md:py-4 md:text-base">
+              <button className="flex w-full text-center  justify-center *:items-center cursor-pointer rounded-xl bg-[#53361C]/30 backdrop-blur-sm border border-[#53361C]/50 px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-[#53361C]/50 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-[#53361C]/50 md:px-8 md:py-4 md:text-base max-h-16">
                 <span>Begin Application</span>
                 <svg
                   className="ml-3 h-5 w-5"

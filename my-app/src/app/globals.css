@@ -32,6 +32,8 @@ body {
 /* Wallet Adapter Custom Styles */
 .wallet-adapter-button {
   font-family: var(--font-gellix), system-ui, -apple-system, sans-serif !important;
+  height: 2.8rem !important;
+  border-radius: 7px !important;
 }
 
 .wallet-adapter-modal-wrapper {

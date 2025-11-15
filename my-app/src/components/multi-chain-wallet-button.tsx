@@ -41,7 +41,7 @@ export function MultiChainWalletButton() {
         <div className="space-y-3">
           <button
             onClick={() => setShowOptions(!showOptions)}
-            className="w-full cursor-pointer rounded-xl bg-white/10 px-8 py-4 text-base font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/20 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white/50 md:px-10 md:py-5 md:text-lg"
+            className="flex w-full text-center  justify-center *:items-center cursor-pointer rounded-xl bg-[#53361C]/30 backdrop-blur-sm border border-[#53361C]/50 px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-[#53361C]/50 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-[#53361C]/50 md:px-8 md:py-4 md:text-base max-h-16"
           >
             Connect Wallet
           </button>
@@ -64,7 +64,7 @@ export function MultiChainWalletButton() {
                   {({ openConnectModal }) => (
                     <button
                       onClick={openConnectModal}
-                      className="w-200px cursor-pointer rounded-lg bg-white/10 px-4 py-3 text-left text-sm font-medium text-white transition-all hover:bg-white/20"
+                      className="w-200px cursor-pointer rounded-lg bg-white/10 px-4 py-3 text-left text-sm font-medium text-white transition-all hover:bg-white/200"
                     >
                       <div className="flex items-center justify-between">
                         <span>EVM chains</span>
@@ -88,8 +88,8 @@ export function MultiChainWalletButton() {
               </div>
 
               {/* Solana Option */}
-              <div className=" !w-200px relative">
-                <WalletMultiButton className="w-200px cursor-pointer rounded-lg bg-white/10 px-4 py-3 text-left text-sm font-medium text-white transition-all hover:bg-white/20">
+              <div className=" !w-200px relative rounded-lg max-h-16 ">
+                <WalletMultiButton className="!rounded-lg !bg-white/10 !px-4 !py-3 !text-left !text-sm !font-medium !text-white !transition-all hover:!bg-white/200">
                   <div className="flex w-full items-center justify-between">
                     <span>Solana</span>
                     <svg
