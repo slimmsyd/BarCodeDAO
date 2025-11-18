@@ -25,12 +25,15 @@ export function D3WorldTourBg() {
     const isMobile = width < 768;
     const scaleFactor = isMobile ? 2.2 : 2.5;
     
-    // Shift globe down on mobile to show more of it behind the card
-    const verticalOffset = isMobile ? height * 0.65 : height / 2;
+    // Shift globe further down on mobile (approx 60% deeper) to expose more of the sphere
+    const verticalOffset = isMobile ? height * 0.85 : height / 2;
+    
+    // Push globe to the left on desktop, keep centered on mobile
+    const horizontalOffset = isMobile ? width / 2 : width * 0.35;
     
     const projection = d3.geoOrthographic()
       .scale(Math.min(width, height) / scaleFactor)
-      .translate([width / 2, verticalOffset])
+      .translate([horizontalOffset, verticalOffset])
       .precision(0.1);
 
     const path = d3.geoPath(projection);
@@ -306,11 +309,12 @@ export function D3WorldTourBg() {
       
       const isMobile = newWidth < 768;
       const scaleFactor = isMobile ? 2.2 : 2.5;
-      const verticalOffset = isMobile ? newHeight * 0.65 : newHeight / 2;
+      const verticalOffset = isMobile ? newHeight * 0.85 : newHeight / 2;
+      const horizontalOffset = isMobile ? newWidth / 2 : newWidth * 0.35;
       
       projection
         .scale(Math.min(newWidth, newHeight) / scaleFactor)
-        .translate([newWidth / 2, verticalOffset]);
+        .translate([horizontalOffset, verticalOffset]);
       
       svg.selectAll('path').attr('d', path as any);
     }

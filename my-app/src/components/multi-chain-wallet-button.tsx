@@ -41,12 +41,26 @@ export function MultiChainWalletButton() {
         <div className="space-y-3">
           <button
             onClick={() => setShowOptions(!showOptions)}
-            className="flex w-full text-center  justify-center *:items-center cursor-pointer rounded-xl bg-[#53361C]/30 backdrop-blur-sm border border-[#53361C]/50 px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-[#53361C]/50 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-[#53361C]/50 md:px-8 md:py-4 md:text-base max-h-16"
+            className="flex w-full text-center justify-center items-center gap-2 cursor-pointer rounded-xl bg-[#53361C]/30 backdrop-blur-sm border border-[#53361C]/50 px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-[#53361C]/50 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-[#53361C]/50 md:px-8 md:py-4 md:text-base max-h-16"
           >
             Connect Wallet
+            <svg
+              className="h-4 w-4 md:h-5 md:w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+              />
+            </svg>
           </button>
 
           {showOptions && (
+            <div className = "flex flex-col gap-2 justify-center items-center">
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -67,7 +81,7 @@ export function MultiChainWalletButton() {
                       className="w-200px cursor-pointer rounded-lg bg-white/10 px-4 py-3 text-left text-sm font-medium text-white transition-all hover:bg-white/200"
                     >
                       <div className="flex items-center justify-between">
-                        <span>EVM chains</span>
+                        <span>EVM Chains</span>
                         <svg
                           className="h-4 w-4"
                           fill="none"
@@ -110,6 +124,7 @@ export function MultiChainWalletButton() {
               </div>
 </div>
             </motion.div>
+            </div>
           )}
         </div>
       ) : (

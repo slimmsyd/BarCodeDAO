@@ -138,26 +138,32 @@ export default function FormPage() {
   const connected = solanaWallet.connected || evmWallet.isConnected;
   
   // Get the current "Did You Know" fact based on current step
-  const currentFact = didYouKnowFacts[Math.min(currentStep - 1, didYouKnowFacts.length - 1)];
+  // Step 5 should show the Lewis H. Latimer factoid (index 2)
+  const getCurrentFact = () => {
+    if (currentStep === 5) {
+      return didYouKnowFacts[2]; // Lewis H. Latimer factoid
+    }
+    return didYouKnowFacts[Math.min(currentStep - 1, didYouKnowFacts.length - 1)];
+  };
+  const currentFact = getCurrentFact();
 
   // Ensure scrolling is always enabled on this page
   useEffect(() => {
     document.body.classList.remove("overflow-hidden");
   }, []);
 
-  // Show "Did You Know" popup when step changes (only for first 3 steps)
+  // Show "Did You Know" popup only when entering step 5
   useEffect(() => {
-    if (currentStep <= 3) {
+    if (currentStep === 5) {
       setShowDidYouKnow(true);
-      // Auto-hide after 15 seconds
       const timer = setTimeout(() => {
         setShowDidYouKnow(false);
       }, 15000);
       return () => clearTimeout(timer);
-    } else {
-      // Hide popup if on step 4 or later
-      setShowDidYouKnow(false);
     }
+
+    setShowDidYouKnow(false);
+    return undefined;
   }, [currentStep]);
 
   // Auto-populate wallet address when wallet is connected
@@ -305,7 +311,7 @@ export default function FormPage() {
       1: "Complete this application to join the community.",
       2: "Complete this application to join the community.",
       3: "Complete this application to join the community.",
-      4: "Please share your professional background",
+      4: "Areas You'd Like to Learn More About",
       5: "Complete this application to join the community.",
       6: "Complete this application to join the community.",
     };
@@ -341,7 +347,7 @@ export default function FormPage() {
       <div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-12 md:px-8">
         {/* "Did You Know" Popup */}
         <AnimatePresence>
-          {showDidYouKnow && currentStep <= 3 && (
+          {showDidYouKnow && currentStep === 5 && (
             <motion.div
               initial={{ x: 400, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
@@ -1076,11 +1082,14 @@ export default function FormPage() {
                       "Real Estate",
                       "Marketing",
                       "Legal",
-                      "Leadership",
                       "Product Development",
                       "Health & Wellness",
                       "Investment",
                       "Technology",
+                      "Creative",
+                      "Developer",
+                      "Artist",
+                      "Design",
                       "Operations",
                       "Finance",
                       "Sales",
@@ -1174,9 +1183,7 @@ export default function FormPage() {
               >
                 {/* Learning Areas Selection */}
                 <div>
-                  <label className="mb-3 block text-sm font-medium text-gray-300">
-                    Areas You'd Like to Learn More About
-                  </label>
+                 
                   <p className="mb-4 text-xs text-gray-500">
                     Choose all that apply
                   </p>
@@ -1670,7 +1677,7 @@ export default function FormPage() {
                 </div>
 
                 {/* Terms Agreement */}
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl"
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl transition-colors hover:bg-[#53361C]/15 hover:border-[#53361C]/40"
                   style={{
                     backdropFilter: 'blur(20px) saturate(150%)',
                     WebkitBackdropFilter: 'blur(20px) saturate(150%)',

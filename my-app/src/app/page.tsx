@@ -153,13 +153,13 @@ export default function Home() {
           }}
         >
           {/* Barcode Icon */}
-          <motion.div variants={item} className="mb-4 flex justify-start">
+          <motion.div variants={item} className=" flex justify-start">
             <Image
               src="/assets/BARCODELogo.png"
               alt="BarCode Logo"
-              width={140}
-              height={56}
-              className="object-contain"
+              width={120}
+              height={48}
+              className="object-contain w-[60px]"
               priority
             />
           </motion.div>
@@ -167,7 +167,7 @@ export default function Home() {
           {/* Heading */}
           <motion.h1
             variants={item}
-            className="mb-4 text-4xl font-bold leading-tight text-white md:text-5xl lg:text-6xl"
+            className="mb-4 text-4xl font-bold leading-tight text-white md:text-4xl lg:text-5xl"
           >
             JOIN BARCODE
           </motion.h1>
@@ -189,7 +189,9 @@ export default function Home() {
                <motion.div variants={item} className="mb-6 mt-4">
             <Link href="/form">
               <button className="flex w-full text-center  justify-center *:items-center cursor-pointer rounded-xl bg-[#53361C]/30 backdrop-blur-sm border border-[#53361C]/50 px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-[#53361C]/50 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-[#53361C]/50 md:px-8 md:py-4 md:text-base max-h-16">
-                <span>Begin Application</span>
+
+              <div className = "flex flex-row items-center align-middle justify-center">
+              <span>Begin Application</span>
                 <svg
                   className="ml-3 h-5 w-5"
                   fill="none"
@@ -203,6 +205,10 @@ export default function Home() {
                     d="M17 8l4 4m0 0l-4 4m4-4H3"
                   />
                 </svg>
+
+              </div>
+               
+
               </button>
             </Link>
           </motion.div>
