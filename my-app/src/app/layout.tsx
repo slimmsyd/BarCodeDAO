@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Orbitron } from "next/font/google";
 import "./globals.css";
 import { PageTransition } from "@/components/page-transition";
 import { SolanaWalletProvider } from "@/components/wallet-provider";
@@ -52,6 +53,13 @@ const gellix = localFont({
   display: "swap",
 });
 
+const orbitron = Orbitron({
+  weight: ["400", "500", "600", "700", "800", "900"],
+  subsets: ["latin"],
+  variable: "--font-orbitron",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "BarCode - Join the Community",
   description: "Fill out the form to become a potential member of our DAO.",
@@ -64,7 +72,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${gellix.variable} antialiased`}>
+      <body className={`${gellix.variable} ${orbitron.variable} antialiased`}>
         <EVMWalletProvider>
           <SolanaWalletProvider>
             <PageTransition>{children}</PageTransition>

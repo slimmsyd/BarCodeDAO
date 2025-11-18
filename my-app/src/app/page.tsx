@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
 import { InitialTransition } from "@/components/initial-transition";
 import { MultiChainWalletButton } from "@/components/multi-chain-wallet-button";
 import { D3WorldTourBg } from "@/components/d3-world-tour-bg";
@@ -152,22 +151,11 @@ export default function Home() {
             WebkitBackdropFilter: 'blur(24px) saturate(150%)',
           }}
         >
-          {/* Barcode Icon */}
-          <motion.div variants={item} className=" flex justify-start">
-            <Image
-              src="/assets/BARCODELogo.png"
-              alt="BarCode Logo"
-              width={120}
-              height={48}
-              className="object-contain w-[60px]"
-              priority
-            />
-          </motion.div>
-
           {/* Heading */}
           <motion.h1
             variants={item}
-            className="mb-4 text-4xl font-bold leading-tight text-white md:text-4xl lg:text-5xl"
+            className="mb-4 mt-8 text-4xl font-black leading-tight text-white md:text-4xl lg:text-5xl"
+            style={{ fontFamily: 'var(--font-orbitron)' }}
           >
             JOIN BARCODE
           </motion.h1>
@@ -193,7 +181,7 @@ export default function Home() {
               <div className = "flex flex-row items-center align-middle justify-center">
               <span>Begin Application</span>
                 <svg
-                  className="ml-3 h-5 w-5"
+                  className="ml-[3px] h-5 w-5"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
