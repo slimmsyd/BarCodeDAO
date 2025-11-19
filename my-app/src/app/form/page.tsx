@@ -76,20 +76,15 @@ const didYouKnowFacts: DidYouKnow[] = [
     source: "Moorish Influence on Europe",
     sourceUrl: "https://www.thecollector.com/how-the-moors-shaped-european-science-architecture/"
   },
-  // {
-  //   text: "Did you know? According to multiple credible sources including the University of Georgia’s Selig Center for Economic Growth, Nielsen, NAACP, The Famuan, and Greenwood reports, the average lifespan of a dollar circulating within the Black community is estimated at about 6 hours. This contrasts sharply with other communities, where the dollar circulates much longer—approximately 28 to 30 days in Asian communities, about 19 to 20 days in Jewish communities, and nearly unlimited or around 17 days in White communities. Moreover, only about 2 percent of the money spent by Black consumers is reinvested back into Black-owned businesses, reflecting a very low recirculation rate that contributes to limited local wealth building.",
-  //   source: "University of Georgia / Nielsen",
-  //   sourceUrl: "#"
-  // },
   {
     text: "Did you know that Lewis H. Latimer, a Black inventor, not only helped Alexander Graham Bell patent the telephone but also developed the carbon filament that made Edison's light bulbs actually practical? His innovations in electrical engineering literally lit up the modern world.",
     source: "Lewis H. Latimer",
     sourceUrl: "https://michelsonip.com/news/five-black-inventors-whose-innovation-forever-changed-the-world/"
   },
   {
-    text: "Did you know… When the same group owns the television networks, the textbook publishers, the census machinery and the patents on the micro-chips inside those census computers, “technological power” and “informational power” collapse into one seamless lever of control? Dr. Amos N. Wilson spelled out that merger on page 96, column 1, paragraph 3 of his 1998 book Blueprint for Black Power (Afrikan World InfoSystems). Black Americans have increased their buying power by 240% since 2000, demonstrating sustained economic growth and resilience.",
-    source: "Blueprint for Black Power",
-    sourceUrl: "#"
+    text: "Dr. Amos N. Wilson is one of the clearest 20th-century voices on how real power works. He speaks on 'Intrusive Power'—the ability to enter the personality, occupy the ego and edit perception, memory and desire so that the oppressed person needs no external whip.",
+    source: "Dr. Amos N. Wilson",
+    sourceUrl: "https://noirpress.org/tenet5-you-got-money-how-the-world-runs-on-black-power/"
   },
 ];
 
@@ -143,7 +138,11 @@ export default function FormPage() {
   const connected = solanaWallet.connected || evmWallet.isConnected;
   
   // Get the current "Did You Know" fact based on current step
+  // Step 5 should show the Lewis H. Latimer factoid (index 2)
   const getCurrentFact = () => {
+    if (currentStep === 5) {
+      return didYouKnowFacts[2]; // Lewis H. Latimer factoid
+    }
     return didYouKnowFacts[Math.min(currentStep - 1, didYouKnowFacts.length - 1)];
   };
   const currentFact = getCurrentFact();
@@ -153,9 +152,9 @@ export default function FormPage() {
     document.body.classList.remove("overflow-hidden");
   }, []);
 
-  // Show "Did You Know" popup on steps 1, 2, 3, and 5
+  // Show "Did You Know" popup only when entering step 5
   useEffect(() => {
-    if (currentStep === 1 || currentStep === 2 || currentStep === 3 || currentStep === 5) {
+    if (currentStep === 5) {
       setShowDidYouKnow(true);
       const timer = setTimeout(() => {
         setShowDidYouKnow(false);
@@ -348,7 +347,7 @@ export default function FormPage() {
       <div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-12 md:px-8">
         {/* "Did You Know" Popup */}
         <AnimatePresence>
-          {showDidYouKnow && (currentStep === 1 || currentStep === 2 || currentStep === 3 || currentStep === 5) && (
+          {showDidYouKnow && currentStep === 5 && (
             <motion.div
               initial={{ x: 400, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
@@ -1698,11 +1697,7 @@ export default function FormPage() {
                       <span className="font-semibold text-white">GET ON CODE</span>
                       <br />
                       <span className="text-xs text-gray-500 mt-1 block">
-                        I agree to the{" "}
-                        <Link href="/terms" className="text-[#53361C] hover:text-[#53361C]/80 underline transition-colors">
-                          Terms & Conditions
-                        </Link>
-                        {" "}and acknowledge the Privacy Policy by proceeding.
+                        I agree to the Terms & Conditions and acknowledge the Privacy Policy by proceeding.
                       </span>
                     </label>
                   </div>

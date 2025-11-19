@@ -7,7 +7,6 @@ import * as topojson from 'topojson-client';
 export function D3WorldTourBg() {
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const tooltipRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!svgRef.current || !containerRef.current) return;
@@ -191,6 +190,26 @@ export function D3WorldTourBg() {
             .attr('r', 6)
             .style('filter', 'drop-shadow(0 0 8px rgba(255, 215, 0, 0.9))');
 
+          // Add SVG tooltip group (background rect + text)
+          const tooltipGroup = svg.append('g')
+            .attr('class', 'tooltip-group')
+            .style('opacity', 0);
+
+          const tooltipBg = tooltipGroup.append('rect')
+            .attr('rx', 8)
+            .attr('ry', 8)
+            .style('fill', '#000000')
+            .style('stroke', '#ffd700')
+            .style('stroke-width', '2px')
+            .style('filter', 'drop-shadow(0 0 15px rgba(255, 215, 0, 0.8))');
+
+          const tooltipText = tooltipGroup.append('text')
+            .style('fill', '#ffd700')
+            .style('font-size', '16px')
+            .style('font-weight', 'bold')
+            .style('text-anchor', 'middle')
+            .style('filter', 'drop-shadow(0 0 5px rgba(255, 215, 0, 0.8))');
+
           // Add traveling particle that moves along the arc with amber glow
           const travelingDot = svg.append('circle')
             .attr('class', 'traveling-dot')
@@ -276,25 +295,52 @@ export function D3WorldTourBg() {
                   // Hide traveling dot
                   travelingDot.transition().duration(300).style('opacity', 0);
 
-                  // Show tooltip
-                  if (tooltipRef.current) {
-                    const endProj = projection(to.coordinates as [number, number]);
-                    if (endProj) {
-                      const tooltip = d3.select(tooltipRef.current);
-                      tooltip
-                        .style('left', `${endProj[0]}px`)
-                        .style('top', `${endProj[1] - 20}px`) // Position slightly above
-                        .text(to.name)
+                  // Show SVG tooltip
+                  const endProj = projection(to.coordinates as [number, number]);
+                  if (endProj) {
+                    console.log('Showing tooltip for:', to.name, 'at position:', endProj);
+                    
+                    // Set text content
+                    tooltipText.text(to.name);
+                    
+                    // Get text dimensions to size the background
+                    const textNode = tooltipText.node();
+                    if (textNode) {
+                      const bbox = textNode.getBBox();
+                      const padding = 12;
+                      
+                      // Position and size the background rectangle
+                      tooltipBg
+                        .attr('x', bbox.x - padding)
+                        .attr('y', bbox.y - padding)
+                        .attr('width', bbox.width + padding * 2)
+                        .attr('height', bbox.height + padding * 2);
+                      
+                      // Position the tooltip group above the end point
+                      const tooltipX = endProj[0];
+                      const tooltipY = endProj[1] - 30;
+                      
+                      tooltipText
+                        .attr('x', tooltipX)
+                        .attr('y', tooltipY);
+                      
+                      tooltipBg
+                        .attr('x', tooltipX - bbox.width / 2 - padding)
+                        .attr('y', tooltipY - bbox.height + padding / 2)
+                        .attr('width', bbox.width + padding * 2)
+                        .attr('height', bbox.height + padding * 2);
+                      
+                      // Fade in the tooltip
+                      tooltipGroup
                         .transition()
-                        .duration(300)
-                        .style('opacity', 1)
-                        .style('transform', 'translate(-50%, -100%) scale(1)');
+                        .duration(500)
+                        .style('opacity', 1);
                     }
                   }
                 });
             })
             .transition()
-            .delay(2200)
+            .delay(3000) // Increased delay to see tooltip longer
             .on('start', function () {
               // Fade out the arc and dots
               arcPath.transition().duration(600).style('stroke-opacity', 0).remove();
@@ -302,14 +348,9 @@ export function D3WorldTourBg() {
               endDot.transition().duration(600).style('opacity', 0).remove();
               travelingDot.remove();
 
-              // Hide tooltip
-              if (tooltipRef.current) {
-                d3.select(tooltipRef.current)
-                  .transition()
-                  .duration(300)
-                  .style('opacity', 0)
-                  .style('transform', 'translate(-50%, -100%) scale(0.8)');
-              }
+              // Hide SVG tooltip
+              console.log('Hiding tooltip');
+              tooltipGroup.transition().duration(500).style('opacity', 0).remove();
             })
             .on('end', () => {
               currentLocation = (currentLocation + 1) % locations.length;
@@ -365,15 +406,6 @@ export function D3WorldTourBg() {
         ref={svgRef}
         className="w-full h-full"
         style={{ display: 'block' }}
-      />
-      <div
-        ref={tooltipRef}
-        className="absolute pointer-events-none px-3 py-1.5 rounded-lg bg-black/80 border border-[#d4af37] text-[#d4af37] text-sm font-medium shadow-[0_0_15px_rgba(212,175,55,0.3)] backdrop-blur-sm whitespace-nowrap z-10"
-        style={{
-          opacity: 0,
-          transform: 'translate(-50%, -100%) scale(0.8)',
-          transition: 'opacity 0.3s ease, transform 0.3s ease'
-        }}
       />
     </div>
   );
