@@ -34,6 +34,7 @@ export function D3WorldTourBg() {
     const projection = d3.geoOrthographic()
       .scale(Math.min(width, height) / scaleFactor)
       .translate([horizontalOffset, verticalOffset])
+      .rotate([40, -30, 0]) // Initial rotation to show Atlantic Ocean (between Virginia and Ghana)
       .precision(0.1);
 
     const path = d3.geoPath(projection);
@@ -100,9 +101,24 @@ export function D3WorldTourBg() {
 
         // Define tour locations with connections and country IDs
         const locations = [
-          { name: 'Virginia, USA', coordinates: [-77.4360, 37.5407], countryId: '840' },
-          { name: 'Ghana, Africa', coordinates: [-1.2164, 7.9465], countryId: '288' },
-          { name: 'Moscow, Russia', coordinates: [37.6173, 55.7558], countryId: '643' },
+          { 
+            name: 'USA', 
+            coordinates: [-77.4360, 37.5407], 
+            countryId: '840',
+            fact: 'GENIUS Act and CLARITY Act have created a more supportive regulatory environment, reviving builder and institutional confidence in digital assets.'
+          },
+          { 
+            name: 'Ghana, Africa', 
+            coordinates: [-1.2164, 7.9465], 
+            countryId: '288',
+            fact: 'Across Africa, Nigeria is dominant with nearly $59 billion in crypto transactions and leading innovation alongside South Africa.'
+          },
+          { 
+            name: 'Moscow, Russia', 
+            coordinates: [37.6173, 55.7558], 
+            countryId: '643',
+            fact: 'Russia is preparing for a digital ruble (CBDC), projected to add $3.2 billion to the economy annually starting with major banks in late 2026.'
+          },
         ];
 
         // Create arcs layer
@@ -167,13 +183,10 @@ export function D3WorldTourBg() {
             .style('stroke-linecap', 'round')
             .style('filter', 'drop-shadow(0 0 8px rgba(255, 215, 0, 0.8))');
 
-          // Get the total length of the path for animation
-          const totalLength = (arcPath.node() as SVGPathElement).getTotalLength();
-
-          // Set up the initial state: line is hidden
+          // Set up the initial state: line is hidden (we'll calculate totalLength after rotation)
           arcPath
-            .style('stroke-dasharray', `${totalLength} ${totalLength}`)
-            .style('stroke-dashoffset', totalLength);
+            .style('stroke-dasharray', '10000 10000')
+            .style('stroke-dashoffset', '10000');
 
           // Add animated dots at start and end points with gold theme
           const startDot = svg.append('circle')
@@ -203,12 +216,18 @@ export function D3WorldTourBg() {
             .style('stroke-width', '2px')
             .style('filter', 'drop-shadow(0 0 15px rgba(255, 215, 0, 0.8))');
 
-          const tooltipText = tooltipGroup.append('text')
+          const tooltipTitle = tooltipGroup.append('text')
             .style('fill', '#ffd700')
-            .style('font-size', '16px')
+            .style('font-size', '18px')
             .style('font-weight', 'bold')
-            .style('text-anchor', 'middle')
+            .style('text-anchor', 'start')
             .style('filter', 'drop-shadow(0 0 5px rgba(255, 215, 0, 0.8))');
+
+          const tooltipFact = tooltipGroup.append('text')
+            .style('fill', '#ffd700')
+            .style('font-size', '13px')
+            .style('font-weight', 'normal')
+            .style('text-anchor', 'start');
 
           // Add traveling particle that moves along the arc with amber glow
           const travelingDot = svg.append('circle')
@@ -255,6 +274,14 @@ export function D3WorldTourBg() {
               // Show traveling dot and animate it along the arc
               travelingDot.style('opacity', 1);
 
+              // Recalculate totalLength AFTER rotation completes for accurate animation
+              const totalLength = (arcPath.node() as SVGPathElement).getTotalLength();
+              
+              // Update stroke-dasharray with correct length
+              arcPath
+                .style('stroke-dasharray', `${totalLength} ${totalLength}`)
+                .style('stroke-dashoffset', totalLength);
+
               // Animate the line being drawn from start to end
               arcPath
                 .transition()
@@ -300,47 +327,79 @@ export function D3WorldTourBg() {
                   if (endProj) {
                     console.log('Showing tooltip for:', to.name, 'at position:', endProj);
                     
-                    // Set text content
-                    tooltipText.text(to.name);
+                    const padding = 16;
+                    const maxWidth = isMobile ? 280 : 400;
+                    const lineHeight = 18;
                     
-                    // Get text dimensions to size the background
-                    const textNode = tooltipText.node();
-                    if (textNode) {
-                      const bbox = textNode.getBBox();
-                      const padding = 12;
+                    // Set title
+                    tooltipTitle.text(to.name);
+                    
+                    // Calculate positions first
+                    const tooltipX = endProj[0];
+                    const tooltipY = endProj[1] - 50;
+                    
+                    // Wrap fact text into multiple lines
+                    const words = to.fact.split(' ');
+                    let line = '';
+                    const lines: string[] = [];
+                    
+                    // Clear previous tspans
+                    tooltipFact.selectAll('tspan').remove();
+                    
+                    // Create tspans for wrapped text
+                    words.forEach((word) => {
+                      const testLine = line + word + ' ';
+                      tooltipFact.text(testLine);
+                      const testWidth = (tooltipFact.node() as SVGTextElement)?.getComputedTextLength() || 0;
                       
-                      // Position and size the background rectangle
-                      tooltipBg
-                        .attr('x', bbox.x - padding)
-                        .attr('y', bbox.y - padding)
-                        .attr('width', bbox.width + padding * 2)
-                        .attr('height', bbox.height + padding * 2);
-                      
-                      // Position the tooltip group above the end point
-                      const tooltipX = endProj[0];
-                      const tooltipY = endProj[1] - 30;
-                      
-                      tooltipText
-                        .attr('x', tooltipX)
-                        .attr('y', tooltipY);
-                      
-                      tooltipBg
-                        .attr('x', tooltipX - bbox.width / 2 - padding)
-                        .attr('y', tooltipY - bbox.height + padding / 2)
-                        .attr('width', bbox.width + padding * 2)
-                        .attr('height', bbox.height + padding * 2);
-                      
-                      // Fade in the tooltip
-                      tooltipGroup
-                        .transition()
-                        .duration(500)
-                        .style('opacity', 1);
-                    }
+                      if (testWidth > maxWidth - padding * 2 && line !== '') {
+                        lines.push(line.trim());
+                        line = word + ' ';
+                      } else {
+                        line = testLine;
+                      }
+                    });
+                    lines.push(line.trim());
+                    
+                    // Clear and rebuild fact text with tspans
+                    tooltipFact.text('');
+                    const factX = tooltipX - maxWidth / 2 + padding;
+                    lines.forEach((lineText, i) => {
+                      tooltipFact.append('tspan')
+                        .attr('x', factX)
+                        .attr('dy', i === 0 ? 0 : lineHeight)
+                        .text(lineText);
+                    });
+                    
+                    // Position title
+                    tooltipTitle
+                      .attr('x', tooltipX - maxWidth / 2 + padding)
+                      .attr('y', tooltipY + padding + 15);
+                    
+                    // Position fact below title
+                    tooltipFact
+                      .attr('x', tooltipX - maxWidth / 2 + padding)
+                      .attr('y', tooltipY + padding + 38);
+                    
+                    // Calculate background dimensions
+                    const tooltipHeight = 40 + (lines.length * lineHeight) + padding;
+                    
+                    tooltipBg
+                      .attr('x', tooltipX - maxWidth / 2)
+                      .attr('y', tooltipY)
+                      .attr('width', maxWidth)
+                      .attr('height', tooltipHeight);
+                    
+                    // Fade in the tooltip
+                    tooltipGroup
+                      .transition()
+                      .duration(500)
+                      .style('opacity', 1);
                   }
                 });
             })
             .transition()
-            .delay(3000) // Increased delay to see tooltip longer
+            .delay(5000) // Longer delay to read the crypto facts
             .on('start', function () {
               // Fade out the arc and dots
               arcPath.transition().duration(600).style('stroke-opacity', 0).remove();

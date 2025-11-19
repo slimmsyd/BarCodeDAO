@@ -124,7 +124,7 @@ export default function Home() {
       </motion.button> */}
 
       {/* Content Container */}
-      <div className="relative z-10 flex min-h-screen flex-col md:flex-row md:justify-end md:items-center md:pr-8 lg:pr-12">
+      <div className="relative z-10 flex min-h-screen flex-col items-center justify-center md:flex-row md:justify-end md:items-center md:pr-8 lg:pr-12">
         {/* Mobile Top Video - Only visible on mobile */}
         {/* <div className="block w-full md:hidden">
           <div className="relative h-48 w-full overflow-hidden bg-black">
