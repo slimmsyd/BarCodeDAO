@@ -7,6 +7,7 @@ import * as topojson from 'topojson-client';
 export function D3WorldTourBg() {
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!svgRef.current || !containerRef.current) return;
@@ -14,7 +15,7 @@ export function D3WorldTourBg() {
     const container = containerRef.current;
     const width = container.clientWidth;
     const height = container.clientHeight;
-    
+
     const svg = d3.select(svgRef.current);
     svg.selectAll('*').remove(); // Clear previous render
 
@@ -24,13 +25,13 @@ export function D3WorldTourBg() {
     // Adjust scale for better mobile visibility
     const isMobile = width < 768;
     const scaleFactor = isMobile ? 2.2 : 2.5;
-    
+
     // Shift globe further down on mobile (approx 60% deeper) to expose more of the sphere
     const verticalOffset = isMobile ? height * 0.85 : height / 2;
-    
+
     // Push globe to the left on desktop, keep centered on mobile
     const horizontalOffset = isMobile ? width / 2 : width * 0.35;
-    
+
     const projection = d3.geoOrthographic()
       .scale(Math.min(width, height) / scaleFactor)
       .translate([horizontalOffset, verticalOffset])
@@ -66,10 +67,10 @@ export function D3WorldTourBg() {
         // Extract individual countries
         const countriesFeature = topojson.feature(world, world.objects.countries) as any;
         const countries = countriesFeature.features;
-        
+
         // Country codes to highlight: USA (840), Ghana (288), Russia (643)
         const highlightCountries = ['840', '288', '643'];
-        
+
         // Draw countries with dark fills and gold borders
         svg.append('g')
           .attr('class', 'countries')
@@ -109,16 +110,16 @@ export function D3WorldTourBg() {
         const arcsGroup = svg.append('g').attr('class', 'arcs');
 
         let currentLocation = 0;
-        
+
         // Get country paths for highlighting
         const countryPaths = svg.selectAll('path.country, path.country-highlight');
 
         function transition() {
           const from = locations[currentLocation];
           const to = locations[(currentLocation + 1) % locations.length];
-          
+
           // Highlight active countries with golden pulsing effect
-          countryPaths.each(function(d: any) {
+          countryPaths.each(function (d: any) {
             const element = d3.select(this as SVGPathElement);
             if (d.id === from.countryId || d.id === to.countryId) {
               // Pulse the active countries with gold/amber glow
@@ -137,16 +138,16 @@ export function D3WorldTourBg() {
                 .style('filter', 'none');
             }
           });
-          
+
           // Create arc between current and next location
           const arcGenerator = d3.geoInterpolate(
             from.coordinates as [number, number],
             to.coordinates as [number, number]
           );
-          
+
           // Generate points along the arc
           const arcPoints = d3.range(0, 1.01, 0.05).map(arcGenerator);
-          
+
           // Create line generator for the arc
           const lineGenerator = d3.geoPath(projection);
           const arcLine = {
@@ -169,7 +170,7 @@ export function D3WorldTourBg() {
 
           // Get the total length of the path for animation
           const totalLength = (arcPath.node() as SVGPathElement).getTotalLength();
-          
+
           // Set up the initial state: line is hidden
           arcPath
             .style('stroke-dasharray', `${totalLength} ${totalLength}`)
@@ -200,7 +201,7 @@ export function D3WorldTourBg() {
 
           // Calculate midpoint for rotation
           const midpoint = arcGenerator(0.5);
-          
+
           // Rotate globe to show the arc
           d3.transition()
             .duration(1500)
@@ -212,14 +213,14 @@ export function D3WorldTourBg() {
                 const interpolated = r(t);
                 projection.rotate(interpolated);
                 svg.selectAll('path').attr('d', path as any);
-                
+
                 // Update arc path
                 arcPath.attr('d', lineGenerator as any);
-                
+
                 // Update dot positions
                 const startProj = projection(from.coordinates as [number, number]);
                 const endProj = projection(to.coordinates as [number, number]);
-                
+
                 if (startProj) {
                   startDot.attr('cx', startProj[0]).attr('cy', startProj[1]);
                 }
@@ -231,32 +232,32 @@ export function D3WorldTourBg() {
             .on('end', function () {
               // Show start dot
               startDot.transition().duration(300).style('opacity', 1);
-              
+
               // Show traveling dot and animate it along the arc
               travelingDot.style('opacity', 1);
-              
+
               // Animate the line being drawn from start to end
               arcPath
                 .transition()
                 .duration(1500)
                 .ease(d3.easeCubicInOut)
-                .styleTween('stroke-dashoffset', function() {
+                .styleTween('stroke-dashoffset', function () {
                   const interpolate = d3.interpolate(totalLength, 0);
-                  return function(t) {
+                  return function (t) {
                     // Update arc path position as we animate
                     arcPath.attr('d', lineGenerator as any);
-                    
+
                     // Update dot positions
                     const startProj = projection(from.coordinates as [number, number]);
                     const endProj = projection(to.coordinates as [number, number]);
-                    
+
                     if (startProj) {
                       startDot.attr('cx', startProj[0]).attr('cy', startProj[1]);
                     }
                     if (endProj) {
                       endDot.attr('cx', endProj[0]).attr('cy', endProj[1]);
                     }
-                    
+
                     // Move traveling dot along the arc
                     const point = arcGenerator(t);
                     const projected = projection(point as [number, number]);
@@ -265,7 +266,7 @@ export function D3WorldTourBg() {
                         .attr('cx', projected[0])
                         .attr('cy', projected[1]);
                     }
-                    
+
                     return interpolate(t).toString();
                   };
                 })
@@ -274,6 +275,22 @@ export function D3WorldTourBg() {
                   endDot.transition().duration(300).style('opacity', 1);
                   // Hide traveling dot
                   travelingDot.transition().duration(300).style('opacity', 0);
+
+                  // Show tooltip
+                  if (tooltipRef.current) {
+                    const endProj = projection(to.coordinates as [number, number]);
+                    if (endProj) {
+                      const tooltip = d3.select(tooltipRef.current);
+                      tooltip
+                        .style('left', `${endProj[0]}px`)
+                        .style('top', `${endProj[1] - 20}px`) // Position slightly above
+                        .text(to.name)
+                        .transition()
+                        .duration(300)
+                        .style('opacity', 1)
+                        .style('transform', 'translate(-50%, -100%) scale(1)');
+                    }
+                  }
                 });
             })
             .transition()
@@ -284,6 +301,15 @@ export function D3WorldTourBg() {
               startDot.transition().duration(600).style('opacity', 0).remove();
               endDot.transition().duration(600).style('opacity', 0).remove();
               travelingDot.remove();
+
+              // Hide tooltip
+              if (tooltipRef.current) {
+                d3.select(tooltipRef.current)
+                  .transition()
+                  .duration(300)
+                  .style('opacity', 0)
+                  .style('transform', 'translate(-50%, -100%) scale(0.8)');
+              }
             })
             .on('end', () => {
               currentLocation = (currentLocation + 1) % locations.length;
@@ -301,21 +327,21 @@ export function D3WorldTourBg() {
     // Handle window resize
     function handleResize() {
       if (!containerRef.current) return;
-      
+
       const newWidth = containerRef.current.clientWidth;
       const newHeight = containerRef.current.clientHeight;
-      
+
       svg.attr('width', newWidth).attr('height', newHeight);
-      
+
       const isMobile = newWidth < 768;
       const scaleFactor = isMobile ? 2.2 : 2.5;
       const verticalOffset = isMobile ? newHeight * 0.85 : newHeight / 2;
       const horizontalOffset = isMobile ? newWidth / 2 : newWidth * 0.35;
-      
+
       projection
         .scale(Math.min(newWidth, newHeight) / scaleFactor)
         .translate([horizontalOffset, verticalOffset]);
-      
+
       svg.selectAll('path').attr('d', path as any);
     }
 
@@ -330,8 +356,8 @@ export function D3WorldTourBg() {
     <div
       ref={containerRef}
       className="absolute inset-0 w-full h-full"
-      style={{ 
-        zIndex: 1, 
+      style={{
+        zIndex: 1,
         opacity: 0.7,
       }}
     >
@@ -339,6 +365,15 @@ export function D3WorldTourBg() {
         ref={svgRef}
         className="w-full h-full"
         style={{ display: 'block' }}
+      />
+      <div
+        ref={tooltipRef}
+        className="absolute pointer-events-none px-3 py-1.5 rounded-lg bg-black/80 border border-[#d4af37] text-[#d4af37] text-sm font-medium shadow-[0_0_15px_rgba(212,175,55,0.3)] backdrop-blur-sm whitespace-nowrap z-10"
+        style={{
+          opacity: 0,
+          transform: 'translate(-50%, -100%) scale(0.8)',
+          transition: 'opacity 0.3s ease, transform 0.3s ease'
+        }}
       />
     </div>
   );

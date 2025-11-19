@@ -12,7 +12,7 @@ const blackBox = {
     height: 0,
     transition: {
       when: "afterChildren",
-      duration: 0.6,
+      duration: 0.8,
       ease: [0.87, 0, 0.13, 1] as const,
     },
   },
@@ -25,7 +25,8 @@ const textContainer = {
   animate: {
     opacity: 0,
     transition: {
-      duration: 0.2,
+      duration: 0.3,
+      delay: 0.8,
       when: "afterChildren",
     },
   },
@@ -73,7 +74,7 @@ const tagline = {
     opacity: 1,
     transition: {
       duration: 0.3,
-      delay: 0.15,
+      delay: 0.2,
       ease: [0.6, -0.05, 0.01, 0.99] as const,
     },
   },
@@ -87,12 +88,12 @@ export function InitialTransition({ onComplete }: InitialTransitionProps) {
   useEffect(() => {
     // Add overflow-hidden on mount
     document.body.classList.add("overflow-hidden");
-    
+
     // Safety timeout to ensure overflow-hidden is removed after animation
     const timer = setTimeout(() => {
       document.body.classList.remove("overflow-hidden");
-    }, 1500); // Total animation time is ~1.2s, so 1.5s is safe
-    
+    }, 4500); // Total animation time is ~2s, so 2.5s is safe
+
     // Cleanup: always remove overflow-hidden when component unmounts
     return () => {
       clearTimeout(timer);
@@ -117,7 +118,7 @@ export function InitialTransition({ onComplete }: InitialTransitionProps) {
           className="absolute z-50 flex flex-col items-center justify-center space-y-6 px-8"
         >
           {/* Barcode Icon */}
-          <motion.div variants={barcode} className="flex justify-center">
+          {/* <motion.div variants={barcode} className="flex justify-center">
             <div className="flex gap-[3px]">
               <div className="h-16 w-[4px] bg-white"></div>
               <div className="h-16 w-[2px] bg-white"></div>
@@ -129,7 +130,7 @@ export function InitialTransition({ onComplete }: InitialTransitionProps) {
               <div className="h-16 w-[2px] bg-white"></div>
               <div className="h-16 w-[4px] bg-white"></div>
             </div>
-          </motion.div>
+          </motion.div> */}
 
           {/* Title */}
           <motion.h1
@@ -144,12 +145,13 @@ export function InitialTransition({ onComplete }: InitialTransitionProps) {
             variants={tagline}
             className="max-w-2xl text-center text-base text-gray-300 md:text-lg lg:text-xl"
           >
-            Get On Code: where access, accountability and acceleration drive
-            everything
+            We're industrializing culture and shaping the future of technology and community.
+
+
           </motion.p>
         </motion.div>
       </motion.div>
-    </div>
+    </div >
   );
 }
 
