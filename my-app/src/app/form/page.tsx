@@ -1697,7 +1697,11 @@ export default function FormPage() {
                       <span className="font-semibold text-white">GET ON CODE</span>
                       <br />
                       <span className="text-xs text-gray-500 mt-1 block">
-                        I agree to the Terms & Conditions and acknowledge the Privacy Policy by proceeding.
+                        I agree to the{" "}
+                        <Link href="/terms" className="text-[#53361C] hover:text-[#6b4624] underline transition-colors">
+                          Terms & Conditions
+                        </Link>{" "}
+                        and acknowledge the Privacy Policy by proceeding.
                       </span>
                     </label>
                   </div>
