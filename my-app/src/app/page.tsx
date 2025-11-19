@@ -163,7 +163,7 @@ export default function Home() {
           {/* Subtext */}
           <motion.p
             variants={item}
-            className="mb-6 text-sm text-gray-300 md:text-base lg:text-lg"
+            className="mb-6 ml-[2px] text-sm text-gray-300 md:text-base lg:text-lg"
           >
             We&apos;re industrializing culture and shaping the future of technology and community.
           </motion.p>
@@ -211,7 +211,7 @@ export default function Home() {
               WebkitBackdropFilter: 'blur(16px) saturate(140%)',
             }}
           >
-            <div className="mx-auto w-full max-w-[420px]">
+            <div className="mx-auto w-full max-w-[420px] pl-6">
               <h2 className="mb-3 text-xl font-bold text-white">
                 EARLY ACCESS
               </h2>
