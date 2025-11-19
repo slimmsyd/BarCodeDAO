@@ -136,14 +136,16 @@ export default function FormPage() {
   });
 
   const connected = solanaWallet.connected || evmWallet.isConnected;
-  
+
   // Get the current "Did You Know" fact based on current step
-  // Step 5 should show the Lewis H. Latimer factoid (index 2)
+  // Steps 1-4 each show a different fact
   const getCurrentFact = () => {
-    if (currentStep === 5) {
-      return didYouKnowFacts[2]; // Lewis H. Latimer factoid
+    // Map steps 1-4 to facts 0-3
+    if (currentStep >= 1 && currentStep <= 4) {
+      return didYouKnowFacts[currentStep - 1];
     }
-    return didYouKnowFacts[Math.min(currentStep - 1, didYouKnowFacts.length - 1)];
+    // Default to first fact if outside range
+    return didYouKnowFacts[0];
   };
   const currentFact = getCurrentFact();
 
@@ -152,9 +154,9 @@ export default function FormPage() {
     document.body.classList.remove("overflow-hidden");
   }, []);
 
-  // Show "Did You Know" popup only when entering step 5
+  // Show "Did You Know" popup when entering steps 1-4
   useEffect(() => {
-    if (currentStep === 5) {
+    if (currentStep >= 1 && currentStep <= 4) {
       setShowDidYouKnow(true);
       const timer = setTimeout(() => {
         setShowDidYouKnow(false);
@@ -179,7 +181,7 @@ export default function FormPage() {
     // EVM wallet connected
     else if (evmWallet.isConnected && evmWallet.address) {
       let chainName = "ethereum"; // default
-      
+
       // Map chain IDs to names
       if (evmWallet.chain) {
         switch (evmWallet.chain.id) {
@@ -228,9 +230,9 @@ export default function FormPage() {
 
     try {
       // Determine which endpoint to use based on environment
-      const isProduction = process.env.NODE_ENV === 'production' || 
-                          (typeof window !== 'undefined' && !window.location.hostname.includes('localhost'));
-      
+      const isProduction = process.env.NODE_ENV === 'production' ||
+        (typeof window !== 'undefined' && !window.location.hostname.includes('localhost'));
+
       const webhookUrl = isProduction
         ? 'https://oncode.app.n8n.cloud/webhook/4170702c-3177-418d-a652-5f7fc8312286'
         : 'https://oncode.app.n8n.cloud/webhook-test/4170702c-3177-418d-a652-5f7fc8312286';
@@ -252,8 +254,8 @@ export default function FormPage() {
     } catch (error) {
       console.error('Form submission error:', error);
       setSubmitError(
-        error instanceof Error 
-          ? error.message 
+        error instanceof Error
+          ? error.message
           : 'Failed to submit application. Please try again.'
       );
     } finally {
@@ -347,7 +349,7 @@ export default function FormPage() {
       <div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-12 md:px-8">
         {/* "Did You Know" Popup */}
         <AnimatePresence>
-          {showDidYouKnow && currentStep === 5 && (
+          {showDidYouKnow && currentStep >= 1 && currentStep <= 4 && (
             <motion.div
               initial={{ x: 400, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
@@ -447,7 +449,7 @@ export default function FormPage() {
                 onClick={() => setShowSuccessModal(false)}
                 className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
               />
-              
+
               {/* Modal */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -507,7 +509,7 @@ export default function FormPage() {
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
-                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
                   </svg>
                   Watch Our Latest Videos
                 </a>
@@ -631,7 +633,8 @@ export default function FormPage() {
           {/* Heading */}
           <motion.h1
             variants={item}
-            className="mb-2 text-3xl font-bold text-white md:text-4xl"
+            className="mb-2 text-3xl font-black text-white md:text-4xl"
+            style={{ fontFamily: 'var(--font-orbitron)' }}
           >
             {getStepHeading(currentStep)}
           </motion.h1>
@@ -734,13 +737,13 @@ export default function FormPage() {
                   >
                     Phone Number
                   </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className="w-full rounded-xl bg-white/5 px-4 py-3 text-white placeholder-gray-500 border border-white/10 backdrop-blur-xl transition-all focus:bg-white/10 focus:border-white/30 focus:outline-none focus:ring-2 focus:ring-white/20 hover:border-white/20"
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className="w-full rounded-xl bg-white/5 px-4 py-3 text-white placeholder-gray-500 border border-white/10 backdrop-blur-xl transition-all focus:bg-white/10 focus:border-white/30 focus:outline-none focus:ring-2 focus:ring-white/20 hover:border-white/20"
                     style={{
                       backdropFilter: 'blur(20px) saturate(150%)',
                       WebkitBackdropFilter: 'blur(20px) saturate(150%)',
@@ -782,9 +785,8 @@ export default function FormPage() {
                     value={formData.walletAddress}
                     onChange={handleChange}
                     disabled={connected}
-                    className={`w-full rounded-xl bg-white/10 px-4 py-3 text-white placeholder-gray-500 backdrop-blur-sm transition-all focus:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/50 ${
-                      connected ? "cursor-not-allowed opacity-70" : ""
-                    }`}
+                    className={`w-full rounded-xl bg-white/10 px-4 py-3 text-white placeholder-gray-500 backdrop-blur-sm transition-all focus:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/50 ${connected ? "cursor-not-allowed opacity-70" : ""
+                      }`}
                     placeholder="0x... or connect wallet"
                   />
                 </div>
@@ -805,7 +807,7 @@ export default function FormPage() {
                     ].map((network) => {
                       const isSelected = formData.chain === network.toLowerCase();
                       const isConnectedChain = connected && isSelected;
-                      
+
                       return (
                         <button
                           key={network}
@@ -817,15 +819,13 @@ export default function FormPage() {
                             })
                           }
                           disabled={isConnectedChain}
-                          className={`rounded-full cursor-pointer px-5 py-2 text-sm font-medium transition-all border backdrop-blur-xl ${
-                            isSelected
-                              ? "bg-white text-gray-900 border-white shadow-lg"
-                              : "bg-white/5 text-gray-300 hover:bg-white/10 border-white/10 hover:border-white/20"
-                          } ${
-                            isConnectedChain
+                          className={`rounded-full cursor-pointer px-5 py-2 text-sm font-medium transition-all border backdrop-blur-xl ${isSelected
+                            ? "bg-white text-gray-900 border-white shadow-lg"
+                            : "bg-white/5 text-gray-300 hover:bg-white/10 border-white/10 hover:border-white/20"
+                            } ${isConnectedChain
                               ? "ring-2 ring-green-400/50"
                               : ""
-                          }`}
+                            }`}
                           style={!isSelected ? {
                             backdropFilter: 'blur(20px) saturate(150%)',
                             WebkitBackdropFilter: 'blur(20px) saturate(150%)',
@@ -1103,11 +1103,10 @@ export default function FormPage() {
                         key={interest}
                         type="button"
                         onClick={() => toggleInterest(interest)}
-                        className={`cursor-pointer rounded-full px-5 py-2 text-sm font-medium transition-all border backdrop-blur-xl hover:scale-105 ${
-                          formData.interests.includes(interest)
-                            ? "bg-white text-gray-900 border-white shadow-lg"
-                            : "bg-white/5 text-gray-300 hover:bg-white/10 border-white/10 hover:border-white/20"
-                        }`}
+                        className={`cursor-pointer rounded-full px-5 py-2 text-sm font-medium transition-all border backdrop-blur-xl hover:scale-105 ${formData.interests.includes(interest)
+                          ? "bg-white text-gray-900 border-white shadow-lg"
+                          : "bg-white/5 text-gray-300 hover:bg-white/10 border-white/10 hover:border-white/20"
+                          }`}
                         style={!formData.interests.includes(interest) ? {
                           backdropFilter: 'blur(20px) saturate(150%)',
                           WebkitBackdropFilter: 'blur(20px) saturate(150%)',
@@ -1183,7 +1182,7 @@ export default function FormPage() {
               >
                 {/* Learning Areas Selection */}
                 <div>
-                 
+
                   <p className="mb-4 text-xs text-gray-500">
                     Choose all that apply
                   </p>
@@ -1211,11 +1210,10 @@ export default function FormPage() {
                         key={area}
                         type="button"
                         onClick={() => toggleLearningArea(area)}
-                        className={`cursor-pointer rounded-full px-5 py-2 text-sm font-medium transition-all border backdrop-blur-xl hover:scale-105 ${
-                          formData.learningAreas.includes(area)
-                            ? "bg-white text-gray-900 border-white shadow-lg"
-                            : "bg-white/5 text-gray-300 hover:bg-white/10 border-white/10 hover:border-white/20"
-                        }`}
+                        className={`cursor-pointer rounded-full px-5 py-2 text-sm font-medium transition-all border backdrop-blur-xl hover:scale-105 ${formData.learningAreas.includes(area)
+                          ? "bg-white text-gray-900 border-white shadow-lg"
+                          : "bg-white/5 text-gray-300 hover:bg-white/10 border-white/10 hover:border-white/20"
+                          }`}
                         style={!formData.learningAreas.includes(area) ? {
                           backdropFilter: 'blur(20px) saturate(150%)',
                           WebkitBackdropFilter: 'blur(20px) saturate(150%)',
@@ -1291,7 +1289,7 @@ export default function FormPage() {
               >
                 {/* Participation Track Selection */}
                 <div>
-            
+
                   <p className="mb-6 text-sm text-gray-400">
                     Choose your preferred level of participation
                   </p>
@@ -1303,11 +1301,10 @@ export default function FormPage() {
                       onClick={() =>
                         setFormData({ ...formData, participationTrack: "citizen" })
                       }
-                      className={`group cursor-pointer relative w-full rounded-2xl border-2 p-6 text-left transition-all backdrop-blur-xl ${
-                        formData.participationTrack === "citizen"
-                          ? "border-[#53361C]/80 bg-[#53361C]/30 shadow-lg"
-                          : "border-white/10 bg-white/5 hover:border-white/30 hover:bg-white/10 hover:scale-105"
-                      }`}
+                      className={`group cursor-pointer relative w-full rounded-2xl border-2 p-6 text-left transition-all backdrop-blur-xl ${formData.participationTrack === "citizen"
+                        ? "border-[#53361C]/80 bg-[#53361C]/30 shadow-lg"
+                        : "border-white/10 bg-white/5 hover:border-white/30 hover:bg-white/10 hover:scale-105"
+                        }`}
                       style={{
                         backdropFilter: 'blur(20px) saturate(150%)',
                         WebkitBackdropFilter: 'blur(20px) saturate(150%)',
@@ -1348,11 +1345,10 @@ export default function FormPage() {
                       onClick={() =>
                         setFormData({ ...formData, participationTrack: "company" })
                       }
-                      className={`group cursor-pointer relative w-full rounded-2xl border-2 p-6 text-left transition-all backdrop-blur-xl ${
-                        formData.participationTrack === "company"
-                          ? "border-[#53361C]/80 bg-[#53361C]/30 shadow-lg"
-                          : "border-white/10 bg-white/5 hover:border-white/30 hover:bg-white/10 hover:scale-105"
-                      }`}
+                      className={`group cursor-pointer relative w-full rounded-2xl border-2 p-6 text-left transition-all backdrop-blur-xl ${formData.participationTrack === "company"
+                        ? "border-[#53361C]/80 bg-[#53361C]/30 shadow-lg"
+                        : "border-white/10 bg-white/5 hover:border-white/30 hover:bg-white/10 hover:scale-105"
+                        }`}
                       style={{
                         backdropFilter: 'blur(20px) saturate(150%)',
                         WebkitBackdropFilter: 'blur(20px) saturate(150%)',
@@ -1396,11 +1392,10 @@ export default function FormPage() {
                           participationTrack: "enterprise",
                         })
                       }
-                      className={`group cursor-pointer relative w-full rounded-2xl border-2 p-6 text-left transition-all backdrop-blur-xl ${
-                        formData.participationTrack === "enterprise"
-                          ? "border-[#53361C]/80 bg-[#53361C]/30 shadow-lg"
-                          : "border-white/10 bg-white/5 hover:border-white/30 hover:bg-white/10 hover:scale-105"
-                      }`}
+                      className={`group cursor-pointer relative w-full rounded-2xl border-2 p-6 text-left transition-all backdrop-blur-xl ${formData.participationTrack === "enterprise"
+                        ? "border-[#53361C]/80 bg-[#53361C]/30 shadow-lg"
+                        : "border-white/10 bg-white/5 hover:border-white/30 hover:bg-white/10 hover:scale-105"
+                        }`}
                       style={{
                         backdropFilter: 'blur(20px) saturate(150%)',
                         WebkitBackdropFilter: 'blur(20px) saturate(150%)',
@@ -1538,11 +1533,11 @@ export default function FormPage() {
                   {/* Professional Info Section */}
                   {(formData.company || formData.title || formData.website || formData.linkedin) && (
                     <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl shadow-lg"
-                    style={{
-                      backdropFilter: 'blur(20px) saturate(150%)',
-                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
-                    }}
-                  >
+                      style={{
+                        backdropFilter: 'blur(20px) saturate(150%)',
+                        WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                      }}
+                    >
                       <h3 className="mb-4 text-xl font-bold text-white">
                         Professional Information
                       </h3>
@@ -1595,11 +1590,11 @@ export default function FormPage() {
                   {/* Bio Section */}
                   {formData.bio && (
                     <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl shadow-lg"
-                    style={{
-                      backdropFilter: 'blur(20px) saturate(150%)',
-                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
-                    }}
-                  >
+                      style={{
+                        backdropFilter: 'blur(20px) saturate(150%)',
+                        WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                      }}
+                    >
                       <h3 className="mb-4 text-xl font-bold text-white">Bio</h3>
                       <p className="text-sm leading-relaxed text-gray-300">
                         {formData.bio}
@@ -1610,11 +1605,11 @@ export default function FormPage() {
                   {/* Contributions & Skills */}
                   {formData.interests.length > 0 && (
                     <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl shadow-lg"
-                    style={{
-                      backdropFilter: 'blur(20px) saturate(150%)',
-                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
-                    }}
-                  >
+                      style={{
+                        backdropFilter: 'blur(20px) saturate(150%)',
+                        WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                      }}
+                    >
                       {/* <h3 className="mb-4 text-xl font-bold text-white">
                         Contributions & Skills
                       </h3> */}
@@ -1637,11 +1632,11 @@ export default function FormPage() {
                   {/* Learning Interests */}
                   {formData.learningAreas.length > 0 && (
                     <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl shadow-lg"
-                    style={{
-                      backdropFilter: 'blur(20px) saturate(150%)',
-                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
-                    }}
-                  >
+                      style={{
+                        backdropFilter: 'blur(20px) saturate(150%)',
+                        WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                      }}
+                    >
                       <h3 className="mb-4 text-xl font-bold text-white">
                         Learning Interests
                       </h3>
@@ -1661,11 +1656,11 @@ export default function FormPage() {
                   {/* Participation Track */}
                   {formData.participationTrack && (
                     <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl shadow-lg"
-                    style={{
-                      backdropFilter: 'blur(20px) saturate(150%)',
-                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
-                    }}
-                  >
+                      style={{
+                        backdropFilter: 'blur(20px) saturate(150%)',
+                        WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                      }}
+                    >
                       <h3 className="mb-4 text-xl font-bold text-white">
                         Participation Track
                       </h3>
@@ -1698,7 +1693,7 @@ export default function FormPage() {
                       <br />
                       <span className="text-xs text-gray-500 mt-1 block">
                         I agree to the{" "}
-                        <Link href="/terms" className="text-[#53361C] hover:text-[#6b4624] underline transition-colors">
+                        <Link href="/terms" className="text-[#ffff] hover:text-[#6b4624] underline transition-colors">
                           Terms & Conditions
                         </Link>{" "}
                         and acknowledge the Privacy Policy by proceeding.
@@ -1736,7 +1731,7 @@ export default function FormPage() {
                   </div>
                 )}
 
-                
+
 
                 {/* Navigation Buttons */}
                 <div className="flex justify-between gap-4 pt-6">
@@ -1842,7 +1837,7 @@ export default function FormPage() {
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
               </svg>
             </a>
 
@@ -1860,7 +1855,7 @@ export default function FormPage() {
                 viewBox="0 0 192 192"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <path d="M141.537 88.9883C140.71 88.5919 139.87 88.2104 139.019 87.8451C137.537 60.5382 122.616 44.905 97.5619 44.745C97.4484 44.7443 97.3355 44.7443 97.222 44.7443C82.2364 44.7443 69.7731 51.1409 62.102 62.7807L75.881 72.2328C81.6116 63.5383 90.6052 61.6848 97.2286 61.6848C97.3051 61.6848 97.3819 61.6848 97.4576 61.6855C105.707 61.7381 111.932 64.1366 115.961 68.814C118.893 72.2193 120.854 76.925 121.825 82.8638C114.511 81.6207 106.601 81.2385 98.145 81.7233C74.3247 83.0954 59.0111 96.9879 60.0396 116.292C60.5615 126.084 65.4397 134.508 73.775 140.011C80.8224 144.663 89.899 146.938 99.3323 146.423C111.79 145.74 121.563 140.987 128.381 132.296C133.559 125.696 136.834 117.143 138.28 106.366C144.217 109.949 148.617 114.664 151.047 120.332C155.179 129.967 155.42 145.8 142.501 158.708C131.182 170.016 117.576 174.908 97.0135 175.059C74.2042 174.89 56.9538 167.575 45.7381 153.317C35.2355 139.966 29.8077 120.682 29.6052 96C29.8077 71.3178 35.2355 52.0336 45.7381 38.6827C56.9538 24.4249 74.2039 17.11 97.0132 16.9405C119.988 17.1113 137.539 24.4614 149.184 38.788C154.894 45.8136 159.199 54.6488 162.037 64.9503L178.184 60.6422C174.744 47.9622 169.331 37.0357 161.965 27.974C147.036 9.60668 125.202 0.195148 97.0695 0H96.9569C68.8816 0.19447 47.2921 9.6418 32.7883 28.0793C19.8819 44.4864 13.2244 67.3157 13.0007 95.9325L13 96L13.0007 96.0675C13.2244 124.684 19.8819 147.514 32.7883 163.921C47.2921 182.358 68.8816 191.806 96.9569 192H97.0695C122.03 191.827 139.624 185.292 154.118 170.811C173.081 151.866 172.51 128.119 166.26 113.541C161.776 103.087 153.227 94.5962 141.537 88.9883ZM98.4405 129.507C88.0005 130.095 77.1544 125.409 76.6196 115.372C76.2232 107.93 81.9158 99.626 99.0812 98.6368C101.047 98.5234 102.976 98.468 104.871 98.468C111.106 98.468 116.939 99.0737 122.242 100.233C120.264 124.935 108.662 128.946 98.4405 129.507Z"/>
+                <path d="M141.537 88.9883C140.71 88.5919 139.87 88.2104 139.019 87.8451C137.537 60.5382 122.616 44.905 97.5619 44.745C97.4484 44.7443 97.3355 44.7443 97.222 44.7443C82.2364 44.7443 69.7731 51.1409 62.102 62.7807L75.881 72.2328C81.6116 63.5383 90.6052 61.6848 97.2286 61.6848C97.3051 61.6848 97.3819 61.6848 97.4576 61.6855C105.707 61.7381 111.932 64.1366 115.961 68.814C118.893 72.2193 120.854 76.925 121.825 82.8638C114.511 81.6207 106.601 81.2385 98.145 81.7233C74.3247 83.0954 59.0111 96.9879 60.0396 116.292C60.5615 126.084 65.4397 134.508 73.775 140.011C80.8224 144.663 89.899 146.938 99.3323 146.423C111.79 145.74 121.563 140.987 128.381 132.296C133.559 125.696 136.834 117.143 138.28 106.366C144.217 109.949 148.617 114.664 151.047 120.332C155.179 129.967 155.42 145.8 142.501 158.708C131.182 170.016 117.576 174.908 97.0135 175.059C74.2042 174.89 56.9538 167.575 45.7381 153.317C35.2355 139.966 29.8077 120.682 29.6052 96C29.8077 71.3178 35.2355 52.0336 45.7381 38.6827C56.9538 24.4249 74.2039 17.11 97.0132 16.9405C119.988 17.1113 137.539 24.4614 149.184 38.788C154.894 45.8136 159.199 54.6488 162.037 64.9503L178.184 60.6422C174.744 47.9622 169.331 37.0357 161.965 27.974C147.036 9.60668 125.202 0.195148 97.0695 0H96.9569C68.8816 0.19447 47.2921 9.6418 32.7883 28.0793C19.8819 44.4864 13.2244 67.3157 13.0007 95.9325L13 96L13.0007 96.0675C13.2244 124.684 19.8819 147.514 32.7883 163.921C47.2921 182.358 68.8816 191.806 96.9569 192H97.0695C122.03 191.827 139.624 185.292 154.118 170.811C173.081 151.866 172.51 128.119 166.26 113.541C161.776 103.087 153.227 94.5962 141.537 88.9883ZM98.4405 129.507C88.0005 130.095 77.1544 125.409 76.6196 115.372C76.2232 107.93 81.9158 99.626 99.0812 98.6368C101.047 98.5234 102.976 98.468 104.871 98.468C111.106 98.468 116.939 99.0737 122.242 100.233C120.264 124.935 108.662 128.946 98.4405 129.507Z" />
               </svg>
             </a>
 
@@ -1877,7 +1872,7 @@ export default function FormPage() {
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
               </svg>
             </a>
 
@@ -1894,7 +1889,7 @@ export default function FormPage() {
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
               </svg>
             </a>
           </motion.div>

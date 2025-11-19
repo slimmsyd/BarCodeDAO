@@ -211,7 +211,7 @@ export default function Home() {
               WebkitBackdropFilter: 'blur(16px) saturate(140%)',
             }}
           >
-            <div className="mx-auto w-full max-w-[420px] pl-6">
+            <div className="mx-auto w-full max-w-[420px] pl-4">
               <h2 className="mb-3 text-xl font-bold text-white">
                 EARLY ACCESS
               </h2>
