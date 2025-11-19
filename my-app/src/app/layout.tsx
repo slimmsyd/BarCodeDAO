@@ -64,10 +64,14 @@ export const metadata: Metadata = {
   title: "BarCode - Join the Community",
   description: "Fill out the form to become a potential member of our DAO.",
   openGraph: {
+    title: "BarCode - Join the Community",
+    description: "Fill out the form to become a potential member of our DAO.",
     images: ["/BARCODE Website Cover.PNG"],
   },
   twitter: {
     card: "summary_large_image",
+    title: "BarCode - Join the Community",
+    description: "Fill out the form to become a potential member of our DAO.",
     images: ["/BARCODE Website Cover.PNG"],
   },
 };
