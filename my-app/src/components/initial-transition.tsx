@@ -117,38 +117,67 @@ export function InitialTransition({ onComplete }: InitialTransitionProps) {
           variants={textContainer}
           className="absolute z-50 flex flex-col items-center justify-center space-y-6 px-8"
         >
-          {/* Barcode Icon */}
-          {/* <motion.div variants={barcode} className="flex justify-center">
-            <div className="flex gap-[3px]">
-              <div className="h-16 w-[4px] bg-white"></div>
-              <div className="h-16 w-[2px] bg-white"></div>
-              <div className="h-16 w-[4px] bg-white"></div>
-              <div className="h-16 w-[2px] bg-white"></div>
-              <div className="h-16 w-[5px] bg-white"></div>
-              <div className="h-16 w-[2px] bg-white"></div>
-              <div className="h-16 w-[4px] bg-white"></div>
-              <div className="h-16 w-[2px] bg-white"></div>
-              <div className="h-16 w-[4px] bg-white"></div>
-            </div>
-          </motion.div> */}
-
           {/* Title */}
           <motion.h1
             variants={title}
-            className="text-center text-6xl font-bold text-white md:text-7xl lg:text-8xl"
+            className="text-center text-6xl font-bold tracking-tight text-white md:text-7xl lg:text-8xl"
           >
             BARCODE
           </motion.h1>
 
-          {/* Tagline */}
-          <motion.p
-            variants={tagline}
-            className="max-w-2xl text-center text-base text-gray-300 md:text-lg lg:text-xl"
+          {/* Sleek Animated Barcode Loading */}
+          <motion.div
+            variants={barcode}
+            className="mt-12 flex flex-col items-center gap-4"
           >
-            We're industrializing culture and shaping the future of technology and community.
+            {/* Barcode Bars Container with border */}
+            <div className="relative flex items-end justify-center gap-[2px] rounded-sm border border-white/20 bg-white/5 px-16 py-3 backdrop-blur-sm">
+              {[...Array(30)].map((_, i) => {
+                // Create varying heights for barcode aesthetic - sleeker/shorter
+                const heights = ['36px', '42px', '32px', '40px', '36px'];
+                const widths = ['2px', '3px', '4px', '2px', '3px'];
 
+                return (
+                  <motion.div
+                    key={i}
+                    className="bg-white shadow-[0_0_8px_rgba(255,255,255,0.3)]"
+                    style={{
+                      width: widths[i % widths.length],
+                      height: heights[i % heights.length],
+                    }}
+                    animate={{
+                      scaleY: [1, 0.7, 1.1, 0.85, 1],
+                      opacity: [0.6, 1, 0.6, 1, 0.6],
+                    }}
+                    transition={{
+                      duration: 1.8,
+                      repeat: Infinity,
+                      delay: i * 0.05,
+                      ease: [0.4, 0.0, 0.2, 1],
+                    }}
+                  />
+                );
+              })}
+            </div>
 
-          </motion.p>
+            {/* Loading Text */}
+            <motion.p
+              className="text-sm font-light tracking-[0.3em] text-white/70"
+              animate={{
+                opacity: [0.5, 1, 0.5],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              LOADING
+            </motion.p>
+          </motion.div>
+
+          {/* Tagline */}
+
         </motion.div>
       </motion.div>
     </div >
