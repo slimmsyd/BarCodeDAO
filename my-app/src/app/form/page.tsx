@@ -110,6 +110,9 @@ interface FormData {
 export default function FormPage() {
   const solanaWallet = useWallet();
   const evmWallet = useAccount();
+  const FORM_STORAGE_KEY = 'barcode_form_data';
+  const STEP_STORAGE_KEY = 'barcode_form_step';
+
   const [currentStep, setCurrentStep] = useState(1);
   const [showDidYouKnow, setShowDidYouKnow] = useState(true);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -148,6 +151,55 @@ export default function FormPage() {
     return didYouKnowFacts[0];
   };
   const currentFact = getCurrentFact();
+
+  // Track if component has loaded initial data to avoid saving default state
+  const [hasLoadedFromStorage, setHasLoadedFromStorage] = useState(false);
+
+  // Load persisted form data and step from localStorage on mount
+  useEffect(() => {
+    try {
+      const savedFormData = localStorage.getItem(FORM_STORAGE_KEY);
+      const savedStep = localStorage.getItem(STEP_STORAGE_KEY);
+
+      if (savedFormData) {
+        const parsed = JSON.parse(savedFormData);
+        setFormData(parsed);
+      }
+
+      if (savedStep) {
+        setCurrentStep(parseInt(savedStep, 10));
+      }
+
+      // Mark that we've loaded from storage
+      setHasLoadedFromStorage(true);
+    } catch (error) {
+      console.error('Error loading form data from localStorage:', error);
+      setHasLoadedFromStorage(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Save form data to localStorage whenever it changes (but not on initial mount)
+  useEffect(() => {
+    if (!hasLoadedFromStorage) return;
+
+    try {
+      localStorage.setItem(FORM_STORAGE_KEY, JSON.stringify(formData));
+    } catch (error) {
+      console.error('Error saving form data to localStorage:', error);
+    }
+  }, [formData, hasLoadedFromStorage, FORM_STORAGE_KEY]);
+
+  // Save current step to localStorage whenever it changes (but not on initial mount)
+  useEffect(() => {
+    if (!hasLoadedFromStorage) return;
+
+    try {
+      localStorage.setItem(STEP_STORAGE_KEY, currentStep.toString());
+    } catch (error) {
+      console.error('Error saving step to localStorage:', error);
+    }
+  }, [currentStep, hasLoadedFromStorage, STEP_STORAGE_KEY]);
 
   // Ensure scrolling is always enabled on this page
   useEffect(() => {
@@ -249,7 +301,9 @@ export default function FormPage() {
         throw new Error(`Submission failed: ${response.status} ${response.statusText}`);
       }
 
-      // Success - show success modal
+      // Success - clear localStorage and show success modal
+      localStorage.removeItem(FORM_STORAGE_KEY);
+      localStorage.removeItem(STEP_STORAGE_KEY);
       setShowSuccessModal(true);
     } catch (error) {
       console.error('Form submission error:', error);
