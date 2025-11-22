@@ -118,62 +118,26 @@ export function InitialTransition({ onComplete }: InitialTransitionProps) {
           className="absolute z-50 flex flex-col items-center justify-center space-y-6 px-8"
         >
           {/* Title */}
-          <motion.h1
+          {/* <motion.h1
             variants={title}
             className="text-center text-6xl font-bold tracking-tight text-white md:text-7xl lg:text-8xl"
           >
             BARCODE
-          </motion.h1>
+          </motion.h1> */}
 
-          {/* Sleek Animated Barcode Loading */}
+          {/* Client Loading Animation */}
           <motion.div
             variants={barcode}
             className="mt-12 flex flex-col items-center gap-4"
           >
-            {/* Barcode Bars Container with border */}
-            <div className="relative flex items-end justify-center gap-[2px] rounded-sm border border-white/20 bg-white/5 px-16 py-3 backdrop-blur-sm">
-              {[...Array(30)].map((_, i) => {
-                // Create varying heights for barcode aesthetic - sleeker/shorter
-                const heights = ['36px', '42px', '32px', '40px', '36px'];
-                const widths = ['2px', '3px', '4px', '2px', '3px'];
-
-                return (
-                  <motion.div
-                    key={i}
-                    className="bg-white shadow-[0_0_8px_rgba(255,255,255,0.3)]"
-                    style={{
-                      width: widths[i % widths.length],
-                      height: heights[i % heights.length],
-                    }}
-                    animate={{
-                      scaleY: [1, 0.7, 1.1, 0.85, 1],
-                      opacity: [0.6, 1, 0.6, 1, 0.6],
-                    }}
-                    transition={{
-                      duration: 1.8,
-                      repeat: Infinity,
-                      delay: i * 0.05,
-                      ease: [0.4, 0.0, 0.2, 1],
-                    }}
-                  />
-                );
-              })}
+            {/* Loading GIF */}
+            <div className="relative flex items-center justify-center">
+              <img
+                src="/Loading Graphic.GIF"
+                alt="Loading animation"
+                className="h-auto w-64 md:w-80 lg:w-96"
+              />
             </div>
-
-            {/* Loading Text */}
-            <motion.p
-              className="text-sm font-light tracking-[0.3em] text-white/70"
-              animate={{
-                opacity: [0.5, 1, 0.5],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              LOADING
-            </motion.p>
           </motion.div>
 
           {/* Tagline */}
