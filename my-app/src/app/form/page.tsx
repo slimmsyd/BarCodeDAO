@@ -287,7 +287,7 @@ export default function FormPage() {
 
       const webhookUrl = isProduction
         ? 'https://codeandcloth.app.n8n.cloud/webhook/4170702c-3177-418d-a652-5f7fc8312286'
-        : 'https://codeandcloth.app.n8n.cloud/webhook-test/4170702c-3177-418d-a652-5f7fc8312286';
+        : 'https://oncode.app.n8n.cloud/webhook-test/4170702c-3177-418d-a652-5f7fc8312286';
 
       const response = await fetch(webhookUrl, {
         method: 'POST',
@@ -504,83 +504,85 @@ export default function FormPage() {
                 className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
               />
 
-              {/* Modal */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                className="fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-3xl border border-white/20 bg-black/90 p-8 shadow-2xl md:p-10"
-                style={{
-                  backdropFilter: 'blur(40px) saturate(180%)',
-                  WebkitBackdropFilter: 'blur(40px) saturate(180%)',
-                  boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.1)',
-                }}
-              >
-                {/* Success Icon */}
-                <div className="mb-6 flex justify-center">
-                  <div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-500/20 backdrop-blur-sm border border-green-500/30">
-                    <svg
-                      className="h-12 w-12 text-green-400"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
+              {/* Modal Wrapper — flex-centered so it never clips on mobile */}
+              <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  className="relative w-full max-w-md rounded-3xl border border-white/20 bg-black/90 p-8 shadow-2xl md:p-10 my-auto"
+                  style={{
+                    backdropFilter: 'blur(40px) saturate(180%)',
+                    WebkitBackdropFilter: 'blur(40px) saturate(180%)',
+                    boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.1)',
+                  }}
+                >
+                  {/* Success Icon */}
+                  <div className="mb-6 flex justify-center">
+                    <div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-500/20 backdrop-blur-sm border border-green-500/30">
+                      <svg
+                        className="h-12 w-12 text-green-400"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 13l4 4L19 7"
+                        />
+                      </svg>
+                    </div>
                   </div>
-                </div>
 
-                {/* Title */}
-                <h2 className="mb-4 text-center text-2xl font-bold text-white md:text-3xl">
-                  Application Submitted!
-                </h2>
+                  {/* Title */}
+                  <h2 className="mb-4 text-center text-2xl font-bold text-white md:text-3xl">
+                    Application Submitted!
+                  </h2>
 
-                {/* Message */}
-                <p className="mb-8 text-center text-base leading-relaxed text-gray-300 md:text-lg">
-                  Thank you for your interest in joining BARCODE. Please check your email for confirmation.
-                </p>
+                  {/* Message */}
+                  <p className="mb-8 text-center text-base leading-relaxed text-gray-300 md:text-lg">
+                    Thank you for your interest in joining BARCODE. Please check your email for confirmation.
+                  </p>
 
-                {/* YouTube CTA */}
-                <a
-                  href="https://youtube.com/@barcodedao"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mb-4 flex w-full items-center justify-center gap-3 rounded-xl bg-red-500/20 backdrop-blur-xl border border-red-500/40 px-8 py-3 text-base font-semibold text-white transition-all hover:bg-red-500/30 hover:scale-105 hover:border-red-500/60 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500/50"
-                  style={{
-                    backdropFilter: 'blur(20px) saturate(150%)',
-                    WebkitBackdropFilter: 'blur(20px) saturate(150%)',
-                    boxShadow: '0 4px 16px 0 rgba(239, 68, 68, 0.2)',
-                  }}
-                >
-                  <svg
-                    className="h-6 w-6"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
+                  {/* YouTube CTA */}
+                  <a
+                    href="https://youtube.com/@barcodedao"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mb-4 flex w-full items-center justify-center gap-3 rounded-xl bg-red-500/20 backdrop-blur-xl border border-red-500/40 px-8 py-3 text-base font-semibold text-white transition-all hover:bg-red-500/30 hover:scale-105 hover:border-red-500/60 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500/50"
+                    style={{
+                      backdropFilter: 'blur(20px) saturate(150%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                      boxShadow: '0 4px 16px 0 rgba(239, 68, 68, 0.2)',
+                    }}
                   >
-                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-                  </svg>
-                  Watch Our Latest Videos
-                </a>
+                    <svg
+                      className="h-6 w-6"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                    </svg>
+                    Watch Our Latest Videos
+                  </a>
 
-                {/* Close Button */}
-                <button
-                  onClick={() => setShowSuccessModal(false)}
-                  className="w-full rounded-xl bg-[#53361C]/40 backdrop-blur-xl border border-[#53361C]/60 px-8 py-3 text-base font-semibold text-white transition-all hover:bg-[#53361C]/60 hover:scale-105 hover:border-[#53361C]/80 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#53361C]/50"
-                  style={{
-                    backdropFilter: 'blur(20px) saturate(150%)',
-                    WebkitBackdropFilter: 'blur(20px) saturate(150%)',
-                    boxShadow: '0 4px 16px 0 rgba(83, 54, 28, 0.2)',
-                  }}
-                >
-                  Close
-                </button>
-              </motion.div>
+                  {/* Close Button */}
+                  <button
+                    onClick={() => setShowSuccessModal(false)}
+                    className="w-full rounded-xl bg-[#53361C]/40 backdrop-blur-xl border border-[#53361C]/60 px-8 py-3 text-base font-semibold text-white transition-all hover:bg-[#53361C]/60 hover:scale-105 hover:border-[#53361C]/80 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#53361C]/50"
+                    style={{
+                      backdropFilter: 'blur(20px) saturate(150%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                      boxShadow: '0 4px 16px 0 rgba(83, 54, 28, 0.2)',
+                    }}
+                  >
+                    Close
+                  </button>
+                </motion.div>
+              </div>
             </>
           )}
         </AnimatePresence>
